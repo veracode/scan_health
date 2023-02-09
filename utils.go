@@ -106,3 +106,8 @@ func formatDuration(duration time.Duration) string {
 
 	return str
 }
+
+func printTitle(title string) {
+	color.HiCyan("\n" + title)
+	fmt.Println(strings.Repeat("=", len(title)))
+}

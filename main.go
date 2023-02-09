@@ -67,6 +67,7 @@ func main() {
 
 	data.reportScanDetails(api.region)
 	data.assertPrescanModulesPresent()
+	data.analyzeUploadedFiles()
 }
 
 func (data Data) reportScanDetails(region string) {
