@@ -111,3 +111,19 @@ func printTitle(title string) {
 	color.HiCyan("\n" + title)
 	fmt.Println(strings.Repeat("=", len(title)))
 }
+
+func pluralise(count int) string {
+	if count > 1 {
+		return "s"
+	}
+
+	return ""
+}
+
+func top5StringList(items []string) string {
+	if len(items) > 5 {
+		return strings.Join(items[0:5], ", ") + "..."
+	}
+
+	return strings.Join(items, ", ")
+}

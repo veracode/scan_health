@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-VERSION="1.0"
+VERSION="1.1"
 FLAGS="-X main.AppVersion=$VERSION -s -w"
 
 GOOS=darwin GOARCH=arm64 go build -ldflags="$FLAGS" -trimpath -o "dist/scan_health-mac-arm64" .
