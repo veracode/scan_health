@@ -11,7 +11,10 @@
             "mode": "auto",
             "program": "${fileDirname}",
             "args":[
-                "-sast https://analysiscenter.veracode.com/auth/index.jsp#ReviewResultsStaticFlaws:35457:568735:22464848:22436151:22451801:::4932501"
+                "-sast",
+                "https://analysiscenter.veracode.com/auth/index.jsp#AnalyzeAppModuleList:78373:1439547:18553931:18526076:18541726",
+                "-profile",
+                "proxy"
             ]
         }
     ]

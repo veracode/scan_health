@@ -14,7 +14,7 @@ func (api API) getData(appId, buildId int) Data {
 	var data = Data{}
 
 	var wg sync.WaitGroup
-	wg.Add(2)
+	wg.Add(1)
 
 	go func() {
 		defer wg.Done()
