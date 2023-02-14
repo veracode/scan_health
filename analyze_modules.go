@@ -17,10 +17,16 @@ func (data Data) analyzeModules() {
 
 	sort.Strings(modules[:])
 
-	if len(modules) > 1000 {
+	if len(data.PrescanModuleList.Modules) > 1000 {
 		report.WriteString(fmt.Sprintf(
-			"⚠️  %d modules were present. This is a lot of modules which is usually an indicator that something is not correct.\n",
-			len(modules)))
+			"⚠️  %d modules were identified. This is a lot of modules which is usually an indicator that something is not correct.\n",
+			len(data.PrescanModuleList.Modules)))
+	}
+
+	if len(data.DetailedReport.StaticAnalysis.Modules) > 100 {
+		report.WriteString(fmt.Sprintf(
+			"⚠️  %d modules were selected for analysis. This is a lot of modules which is usually an indicator that something is not correct.\n",
+			len(data.DetailedReport.StaticAnalysis.Modules)))
 	}
 
 	if report.Len() > 0 {
