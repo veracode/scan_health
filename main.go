@@ -68,15 +68,21 @@ func main() {
 	data.reportScanDetails(api.region)
 	data.assertPrescanModulesPresent()
 	data.analyzeUploadedFiles()
+	data.analyzeModules()
+	data.outputRecommendations(api.region)
 }
 
 func (data Data) reportScanDetails(region string) {
 	fmt.Printf("Account ID:         %d\n", data.DetailedReport.AccountId)
 	fmt.Printf("Application:        \"%s\"\n", data.DetailedReport.AppName)
-	fmt.Printf("Sandbox:            \"%s\"\n", data.DetailedReport.SandboxName)
+
+	if len(data.DetailedReport.SandboxName) > 0 {
+		fmt.Printf("Sandbox:            \"%s\"\n", data.DetailedReport.SandboxName)
+	}
+
 	fmt.Printf("Scan name:          \"%s\"\n", data.DetailedReport.StaticAnalysis.ScanName)
 	fmt.Printf("Review Modules URL: %s\n", data.DetailedReport.getReviewModulesUrl(region))
-	fmt.Printf("Traige Flaws URL:   %s\n", data.DetailedReport.getTriageFlawsUrl(region))
+	fmt.Printf("Triage Flaws URL:   %s\n", data.DetailedReport.getTriageFlawsUrl(region))
 	fmt.Printf("Files uploaded:     %d\n", len(data.PrescanFileList.Files))
 	fmt.Printf("Total modules:      %d\n", len(data.PrescanModuleList.Modules))
 	fmt.Printf("Modules selected:   %d\n", len(data.DetailedReport.StaticAnalysis.Modules))
@@ -92,6 +98,8 @@ func (data Data) reportScanDetails(region string) {
 	} else {
 		fmt.Print(flawsFormatted)
 	}
+
+	println()
 }
 
 func (data Data) assertPrescanModulesPresent() {

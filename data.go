@@ -8,10 +8,18 @@ type Data struct {
 	DetailedReport    DetailedReport
 	PrescanFileList   PrescanFileList
 	PrescanModuleList PrescanModuleList
+	Recommendations   *[]string
+}
+
+func (data Data) makeRecommendation(recommendation string) {
+	if !isStringInStringArray(recommendation, *data.Recommendations) {
+		*data.Recommendations = append(*data.Recommendations, recommendation)
+	}
 }
 
 func (api API) getData(appId, buildId int) Data {
 	var data = Data{}
+	data.Recommendations = &[]string{}
 
 	var wg sync.WaitGroup
 	wg.Add(1)

@@ -12,7 +12,7 @@
             "program": "${fileDirname}",
             "args":[
                 "-sast",
-                "https://analysiscenter.veracode.com/auth/index.jsp#AnalyzeAppModuleList::234345:23703845:23675071:23690721::::260136",
+                "https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:0:1628261:23299381:23270636:23286286::::",
                 "-profile",
                 "proxy"
             ]
