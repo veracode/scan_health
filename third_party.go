@@ -3,18 +3,18 @@ package main
 import "strings"
 
 var thirdPartyModules = []string{
-	"microsoft.*.dll",
-	"microsoft.*.pdb",
-	"system.*.dll",
-	"newtonsoft.json.dll",
-	"devexpress.*",
-	"log4net.dll",
-	"ninject.web.common.webhost.dll",
 	"componentspace.saml2.dll",
-	"syncfusion.*",
+	"devexpress.*",
 	"entityframework.dll",
 	"itextsharp.dll",
+	"log4net.dll",
+	"microsoft.*.dll",
+	"microsoft.*.pdb",
 	"newrelic.*.dll",
+	"newtonsoft.json.dll",
+	"ninject.web.common.webhost.dll",
+	"syncfusion.*",
+	"system.*.dll",
 }
 
 func isThirdParty(fileName string) bool {

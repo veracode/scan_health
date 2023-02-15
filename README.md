@@ -2,7 +2,7 @@
 ![Docker Image Size](https://img.shields.io/docker/image-size/antfie/scan_health/latest)
 ![Downloads](https://img.shields.io/github/downloads/antfie/scan_health/total)
 
-# Veracode Scan Health
+# Veracode Scan Health 🏥
 
 This is an unofficial Veracode product. It does not come with any support or warrenty.
 
@@ -49,11 +49,7 @@ Using Docker:
 docker run -t -v "$HOME/.veracode:/.veracode" antfie/scan_health -sast https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002
 ```
 
-## Example Output
-
-![Screenshot](./docs/images/screenshot.png)
-
-## Development
+## Development 🛠️
 
 ### Running
 
