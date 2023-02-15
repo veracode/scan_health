@@ -43,15 +43,11 @@ func (data Data) analyzeModuleWarnings() {
 	for _, module := range data.PrescanModuleList.Modules {
 		for _, issue := range module.Issues {
 			if issue.Details == "No supporting files or PDB files" {
-				if strings.HasSuffix(module.Name, ".jar") {
+				if strings.HasSuffix(module.Name, ".jar") || strings.HasSuffix(module.Name, ".war") || strings.HasSuffix(module.Name, ".ear") {
 					continue
 				}
 
-				if strings.HasSuffix(module.Name, ".map") {
-					continue
-				}
-
-				if strings.Contains(module.Name, "_nodemodule_") {
+				if strings.HasSuffix(module.Name, ".map") || strings.Contains(module.Name, "_nodemodule_") {
 					continue
 				}
 			}
