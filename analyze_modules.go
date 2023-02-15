@@ -2,20 +2,11 @@ package main
 
 import (
 	"fmt"
-	"sort"
 	"strings"
 )
 
 func (data Data) analyzeModules() {
 	var report strings.Builder
-
-	var modules []string
-
-	for _, module := range data.PrescanModuleList.Modules {
-		modules = append(modules, module.Name)
-	}
-
-	sort.Strings(modules[:])
 
 	if len(data.PrescanModuleList.Modules) > 1000 {
 		report.WriteString(fmt.Sprintf(
@@ -41,6 +32,10 @@ func (data Data) analyzeModuleWarnings() {
 	var warnings []string
 
 	for _, module := range data.PrescanModuleList.Modules {
+		if isThirdParty(module.Name) {
+			continue
+		}
+
 		for _, issue := range module.Issues {
 			if issue.Details == "No supporting files or PDB files" {
 				if strings.HasSuffix(module.Name, ".jar") || strings.HasSuffix(module.Name, ".war") || strings.HasSuffix(module.Name, ".ear") {
@@ -58,7 +53,6 @@ func (data Data) analyzeModuleWarnings() {
 				warnings = append(warnings, formattedIssue)
 			}
 		}
-
 	}
 
 	for _, warning := range warnings {

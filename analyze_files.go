@@ -6,20 +6,6 @@ import (
 	"strings"
 )
 
-var fileExtensionsToIgnore = []string{
-	".cs",
-	".sln",
-	".asax",
-	".asmx",
-	".aspx",
-	".manifest",
-	".config",
-	".xml",
-	".properties",
-	".md",
-	".less",
-}
-
 func (data Data) analyzeUploadedFiles() {
 	var report strings.Builder
 
@@ -121,16 +107,6 @@ func detectUnwantedFiles(data Data, report *strings.Builder, files []string, suf
 		top5StringList(foundFiles)))
 }
 
-func shouldFileNameBeIgnored(fileName string) bool {
-	for _, extension := range fileExtensionsToIgnore {
-		if strings.HasSuffix(fileName, extension) {
-			return true
-		}
-	}
-
-	return false
-}
-
 func (data Data) reportDuplicateFiles() {
 	var warningReport strings.Builder
 	var errorReport strings.Builder
@@ -141,7 +117,7 @@ func (data Data) reportDuplicateFiles() {
 			continue
 		}
 
-		if shouldFileNameBeIgnored(thisFile.Name) {
+		if shouldFileNameBeIgnored(thisFile.Name) || isThirdParty(thisFile.Name) {
 			continue
 		}
 
