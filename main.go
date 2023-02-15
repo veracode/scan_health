@@ -69,6 +69,7 @@ func main() {
 	data.analyzeUploadedFiles()
 	data.reportDuplicateFiles()
 	data.analyzeModules()
+	data.analyzeModuleWarnings()
 	data.outputRecommendations(api.region)
 }
 

@@ -33,6 +33,7 @@ func (data Data) reportScanDetails(region string) {
 
 	if data.DetailedReport.TotalFlaws == 0 {
 		color.HiYellow(flawsFormatted)
+		data.makeRecommendation("When no flaws have been found this can be an indication that the scan is misconfigured")
 	} else {
 		fmt.Print(flawsFormatted)
 	}
