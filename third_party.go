@@ -4,6 +4,7 @@ import "strings"
 
 var thirdPartyModules = []string{
 	"microsoft.*.dll",
+	"microsoft.*.pdb",
 	"system.*.dll",
 	"newtonsoft.json.dll",
 	"devexpress.*",
@@ -11,6 +12,9 @@ var thirdPartyModules = []string{
 	"ninject.web.common.webhost.dll",
 	"componentspace.saml2.dll",
 	"syncfusion.*",
+	"entityframework.dll",
+	"itextsharp.dll",
+	"newrelic.*.dll",
 }
 
 func isThirdParty(fileName string) bool {
