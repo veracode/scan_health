@@ -39,6 +39,7 @@ func (data Data) analyzeUploadedFiles() {
 	}
 
 	detectNodeModules(data, &report, files)
+	detectCoffeescriptFiles(data, &report, files)
 	detectUnwantedFiles(data, &report, files, ".zip", "nested zip file", []string{"Do not upload archives (nested archives) within the upload package"})
 	detectUnwantedFiles(data, &report, files, ".7z", "7-zip file", []string{"Veracode does not support 7-zip. Consider zip files instead"})
 	detectUnwantedFiles(data, &report, files, ".java", "Java source code file", []string{"Do not upload Java source code", "Veracode requires Java application to be compiled into a .jar, .war or .ear file"})
@@ -72,6 +73,26 @@ func detectNodeModules(data Data, report *strings.Builder, files []string) {
 	data.makeRecommendation("Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager")
 
 	report.WriteString("⚠️  One or more node_modules folders were detected\n")
+}
+
+func detectCoffeescriptFiles(data Data, report *strings.Builder, files []string) {
+	var foundFiles []string
+
+	for _, fileName := range files {
+		if strings.HasSuffix(strings.ToLower(fileName), ".coffee") {
+			foundFiles = append(foundFiles, fileName)
+		}
+	}
+
+	if len(foundFiles) == 0 {
+		return
+	}
+
+	data.makeRecommendation("Veracode does not support the analysis of CoffeeScript")
+	data.makeRecommendation("Review the JavaScript/TypeScript packaging cheatsheet: https://nhinv11.github.io/#/JavaScript%20/%20TypeScript")
+	data.makeRecommendation("Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager")
+
+	report.WriteString("⚠️  One or more .coffee CoffeeScrip source code files were detected\n")
 
 }
 
