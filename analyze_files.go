@@ -6,6 +6,8 @@ import (
 	"strings"
 )
 
+var fileExtensionsToIgnore = []string{".cs", ".sln", ".asax", ".asmx", ".aspx", ".manifest", ".config"}
+
 func (data Data) analyzeUploadedFiles() {
 	var report strings.Builder
 
@@ -20,7 +22,7 @@ func (data Data) analyzeUploadedFiles() {
 
 	if len(files) > 10000 {
 		report.WriteString(fmt.Sprintf(
-			"⚠️  %d files were present. This is a lot of files which is usually an indicator that something is not correct.\n",
+			"⚠️  %d files were present. This is a lot of files which is usually an indicator that something is not correct\n",
 			len(files)))
 	}
 
@@ -61,4 +63,68 @@ func detectUnwantedFiles(data Data, report *strings.Builder, files []string, suf
 		name,
 		pluralise(len(foundFiles)),
 		top5StringList(foundFiles)))
+}
+
+func shouldFileNameBeIgnored(fileName string) bool {
+	for _, extension := range fileExtensionsToIgnore {
+		if strings.HasSuffix(fileName, extension) {
+			return true
+		}
+	}
+
+	return false
+}
+
+func (data Data) reportDuplicateFiles() {
+	var warningReport strings.Builder
+	var errorReport strings.Builder
+	var processedFiles []string
+
+	for _, thisFile := range data.PrescanFileList.Files {
+		if isStringInStringArray(thisFile.Name, processedFiles) {
+			continue
+		}
+
+		if shouldFileNameBeIgnored(thisFile.Name) {
+			continue
+		}
+
+		md5s := []string{thisFile.MD5}
+		var count = 0
+
+		for _, otherFile := range data.PrescanFileList.Files {
+			if thisFile.Name == otherFile.Name {
+				count++
+				if !isStringInStringArray(otherFile.MD5, md5s) {
+					md5s = append(md5s, otherFile.MD5)
+				}
+			}
+		}
+
+		if len(md5s) > 1 {
+			if count == len(md5s) {
+				warningReport.WriteString(fmt.Sprintf(
+					"⚠️  %d duplicate occurance%s of \"%s\"\n",
+					count,
+					pluralise(count),
+					thisFile.Name))
+			} else {
+				errorReport.WriteString(fmt.Sprintf(
+					"❌ %d duplicate occurance%s of \"%s\" with %d different MD5 hashes\n",
+					count,
+					pluralise(count),
+					thisFile.Name,
+					len(md5s)))
+			}
+		}
+
+		processedFiles = append(processedFiles, thisFile.Name)
+	}
+
+	if warningReport.Len() > 0 || errorReport.Len() > 0 {
+		printTitle("Duplicates")
+		colorPrintf(errorReport.String() + warningReport.String() + "\n")
+
+		data.makeRecommendation("Do not upload duplicate filenames")
+	}
 }

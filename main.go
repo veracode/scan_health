@@ -67,6 +67,7 @@ func main() {
 	data.reportScanDetails(api.region)
 	data.assertPrescanModulesPresent()
 	data.analyzeUploadedFiles()
+	data.reportDuplicateFiles()
 	data.analyzeModules()
 	data.outputRecommendations(api.region)
 }
