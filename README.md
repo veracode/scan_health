@@ -66,3 +66,7 @@ go run *.go
 ```
 ./release.sh
 ```
+
+# Bug Reports 🐞
+
+If you find a bug, please file an Issue right here in GitHub, and I will try to resolve it in a timely manner.
