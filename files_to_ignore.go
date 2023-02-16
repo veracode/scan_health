@@ -11,10 +11,14 @@ var fileExtensionsToIgnore = []string{
 	".less",
 	".manifest",
 	".md",
+	".png",
 	".properties",
 	".sln",
 	".txt",
 	".xml",
+	"licence",
+	"authors",
+	"makefile",
 }
 
 func shouldFileNameBeIgnored(fileName string) bool {

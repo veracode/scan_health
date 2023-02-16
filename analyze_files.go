@@ -78,7 +78,7 @@ func detectCoffeescriptFiles(data Data, report *strings.Builder, files []string)
 	data.makeRecommendation("Review the JavaScript/TypeScript packaging cheatsheet: https://nhinv11.github.io/#/JavaScript%20/%20TypeScript")
 	data.makeRecommendation("Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager")
 
-	report.WriteString("⚠️  One or more .coffee CoffeeScrip source code files were detected\n")
+	report.WriteString("⚠️  One or more .coffee CoffeeScript source code files were detected and will not be analyzed\n")
 
 }
 
