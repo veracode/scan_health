@@ -35,7 +35,7 @@ func (data Data) analyzeModules() {
 
 	if len(thirdPartyModules) > 0 {
 		report.WriteString(fmt.Sprintf(
-			"⚠️  %d Third party module%s selected: %s\n",
+			"⚠️  %d 3rd-party module%s selected: %s\n",
 			len(thirdPartyModules),
 			pluralise(len(thirdPartyModules)),
 			top5StringList(thirdPartyModules)))
@@ -103,6 +103,10 @@ func (data Data) analyzeModuleWarnings() {
 				}
 
 				if strings.HasPrefix(formattedModuleName, "JS files within") {
+					continue
+				}
+
+				if strings.EqualFold(formattedModuleName, "TSQL Files") {
 					continue
 				}
 			} else if strings.HasSuffix(formattedModuleName, ".dll") || strings.HasSuffix(formattedModuleName, ".exe") {

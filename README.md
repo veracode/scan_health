@@ -22,7 +22,7 @@ This is an unofficial Veracode product. It does not come with any support or war
 
 Usage of scan_health:
   -sast string
-        Veracode Platform URL or build ID for health review"
+        Veracode Platform URL or build ID for health review
   -region string
         Veracode Region [global, us, eu]
   -vid string
@@ -47,6 +47,20 @@ Using Docker:
 
 ```
 docker run -t -v "$HOME/.veracode:/.veracode" antfie/scan_health -sast https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002
+```
+
+With zsh helper:
+
+add this to your ~/.zshrc file:
+
+```
+alias vsh='f() { /path/to/scan_health-mac-arm64 -sast "$1" };f'
+```
+
+then you can simply run:
+
+```
+vsh https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002
 ```
 
 ## Development 🛠️

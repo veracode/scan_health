@@ -73,8 +73,9 @@ func detectSensitiveFiles(data Data, report *strings.Builder, files []string) {
 	}
 
 	report.WriteString(fmt.Sprintf(
-		"❌ %d sensitive files were found: %s\n",
+		"❌ %d sensitive file%s were found: %s\n",
 		len(foundFiles),
+		pluralise(len(foundFiles)),
 		top5StringList(foundFiles)))
 
 	data.makeRecommendation("Do not upload any secrets, certificates or key files")
