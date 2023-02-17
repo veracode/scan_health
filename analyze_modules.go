@@ -111,6 +111,26 @@ func (data Data) analyzeModuleWarnings() {
 				warnings = append(warnings, formattedIssue)
 			}
 		}
+
+		for _, statusMessage := range strings.Split(module.Status, ",") {
+			formattedStatusMessage := strings.TrimSpace(statusMessage)
+
+			if strings.HasPrefix(formattedStatusMessage, "Unsupported Framework") {
+				// These are captured under the issue details
+				continue
+			}
+
+			formattedIssue := fmt.Sprintf("\"%s\": %s", module.Name, formattedStatusMessage)
+
+			if !isStringInStringArray(formattedIssue, warnings) {
+				warnings = append(warnings, formattedIssue)
+
+				if strings.Contains(formattedStatusMessage, "Missing Supporting Files") {
+					data.makeRecommendation("Be sure to include all the components that make up the application within the upload. Do not omit any 2nd or third party libraries from the upload")
+				}
+			}
+		}
+
 	}
 
 	for _, warning := range warnings {
