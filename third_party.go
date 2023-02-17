@@ -22,6 +22,7 @@ var thirdPartyModules = []string{
 	"newtonsoft.json.*",
 	"ninject.web.common.webhost.dll",
 	"org.eclipse.*.jar",
+	"Serilog.dll",
 	"syncfusion.*",
 	"system.*.dll",
 	"Telerik.*.dll",
