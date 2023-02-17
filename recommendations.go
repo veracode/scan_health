@@ -19,7 +19,7 @@ func (data Data) outputRecommendations(region string) {
 	}
 
 	data.makeRecommendation(fmt.Sprintf("Review the module configuration: %s", data.DetailedReport.getReviewModulesUrl(region)))
-	data.makeRecommendation("Review the module selection guidance: https://community.veracode.com/s/article/What-are-Modules-and-how-do-my-results-change-based-on-what-I-select")
+	data.makeRecommendation("Read the module selection guidance: https://community.veracode.com/s/article/What-are-Modules-and-how-do-my-results-change-based-on-what-I-select")
 
 	data.makeRecommendation("Consider scheduling a consultation to review the packaging: https://docs.veracode.com/r/t_schedule_consultation")
 
@@ -32,5 +32,4 @@ func (data Data) outputRecommendations(region string) {
 
 	printTitle("Recommendations")
 	colorPrintf(report.String() + "\n")
-
 }

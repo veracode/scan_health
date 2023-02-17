@@ -103,6 +103,8 @@ func (data Data) analyzeModuleWarnings() {
 				if strings.HasPrefix(module.Name, "JS files within") {
 					continue
 				}
+			} else {
+				data.makeRecommendation("Ensure you include PDB files for all 1st and 2nd party .NET components. This enables Veracode to accurately report line numbers for any found flaws")
 			}
 
 			formattedIssue := fmt.Sprintf("\"%s\": %s", module.Name, issue.Details)
