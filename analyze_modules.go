@@ -121,6 +121,10 @@ func (data Data) analyzeModuleWarnings() {
 		}
 
 		for _, statusMessage := range strings.Split(module.Status, ",") {
+			if module.Status == "OK" {
+				continue
+			}
+
 			formattedStatusMessage := strings.TrimSpace(statusMessage)
 
 			if strings.HasPrefix(formattedStatusMessage, "Unsupported Framework") {
