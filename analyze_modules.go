@@ -90,20 +90,22 @@ func (data Data) analyzeModuleWarnings() {
 			continue
 		}
 
+		formattedModuleName := strings.ToLower(module.Name)
+
 		for _, issue := range module.Issues {
 			if issue.Details == "No supporting files or PDB files" {
-				if strings.HasSuffix(module.Name, ".jar") || strings.HasSuffix(module.Name, ".war") || strings.HasSuffix(module.Name, ".ear") {
+				if strings.HasSuffix(formattedModuleName, ".jar") || strings.HasSuffix(formattedModuleName, ".war") || strings.HasSuffix(formattedModuleName, ".ear") {
 					continue
 				}
 
-				if strings.HasSuffix(module.Name, ".map") || strings.Contains(module.Name, "_nodemodule_") {
+				if strings.HasSuffix(formattedModuleName, ".map") || strings.Contains(formattedModuleName, "_nodemodule_") {
 					continue
 				}
 
-				if strings.HasPrefix(module.Name, "JS files within") {
+				if strings.HasPrefix(formattedModuleName, "JS files within") {
 					continue
 				}
-			} else {
+			} else if strings.HasSuffix(formattedModuleName, ".dll") || strings.HasSuffix(formattedModuleName, ".exe") {
 				data.makeRecommendation("Ensure you include PDB files for all 1st and 2nd party .NET components. This enables Veracode to accurately report line numbers for any found flaws")
 			}
 
