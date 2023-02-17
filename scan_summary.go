@@ -35,6 +35,10 @@ func (data Data) reportScanDetails(region string) {
 		data.makeRecommendation("When no flaws have been found this can be an indication that the scan is misconfigured")
 	} else {
 		fmt.Print(flawsFormatted)
+
+		if data.DetailedReport.TotalFlaws > 2500 {
+			data.makeRecommendation("More than 2500 flaws were found which can be an indication that the scan is misconfigured")
+		}
 	}
 
 	println()
