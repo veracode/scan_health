@@ -14,6 +14,10 @@ func (data Data) outputRecommendations(region string) {
 		data.makeRecommendation("Review the .NET packaging cheatsheet: https://nhinv11.github.io/#/.NET")
 	}
 
+	if strings.Contains(strings.Join(*data.Recommendations, ""), "Java") {
+		data.makeRecommendation("Review the Java packaging cheatsheet: https://nhinv11.github.io/#/Java")
+	}
+
 	data.makeRecommendation(fmt.Sprintf("Review the module configuration: %s", data.DetailedReport.getReviewModulesUrl(region)))
 	data.makeRecommendation("Review the module selection guidance: https://community.veracode.com/s/article/What-are-Modules-and-how-do-my-results-change-based-on-what-I-select")
 
