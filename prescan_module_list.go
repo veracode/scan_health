@@ -24,6 +24,8 @@ type PrescanModule struct {
 	HasFatalErrors bool                 `xml:"has_fatal_errors,attr"`
 	IsDependency   bool                 `xml:"is_dependency,attr"`
 	Issues         []PrescanModuleIssue `xml:"issue"`
+	IsIgnored      bool
+	IsThirdParty   bool
 }
 
 type PrescanModuleIssue struct {
@@ -37,6 +39,11 @@ func (api API) getPrescanModuleList(appId, buildId int) PrescanModuleList {
 
 	moduleList := PrescanModuleList{}
 	xml.Unmarshal(response, &moduleList)
+
+	for index, module := range moduleList.Modules {
+		moduleList.Modules[index].IsIgnored = isFileNameInFancyList(module.Name, fileExtensionsToIgnore)
+		moduleList.Modules[index].IsThirdParty = isFileNameInFancyList(module.Name, thirdPartyModules)
+	}
 
 	// Sort modules by name for consistency
 	sort.Slice(moduleList.Modules, func(i, j int) bool {

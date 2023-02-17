@@ -3,22 +3,22 @@ package main
 import "strings"
 
 var fileExtensionsToIgnore = []string{
-	".asax",
-	".asmx",
-	".aspx",
-	".config",
-	".cs",
-	".less",
-	".manifest",
-	".md",
-	".png",
-	".properties",
-	".sln",
-	".txt",
-	".xml",
-	"licence",
-	"authors",
-	"makefile",
+	"*.asax",
+	"*.asmx",
+	"*.aspx",
+	"*.config",
+	"*.cs",
+	"*.less",
+	"*.manifest",
+	"*.md",
+	"*.png",
+	"*.properties",
+	"*.sln",
+	"*.txt",
+	"*.xml",
+	"AUTHORS",
+	"LICENCE",
+	"Makefile",
 }
 
 func shouldFileNameBeIgnored(fileName string) bool {

@@ -26,13 +26,38 @@ func (data Data) analyzeModules() {
 	}
 }
 
+func (data Data) analyzeModuleFatalErrors() {
+	var report strings.Builder
+
+	var errors []string
+
+	for _, module := range data.PrescanModuleList.Modules {
+		if module.HasFatalErrors {
+			formattedError := fmt.Sprintf("\"%s\": %s", module.Name, module.Status)
+
+			if !isStringInStringArray(formattedError, errors) {
+				errors = append(errors, formattedError)
+			}
+		}
+	}
+
+	for _, errors := range errors {
+		report.WriteString(fmt.Sprintf("⚠️  %s\n", errors))
+	}
+
+	if report.Len() > 0 {
+		printTitle("Module Errors")
+		colorPrintf(report.String() + "\n")
+	}
+}
+
 func (data Data) analyzeModuleWarnings() {
 	var report strings.Builder
 
 	var warnings []string
 
 	for _, module := range data.PrescanModuleList.Modules {
-		if isThirdParty(module.Name) {
+		if module.IsThirdParty {
 			continue
 		}
 

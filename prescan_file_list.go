@@ -13,11 +13,13 @@ type PrescanFileList struct {
 }
 
 type PrescanFile struct {
-	XMLName xml.Name `xml:"file"`
-	ID      int      `xml:"file_id,attr"`
-	Name    string   `xml:"file_name,attr"`
-	Status  string   `xml:"file_status,attr"`
-	MD5     string   `xml:"file_md5,attr"`
+	XMLName      xml.Name `xml:"file"`
+	ID           int      `xml:"file_id,attr"`
+	Name         string   `xml:"file_name,attr"`
+	Status       string   `xml:"file_status,attr"`
+	MD5          string   `xml:"file_md5,attr"`
+	IsIgnored    bool
+	IsThirdParty bool
 }
 
 func (api API) getPrescanFileList(appId, buildId int) PrescanFileList {
@@ -26,6 +28,11 @@ func (api API) getPrescanFileList(appId, buildId int) PrescanFileList {
 
 	fileList := PrescanFileList{}
 	xml.Unmarshal(response, &fileList)
+
+	for index, file := range fileList.Files {
+		fileList.Files[index].IsIgnored = isFileNameInFancyList(file.Name, fileExtensionsToIgnore)
+		fileList.Files[index].IsThirdParty = isFileNameInFancyList(file.Name, thirdPartyModules)
+	}
 
 	// Sort files by name for consistency
 	sort.Slice(fileList.Files, func(i, j int) bool {
