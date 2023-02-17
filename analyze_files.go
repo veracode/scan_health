@@ -24,6 +24,7 @@ func (data Data) analyzeUploadedFiles() {
 			len(files)))
 	}
 
+	detectSensitiveFiles(data, &report, files)
 	detectNodeModules(data, &report, files)
 	detectCoffeescriptFiles(data, &report, files)
 	detectRoslyn(data, &report, files)
@@ -40,6 +41,43 @@ func (data Data) analyzeUploadedFiles() {
 		printTitle("Files Uploaded")
 		colorPrintf(report.String() + "\n")
 	}
+}
+
+func detectSensitiveFiles(data Data, report *strings.Builder, files []string) {
+	var foundFiles []string
+
+	for _, fileName := range files {
+		if strings.HasSuffix(strings.ToLower(fileName), ".pem") && !isStringInStringArray(fileName, foundFiles) {
+			foundFiles = append(foundFiles, fileName)
+		}
+
+		if strings.HasSuffix(strings.ToLower(fileName), ".pfx") && !isStringInStringArray(fileName, foundFiles) {
+			foundFiles = append(foundFiles, fileName)
+		}
+
+		if strings.HasSuffix(strings.ToLower(fileName), ".crt") && !isStringInStringArray(fileName, foundFiles) {
+			foundFiles = append(foundFiles, fileName)
+		}
+
+		if strings.HasSuffix(strings.ToLower(fileName), ".key") && !isStringInStringArray(fileName, foundFiles) {
+			foundFiles = append(foundFiles, fileName)
+		}
+
+		if strings.HasSuffix(strings.ToLower(fileName), ".jks") && !isStringInStringArray(fileName, foundFiles) {
+			foundFiles = append(foundFiles, fileName)
+		}
+	}
+
+	if len(foundFiles) == 0 {
+		return
+	}
+
+	report.WriteString(fmt.Sprintf(
+		"❌ %d sensitive files were found: %s\n",
+		len(foundFiles),
+		top5StringList(foundFiles)))
+
+	data.makeRecommendation("Do not upload any secrets, certificates or key files")
 }
 
 func detectNodeModules(data Data, report *strings.Builder, files []string) {

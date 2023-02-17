@@ -19,6 +19,7 @@ var fileExtensionsToIgnore = []string{
 	"AUTHORS",
 	"LICENCE",
 	"Makefile",
+	".*",
 }
 
 func shouldFileNameBeIgnored(fileName string) bool {

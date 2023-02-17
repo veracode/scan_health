@@ -14,4 +14,5 @@ var thirdPartyModules = []string{
 	"syncfusion.*",
 	"system.*.dll",
 	"WebGrease.dll",
+	"gradle-wrapper.jar",
 }
