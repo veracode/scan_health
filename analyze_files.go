@@ -30,10 +30,10 @@ func (data Data) analyzeUploadedFiles() {
 	detectRoslyn(data, &report, files)
 	detectUnwantedFiles(data, &report, files, ".zip", "nested zip file", []string{"Do not upload archives (nested archives) within the upload package"})
 	detectUnwantedFiles(data, &report, files, ".7z", "7-zip file", []string{"Veracode does not support 7-zip. Consider zip files instead"})
-	detectUnwantedFiles(data, &report, files, ".java", "Java source code file", []string{"Do not upload Java source code", "Veracode requires Java application to be compiled into a .jar, .war or .ear file"})
+	detectUnwantedFiles(data, &report, files, ".java", "Java source code file", []string{"Do not upload Java source code files. They will not be scanned", "Veracode requires Java application to be compiled into a .jar, .war or .ear file"})
 	detectUnwantedFiles(data, &report, files, ".class", "Java class file", []string{"Do not upload Java class files", "Package Java applications into .jar, .war, .ear files"})
-	detectUnwantedFiles(data, &report, files, ".cs", "C# source code file", []string{"Do not upload C# source code", "Veracode requires the .NET application to be compiled"})
-	detectUnwantedFiles(data, &report, files, ".c", "C source code file", []string{"Do not upload C source code", "Veracode requires the application to be compiled with debug symbols"})
+	detectUnwantedFiles(data, &report, files, ".cs", "C# source code file", []string{"Do not upload C# source code. They will not be scanned", "Veracode requires the .NET application to be compiled"})
+	detectUnwantedFiles(data, &report, files, ".c", "C source code file", []string{"Do not upload C source code. They will not be scanned", "Veracode requires the application to be compiled with debug symbols"})
 	detectUnwantedFiles(data, &report, files, ".test.dll", "test artefacts", []string{"Do not upload any test code"})
 	detectUnwantedFiles(data, &report, files, "fsmonitor-watchman.sample", "Git repo", []string{"Do not upload .git folders"})
 
@@ -203,6 +203,10 @@ func (data Data) reportDuplicateFiles() {
 					pluralise(count),
 					file.Name,
 					len(md5s)))
+
+				if strings.HasSuffix(strings.ToLower(file.Name), ".dll") || strings.HasSuffix(strings.ToLower(file.Name), ".exe") {
+					data.makeRecommendation("Be careful not to upload duplicate file names with different contents as this can lead to indeterminate scan results")
+				}
 			}
 		}
 

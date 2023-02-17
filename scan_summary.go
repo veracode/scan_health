@@ -11,7 +11,6 @@ func (data Data) reportScanDetails(region string) {
 	println()
 	printTitle("Scan Summary")
 
-	fmt.Printf("Account ID:         %d\n", data.DetailedReport.AccountId)
 	fmt.Printf("Application:        \"%s\"\n", data.DetailedReport.AppName)
 
 	if len(data.DetailedReport.SandboxName) > 0 {

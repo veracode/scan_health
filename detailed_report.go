@@ -48,6 +48,8 @@ type DetailedReportModule struct {
 	Compiler     string   `xml:"compiler,attr"`
 	Os           string   `xml:"os,attr"`
 	Architecture string   `xml:"architecture,attr"`
+	IsIgnored    bool
+	IsThirdParty bool
 }
 
 type DetailedReportFlaw struct {
@@ -79,6 +81,11 @@ func (api API) getDetailedReport(buildId int) DetailedReport {
 
 	// Dedupe the module list which can contain duplicate entries
 	report.StaticAnalysis.Modules = dedupeArray(report.StaticAnalysis.Modules)
+
+	for index, module := range report.StaticAnalysis.Modules {
+		report.StaticAnalysis.Modules[index].IsIgnored = isFileNameInFancyList(module.Name, fileExtensionsToIgnore)
+		report.StaticAnalysis.Modules[index].IsThirdParty = isFileNameInFancyList(module.Name, thirdPartyModules)
+	}
 
 	// Sort modules by name for consistency
 	sort.Slice(report.StaticAnalysis.Modules, func(i, j int) bool {

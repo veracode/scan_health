@@ -20,6 +20,35 @@ func (data Data) analyzeModules() {
 			len(data.DetailedReport.StaticAnalysis.Modules)))
 	}
 
+	var thirdPartyModules []string
+	var junkModulesSelected []string
+
+	for _, module := range data.DetailedReport.StaticAnalysis.Modules {
+		if module.IsThirdParty && !isStringInStringArray(module.Name, thirdPartyModules) {
+			thirdPartyModules = append(thirdPartyModules, module.Name)
+		}
+
+		if module.IsIgnored && !isStringInStringArray(module.Name, junkModulesSelected) {
+			junkModulesSelected = append(junkModulesSelected, module.Name)
+		}
+	}
+
+	if len(thirdPartyModules) > 0 {
+		report.WriteString(fmt.Sprintf(
+			"⚠️  %d Third party module%s selected: %s\n",
+			len(thirdPartyModules),
+			pluralise(len(thirdPartyModules)),
+			top5StringList(thirdPartyModules)))
+	}
+
+	if len(junkModulesSelected) > 0 {
+		report.WriteString(fmt.Sprintf(
+			"⚠️  %d module%s selected that likely should not be: %s\n",
+			len(junkModulesSelected),
+			pluralise(len(junkModulesSelected)),
+			top5StringList(junkModulesSelected)))
+	}
+
 	if report.Len() > 0 {
 		printTitle("Modules")
 		colorPrintf(report.String() + "\n")
@@ -70,6 +99,10 @@ func (data Data) analyzeModuleWarnings() {
 				if strings.HasSuffix(module.Name, ".map") || strings.Contains(module.Name, "_nodemodule_") {
 					continue
 				}
+
+				if strings.HasPrefix(module.Name, "JS files within") {
+					continue
+				}
 			}
 
 			formattedIssue := fmt.Sprintf("\"%s\": %s", module.Name, issue.Details)
@@ -84,20 +117,8 @@ func (data Data) analyzeModuleWarnings() {
 		report.WriteString(fmt.Sprintf("⚠️  %s\n", warning))
 	}
 
-	if len(data.PrescanModuleList.Modules) > 1000 {
-		report.WriteString(fmt.Sprintf(
-			"⚠️  %d modules were identified. This is a lot of modules which is usually an indicator that something is not correct\n",
-			len(data.PrescanModuleList.Modules)))
-	}
-
-	if len(data.DetailedReport.StaticAnalysis.Modules) > 100 {
-		report.WriteString(fmt.Sprintf(
-			"⚠️  %d modules were selected for analysis. This is a lot of modules which is usually an indicator that something is not correct\n",
-			len(data.DetailedReport.StaticAnalysis.Modules)))
-	}
-
 	if report.Len() > 0 {
-		printTitle("Modules")
+		printTitle("Module Warnings")
 		colorPrintf(report.String() + "\n")
 	}
 }

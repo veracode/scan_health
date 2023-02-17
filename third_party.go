@@ -15,4 +15,6 @@ var thirdPartyModules = []string{
 	"system.*.dll",
 	"WebGrease.dll",
 	"gradle-wrapper.jar",
+	"7z.dll",
+	"7za.exe",
 }
