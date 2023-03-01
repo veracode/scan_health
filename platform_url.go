@@ -47,10 +47,10 @@ func parseRegionFromUrl(url string) string {
 	}
 
 	if strings.HasPrefix(url, "https://analysiscenter.veracode.eu") {
-		return "eu"
+		return "european"
 	}
 
-	return "global"
+	return "commercial"
 }
 
 func parseBaseUrlFromRegion(region string) string {
@@ -58,7 +58,7 @@ func parseBaseUrlFromRegion(region string) string {
 		return "https://analysiscenter.veracode.us"
 	}
 
-	if region == "eu" {
+	if region == "european" {
 		return "https://analysiscenter.veracode.eu"
 	}
 

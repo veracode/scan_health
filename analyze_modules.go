@@ -3,10 +3,18 @@ package main
 import (
 	"fmt"
 	"strings"
+
+	"github.com/dustin/go-humanize"
 )
 
 func (data Data) analyzeModules() {
 	var report strings.Builder
+
+	if data.PrescanModuleList.TotalSize > 1e+9 {
+		report.WriteString(fmt.Sprintf(
+			"⚠️  The size of the modules was %s. This is a very large scan and will likely take a long time to run\n",
+			humanize.Bytes(uint64(data.PrescanModuleList.TotalSize))))
+	}
 
 	if len(data.PrescanModuleList.Modules) > 1000 {
 		report.WriteString(fmt.Sprintf(

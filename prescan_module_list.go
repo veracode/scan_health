@@ -5,12 +5,14 @@ import (
 	"fmt"
 	"net/http"
 	"sort"
+	"strconv"
 	"strings"
 )
 
 type PrescanModuleList struct {
-	XMLName xml.Name        `xml:"prescanresults"`
-	Modules []PrescanModule `xml:"module"`
+	XMLName   xml.Name        `xml:"prescanresults"`
+	Modules   []PrescanModule `xml:"module"`
+	TotalSize int
 }
 
 type PrescanModule struct {
@@ -26,6 +28,7 @@ type PrescanModule struct {
 	Issues         []PrescanModuleIssue `xml:"issue"`
 	IsIgnored      bool
 	IsThirdParty   bool
+	SizeBytes      int
 }
 
 type PrescanModuleIssue struct {
@@ -40,9 +43,13 @@ func (api API) getPrescanModuleList(appId, buildId int) PrescanModuleList {
 	moduleList := PrescanModuleList{}
 	xml.Unmarshal(response, &moduleList)
 
+	moduleList.TotalSize = 0
+
 	for index, module := range moduleList.Modules {
 		moduleList.Modules[index].IsIgnored = isFileNameInFancyList(module.Name, fileExtensionsToIgnore)
 		moduleList.Modules[index].IsThirdParty = isFileNameInFancyList(module.Name, thirdPartyModules)
+		moduleList.Modules[index].SizeBytes = calculateModuleSize(module.Size)
+		moduleList.TotalSize += moduleList.Modules[index].SizeBytes
 	}
 
 	// Sort modules by name for consistency
@@ -51,6 +58,30 @@ func (api API) getPrescanModuleList(appId, buildId int) PrescanModuleList {
 	})
 
 	return moduleList
+}
+
+func calculateModuleSize(size string) int {
+	var totalModuleSize = 0
+	totalModuleSize += foo(size, "GB", 1e+9)
+	totalModuleSize += foo(size, "MB", 1e+6)
+	totalModuleSize += foo(size, "KB", 1000)
+	return totalModuleSize
+}
+
+func foo(size, measurement string, multiplier int) int {
+	if !strings.HasSuffix(size, measurement) {
+		return 0
+	}
+
+	formattedSize := strings.TrimSuffix(size, measurement)
+	sizeInt, err := strconv.Atoi(formattedSize)
+
+	if err != nil {
+		panic(err)
+	}
+
+	return sizeInt * multiplier
+
 }
 
 func (moduleList PrescanModuleList) getFromName(moduleName string) PrescanModule {

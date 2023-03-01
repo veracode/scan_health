@@ -1,43 +1,38 @@
 package main
 
-import "strings"
-
 var fileExtensionsToIgnore = []string{
+	"!LICENSE*",
+	".*",
 	"*.asax",
 	"*.asmx",
 	"*.aspx",
 	"*.config",
 	"*.cs",
-	"*.less",
-	"*.manifest",
-	"*.md",
-	"*.png",
-	"*.properties",
-	"*.sln",
-	"*.txt",
-	"*.xml",
-	"AUTHORS",
-	"LICENSE",
-	"README",
-	"CONTRIBUTORS",
-	"Makefile",
-	"Dockerfile",
-	"*.sh",
-	".*",
-	"*.gif",
-	"*.pdf",
 	"*.doc",
 	"*.docx",
+	"*.gif",
+	"*.ico",
+	"*.less",
+	"*.manifest",
+	"*.map",
+	"*.markdown",
+	"*.md",
+	"*.pdf",
+	"*.png",
+	"*.properties",
+	"*.scss",
+	"*.sh",
+	"*.sln",
+	"*.svg",
+	"*.txt",
 	"*.xls",
 	"*.xlsx",
-}
-
-func shouldFileNameBeIgnored(fileName string) bool {
-	for _, extension := range fileExtensionsToIgnore {
-		if strings.HasSuffix(strings.ToLower(fileName), extension) {
-			return true
-		}
-	}
-
-	return false
+	"*.xml",
+	"AUTHORS",
+	"CHANGELOG",
+	"CONTRIBUTORS",
+	"Dockerfile",
+	"LICENSE",
+	"Makefile",
+	"README",
 }

@@ -14,13 +14,13 @@ func main() {
 	vid := flag.String("vid", "", "Veracode API ID - See https://docs.veracode.com/r/t_create_api_creds")
 	vkey := flag.String("vkey", "", "Veracode API key - See https://docs.veracode.com/r/t_create_api_creds")
 	profile := flag.String("profile", "default", "Veracode credential profile - See https://docs.veracode.com/r/c_httpie_tool")
-	region := flag.String("region", "", "Veracode Region [global, us, eu]")
+	region := flag.String("region", "", "Veracode Region [commercial, us, european]")
 	scan := flag.String("sast", "", "Veracode Platform URL or build ID for a SAST application health review")
 
 	flag.Parse()
 
-	if !(*region == "" || *region == "global" || *region == "us" || *region == "eu") {
-		color.HiRed("Error: Invalid region. Must be either \"global\", \"us\" or \"eu\"")
+	if !(*region == "" || *region == "commercial" || *region == "us" || *region == "european") {
+		color.HiRed("Error: Invalid region. Must be either \"glocommercialbal\", \"us\" or \"european\"")
 		print("\nUsage:\n")
 		flag.PrintDefaults()
 		return

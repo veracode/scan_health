@@ -24,7 +24,7 @@ Usage of scan_health:
   -sast string
         Veracode Platform URL or build ID for health review
   -region string
-        Veracode Region [global, us, eu]
+        Veracode Region [commercial, us, european]
   -vid string
         Veracode API ID - See https://docs.veracode.com/r/t_create_api_creds
   -vkey string
@@ -43,7 +43,7 @@ If you know the build IDs you can use them instead of URLs like so:
 ./scan_health -sast 22132159
 ```
 
-Using Docker:
+Using Docker 🐳:
 
 ```
 docker run -t -v "$HOME/.veracode:/.veracode" antfie/scan_health -sast https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002

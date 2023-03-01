@@ -25,17 +25,19 @@ func (data Data) analyzeUploadedFiles() {
 	}
 
 	detectSensitiveFiles(data, &report, files)
-	detectNodeModules(data, &report, files)
-	detectCoffeescriptFiles(data, &report, files)
+	detectNodeModules(data, &report)
 	detectRoslyn(data, &report, files)
 	detectUnwantedFiles(data, &report, files, ".zip", "nested zip file", []string{"Do not upload archives (nested archives) within the upload package"})
 	detectUnwantedFiles(data, &report, files, ".7z", "7-zip file", []string{"Veracode does not support 7-zip. Consider zip files instead"})
 	detectUnwantedFiles(data, &report, files, ".java", "Java source code file", []string{"Do not upload Java source code files. They will not be scanned", "Veracode requires Java application to be compiled into a .jar, .war or .ear file"})
 	detectUnwantedFiles(data, &report, files, ".class", "Java class file", []string{"Do not upload Java class files", "Package Java applications into .jar, .war, .ear files"})
 	detectUnwantedFiles(data, &report, files, ".cs", "C# source code file", []string{"Do not upload C# source code. They will not be scanned", "Veracode requires the .NET application to be compiled"})
+	detectUnwantedFiles(data, &report, files, ".sln", ".NET solution file", []string{"Do not upload C# source code. They will not be scanned", "Veracode requires the .NET application to be compiled"})
+	detectUnwantedFiles(data, &report, files, ".csproj", "C# project file", []string{"Do not upload C# source code. They will not be scanned", "Veracode requires the .NET application to be compiled"})
 	detectUnwantedFiles(data, &report, files, ".c", "C source code file", []string{"Do not upload C source code. They will not be scanned", "Veracode requires the application to be compiled with debug symbols"})
 	detectUnwantedFiles(data, &report, files, ".test.dll", "test artefacts", []string{"Do not upload any test code"})
 	detectUnwantedFiles(data, &report, files, "fsmonitor-watchman.sample", "Git repo", []string{"Do not upload .git folders"})
+	detectUnwantedFiles(data, &report, files, ".coffee", "CoffeeScript file", []string{"CoffeeScript source code files will not be scanned", "Review the JavaScript/TypeScript packaging cheatsheet: https://nhinv11.github.io/#/JavaScript%20/%20TypeScript", "Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager"})
 
 	if report.Len() > 0 {
 		printTitle("Files Uploaded")
@@ -81,12 +83,18 @@ func detectSensitiveFiles(data Data, report *strings.Builder, files []string) {
 	data.makeRecommendation("Do not upload any secrets, certificates or key files")
 }
 
-func detectNodeModules(data Data, report *strings.Builder, files []string) {
+func detectNodeModules(data Data, report *strings.Builder) {
 	var foundFiles []string
 
-	for _, fileName := range files {
-		if strings.Contains(strings.ToLower(fileName), "_nodemodule_") {
-			foundFiles = append(foundFiles, fileName)
+	for _, file := range data.PrescanFileList.Files {
+		if strings.Contains(strings.ToLower(file.Name), "_nodemodule_") {
+			foundFiles = append(foundFiles, file.Name)
+		}
+	}
+
+	for _, module := range data.DetailedReport.StaticAnalysis.Modules {
+		if strings.Contains(strings.ToLower(module.Name), "_nodemodule_") {
+			foundFiles = append(foundFiles, module.Name)
 		}
 	}
 
@@ -99,26 +107,6 @@ func detectNodeModules(data Data, report *strings.Builder, files []string) {
 	data.makeRecommendation("Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager")
 
 	report.WriteString("⚠️  One or more node_modules folders were detected\n")
-}
-
-func detectCoffeescriptFiles(data Data, report *strings.Builder, files []string) {
-	var foundFiles []string
-
-	for _, fileName := range files {
-		if strings.HasSuffix(strings.ToLower(fileName), ".coffee") {
-			foundFiles = append(foundFiles, fileName)
-		}
-	}
-
-	if len(foundFiles) == 0 {
-		return
-	}
-
-	report.WriteString("⚠️  One or more .coffee CoffeeScript source code files were detected and will not be analyzed\n")
-
-	data.makeRecommendation("Veracode does not support the analysis of CoffeeScript")
-	data.makeRecommendation("Review the JavaScript/TypeScript packaging cheatsheet: https://nhinv11.github.io/#/JavaScript%20/%20TypeScript")
-	data.makeRecommendation("Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager")
 }
 
 func detectRoslyn(data Data, report *strings.Builder, files []string) {
