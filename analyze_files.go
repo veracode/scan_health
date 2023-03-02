@@ -49,23 +49,7 @@ func detectSensitiveFiles(data Data, report *strings.Builder, files []string) {
 	var foundFiles []string
 
 	for _, fileName := range files {
-		if strings.HasSuffix(strings.ToLower(fileName), ".pem") && !isStringInStringArray(fileName, foundFiles) {
-			foundFiles = append(foundFiles, fileName)
-		}
-
-		if strings.HasSuffix(strings.ToLower(fileName), ".pfx") && !isStringInStringArray(fileName, foundFiles) {
-			foundFiles = append(foundFiles, fileName)
-		}
-
-		if strings.HasSuffix(strings.ToLower(fileName), ".crt") && !isStringInStringArray(fileName, foundFiles) {
-			foundFiles = append(foundFiles, fileName)
-		}
-
-		if strings.HasSuffix(strings.ToLower(fileName), ".key") && !isStringInStringArray(fileName, foundFiles) {
-			foundFiles = append(foundFiles, fileName)
-		}
-
-		if strings.HasSuffix(strings.ToLower(fileName), ".jks") && !isStringInStringArray(fileName, foundFiles) {
+		if isFileNameInFancyList(fileName, secretFileNames) {
 			foundFiles = append(foundFiles, fileName)
 		}
 	}
