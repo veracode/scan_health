@@ -43,7 +43,7 @@ func (data Data) analyzeModules() {
 
 	if len(thirdPartyModules) > 0 {
 		report.WriteString(fmt.Sprintf(
-			"⚠️  %d 3rd-party module%s selected: %s\n",
+			"⚠️  %d 3rd-party module%s selected that likely should not be: %s\n",
 			len(thirdPartyModules),
 			pluralise(len(thirdPartyModules)),
 			top5StringList(thirdPartyModules)))
@@ -102,7 +102,9 @@ func (data Data) analyzeModuleWarnings() {
 
 		for _, issue := range module.Issues {
 			if issue.Details == "No supporting files or PDB files" {
-				if strings.HasSuffix(formattedModuleName, ".jar") || strings.HasSuffix(formattedModuleName, ".war") || strings.HasSuffix(formattedModuleName, ".ear") {
+				if strings.HasSuffix(formattedModuleName, ".jar") ||
+					strings.HasSuffix(formattedModuleName, ".war") ||
+					strings.HasSuffix(formattedModuleName, ".ear") {
 					continue
 				}
 
@@ -115,6 +117,10 @@ func (data Data) analyzeModuleWarnings() {
 				}
 
 				if strings.EqualFold(formattedModuleName, "TSQL Files") {
+					continue
+				}
+
+				if strings.EqualFold(formattedModuleName, "Python Files") {
 					continue
 				}
 			} else if strings.HasSuffix(formattedModuleName, ".dll") || strings.HasSuffix(formattedModuleName, ".exe") {
