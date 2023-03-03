@@ -112,7 +112,7 @@ func (data Data) analyzeModuleWarnings() {
 					continue
 				}
 
-				if strings.HasPrefix(formattedModuleName, "JS files within") {
+				if strings.HasPrefix(formattedModuleName, "js files within") {
 					continue
 				}
 
