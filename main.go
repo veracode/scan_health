@@ -65,18 +65,10 @@ func main() {
 	data := api.getData(scanAppId, scanBuildId)
 
 	data.reportScanDetails(api.region)
-	data.assertPrescanModulesPresent()
 	data.analyzeUploadedFiles()
 	data.reportDuplicateFiles()
 	data.analyzeModules()
 	data.analyzeModuleFatalErrors()
 	data.analyzeModuleWarnings()
 	data.outputRecommendations(api.region)
-}
-
-func (data Data) assertPrescanModulesPresent() {
-	if len(data.PrescanModuleList.Modules) == 0 {
-		color.HiRed("Error: Could not retrieve pre-scan modules")
-		os.Exit(1)
-	}
 }

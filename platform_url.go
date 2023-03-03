@@ -93,31 +93,32 @@ func parseAccountIdFromPlatformUrl(urlOrAccountId string) int {
 	return -1
 }
 
-func parseAppIdFromPlatformUrl(urlOrAppId string) int {
-	appId, err := strconv.Atoi(urlOrAppId)
+func parseAppIdFromPlatformUrl(urlOrBuildId string) int {
+	_, err := strconv.Atoi(urlOrBuildId)
 
 	if err == nil {
-		return appId
+		// This is a build ID, not an app ID. We cannot resolve the app ID.
+		return -1
 	}
 
-	if !isPlatformURL(urlOrAppId) {
-		platformUrlInvalid(urlOrAppId)
+	if !isPlatformURL(urlOrBuildId) {
+		platformUrlInvalid(urlOrBuildId)
 	}
 
-	var urlFragment = strings.Split(urlOrAppId, "#")[1]
+	var urlFragment = strings.Split(urlOrBuildId, "#")[1]
 
 	if isParseableURL(urlFragment) {
 		appId, err := strconv.Atoi(strings.Split(urlFragment, ":")[2])
 
 		if err != nil {
-			platformUrlInvalid(urlOrAppId)
+			platformUrlInvalid(urlOrBuildId)
 		}
 
 		return appId
 
 	}
 
-	platformUrlInvalid(urlOrAppId)
+	platformUrlInvalid(urlOrBuildId)
 	return -1
 }
 

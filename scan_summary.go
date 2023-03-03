@@ -22,7 +22,16 @@ func (data Data) reportScanDetails(region string) {
 	fmt.Printf("Triage Flaws URL:   %s\n", data.DetailedReport.getTriageFlawsUrl(region))
 	fmt.Printf("Files uploaded:     %d\n", len(data.PrescanFileList.Files))
 	fmt.Printf("Total modules:      %d\n", len(data.PrescanModuleList.Modules))
-	fmt.Printf("Modules selected:   %d\n", len(data.DetailedReport.StaticAnalysis.Modules))
+
+	if data.DetailedReport.DataAvailable {
+		fmt.Printf("Modules selected:   %d\n", len(data.DetailedReport.StaticAnalysis.Modules))
+		data.reportScanFlawSummary(region)
+	}
+
+	println()
+}
+
+func (data Data) reportScanFlawSummary(region string) {
 	fmt.Printf("Engine version:     %s\n", data.DetailedReport.StaticAnalysis.EngineVersion)
 	fmt.Printf("Submitted:          %s (%s ago)\n", data.DetailedReport.SubmittedDate, formatDuration(time.Since(data.DetailedReport.SubmittedDate)))
 	fmt.Printf("Published:          %s (%s ago)\n", data.DetailedReport.PublishedDate, formatDuration(time.Since(data.DetailedReport.PublishedDate)))
@@ -40,6 +49,4 @@ func (data Data) reportScanDetails(region string) {
 			data.makeRecommendation("More than 2500 flaws were found which can be an indication that the scan is misconfigured")
 		}
 	}
-
-	println()
 }

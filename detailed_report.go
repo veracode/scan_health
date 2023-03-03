@@ -28,6 +28,7 @@ type DetailedReport struct {
 	SubmittedDate        time.Time
 	PublishedDate        time.Time
 	Duration             time.Duration
+	DataAvailable        bool
 }
 
 type DetailedReportStaticAnalysis struct {
@@ -67,7 +68,7 @@ type DetailedReportFlaw struct {
 }
 
 func (api API) getDetailedReport(buildId int) DetailedReport {
-	report := DetailedReport{}
+	report := DetailedReport{DataAvailable: false}
 	var url = fmt.Sprintf("https://analysiscenter.veracode.com/api/5.0/detailedreport.do?build_id=%d", buildId)
 	response := api.makeApiRequest(url, http.MethodGet)
 
@@ -99,6 +100,7 @@ func (api API) getDetailedReport(buildId int) DetailedReport {
 	report.SubmittedDate = parseVeracodeDate(report.StaticAnalysis.SubmittedDate).Local()
 	report.PublishedDate = parseVeracodeDate(report.StaticAnalysis.PublishedDate).Local()
 	report.Duration = report.PublishedDate.Sub(report.SubmittedDate)
+	report.DataAvailable = true
 
 	return report
 }

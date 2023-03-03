@@ -1,7 +1,10 @@
 package main
 
 import (
+	"os"
 	"sync"
+
+	"github.com/fatih/color"
 )
 
 type Data struct {
@@ -18,8 +21,7 @@ func (data Data) makeRecommendation(recommendation string) {
 }
 
 func (api API) getData(appId, buildId int) Data {
-	var data = Data{}
-	data.Recommendations = &[]string{}
+	var data = Data{Recommendations: &[]string{}}
 
 	var wg sync.WaitGroup
 	wg.Add(1)
@@ -30,18 +32,43 @@ func (api API) getData(appId, buildId int) Data {
 	}()
 
 	wg.Wait()
-	wg.Add(2)
 
-	// We can't rely on the passed-in app IDs as they may not be present if not using a URL, so get the app ID from the detailed report
+	// We can't rely on the passed-in app IDs as they may not be present (if not using a URL).
+	// Try to get the app ID from the detailed report if possible
+	if data.DetailedReport.DataAvailable {
+		appId = data.DetailedReport.AppId
+	}
+
+	if appId == -1 {
+		color.HiRed("Error: Could not resolve the application ID because only a build ID was supplied, and the scan has not finished. Please try again using the URL instead of the build ID.")
+		os.Exit(1)
+	}
+
+	// Resolve other information if we cannot get the detailed report
+	if !data.DetailedReport.DataAvailable {
+		wg.Add(2)
+
+		go func() {
+			defer wg.Done()
+			api.populateReportDetailsFromAppInfo(appId, &data.DetailedReport)
+		}()
+
+		go func() {
+			defer wg.Done()
+			api.populateReportDetailsFromBuildInfo(appId, buildId, &data.DetailedReport)
+		}()
+	}
+
+	wg.Add(2)
 
 	go func() {
 		defer wg.Done()
-		data.PrescanFileList = api.getPrescanFileList(data.DetailedReport.AppId, buildId)
+		data.PrescanFileList = api.getPrescanFileList(appId, buildId)
 	}()
 
 	go func() {
 		defer wg.Done()
-		data.PrescanModuleList = api.getPrescanModuleList(data.DetailedReport.AppId, buildId)
+		data.PrescanModuleList = api.getPrescanModuleList(appId, buildId)
 	}()
 
 	wg.Wait()
