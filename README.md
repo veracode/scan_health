@@ -65,16 +65,10 @@ vsh https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:7937
 
 ## Development 🛠️
 
-### Running
-
-```
-./build.sh
-```
-
 ### Compiling
 
 ```
-./release.sh
+./build.sh
 ```
 
 # Bug Reports 🐞
