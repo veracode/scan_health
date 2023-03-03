@@ -5,6 +5,7 @@ var thirdPartyModules = []string{
 	"7za.exe",
 	"AutoMapper.*.dll",
 	"Azure.*.dll",
+	"BouncyCastle.*",
 	"Castle.Core.*",
 	"Castle.Windsor.*",
 	"componentspace.saml2.dll",

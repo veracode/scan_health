@@ -68,7 +68,7 @@ vsh https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:7937
 ### Running
 
 ```
-go run *.go
+./build.sh
 ```
 
 ### Compiling

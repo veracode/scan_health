@@ -4,7 +4,6 @@ import (
 	"encoding/xml"
 	"fmt"
 	"net/http"
-	"os"
 	"sort"
 	"strings"
 	"time"
@@ -68,15 +67,15 @@ type DetailedReportFlaw struct {
 }
 
 func (api API) getDetailedReport(buildId int) DetailedReport {
+	report := DetailedReport{}
 	var url = fmt.Sprintf("https://analysiscenter.veracode.com/api/5.0/detailedreport.do?build_id=%d", buildId)
 	response := api.makeApiRequest(url, http.MethodGet)
 
 	if strings.Contains(string(response[:]), "<error>No report available.</error>") {
-		color.HiRed(fmt.Sprintf("Error: There was no detailed report for Build id %d. Has the scan finished?", buildId))
-		os.Exit(1)
+		color.HiYellow(fmt.Sprintf("Warning: There was no detailed report for Build id %d. Has the scan finished?", buildId))
+		return report
 	}
 
-	report := DetailedReport{}
 	xml.Unmarshal(response, &report)
 
 	// Dedupe the module list which can contain duplicate entries
@@ -96,6 +95,10 @@ func (api API) getDetailedReport(buildId int) DetailedReport {
 	sort.Slice(report.Flaws, func(i, j int) bool {
 		return report.Flaws[i].ID < report.Flaws[j].ID
 	})
+
+	report.SubmittedDate = parseVeracodeDate(report.StaticAnalysis.SubmittedDate).Local()
+	report.PublishedDate = parseVeracodeDate(report.StaticAnalysis.PublishedDate).Local()
+	report.Duration = report.PublishedDate.Sub(report.SubmittedDate)
 
 	return report
 }

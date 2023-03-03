@@ -1,17 +1,15 @@
 # !/usr/bin/env sh
 
-VERSION="1.8"
-FLAGS="-X main.AppVersion=$VERSION -s -w"
+ESCAPE=$'\e'
+export VERSION="1.8"
 
-GOOS=darwin GOARCH=arm64 go build -ldflags="$FLAGS" -trimpath -o "dist/scan_health-mac-arm64" . && \
-GOOS=darwin GOARCH=amd64 go build -ldflags="$FLAGS" -trimpath -o "dist/scan_health-mac-amd64" . && \
-GOOS=linux GOARCH=amd64 go build -ldflags="$FLAGS" -trimpath -o "dist/scan_health-linux-amd64" . && \
-GOOS=windows GOARCH=amd64 go build -ldflags="$FLAGS" -trimpath -o "dist/scan_health-win.exe" . && \
+./build.sh && \
+
+echo "${ESCAPE}[0;32mReleasing v${VERSION}...${ESCAPE}[0m" && \
 
 docker build -t antfie/scan_health:$VERSION . && \
 docker build -t antfie/scan_health . && \
 docker push antfie/scan_health:$VERSION && \
 docker push antfie/scan_health && \
 
-ESCAPE=$'\e'
-echo "${ESCAPE}[0;32mSuccess${ESCAPE}[0m"
+echo "${ESCAPE}[0;32mRelease Success${ESCAPE}[0m"

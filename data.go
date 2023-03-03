@@ -46,10 +46,5 @@ func (api API) getData(appId, buildId int) Data {
 
 	wg.Wait()
 
-	data.DetailedReport.SubmittedDate = parseVeracodeDate(data.DetailedReport.StaticAnalysis.SubmittedDate).Local()
-	data.DetailedReport.PublishedDate = parseVeracodeDate(data.DetailedReport.StaticAnalysis.PublishedDate).Local()
-	data.DetailedReport.Duration = data.DetailedReport.PublishedDate.Sub(data.DetailedReport.SubmittedDate)
-	data.DetailedReport.Duration = data.DetailedReport.PublishedDate.Sub(data.DetailedReport.SubmittedDate)
-
 	return data
 }
