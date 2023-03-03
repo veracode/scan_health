@@ -156,7 +156,6 @@ func (data Data) analyzeModuleWarnings() {
 				}
 			}
 		}
-
 	}
 
 	for _, warning := range warnings {
