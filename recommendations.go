@@ -10,11 +10,14 @@ func (data Data) outputRecommendations(region string) {
 		return
 	}
 
-	if strings.Contains(strings.Join(*data.Recommendations, ""), ".NET") || strings.Contains(strings.Join(*data.Recommendations, ""), "C#") {
+	allRecommendations := strings.Join(*data.Recommendations, "")
+
+	if strings.Contains(allRecommendations, ".NET") || strings.Contains(allRecommendations, "C#") {
 		data.makeRecommendation("Review the .NET packaging cheatsheet: https://nhinv11.github.io/#/.NET")
+		data.makeRecommendation("Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/nhinv11/veracode-dotnet-packager")
 	}
 
-	if strings.Contains(strings.Join(*data.Recommendations, ""), "Java") {
+	if strings.Contains(allRecommendations, "Java ") {
 		data.makeRecommendation("Review the Java packaging cheatsheet: https://nhinv11.github.io/#/Java")
 	}
 
