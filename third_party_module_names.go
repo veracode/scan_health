@@ -28,4 +28,6 @@ var thirdPartyModules = []string{
 	"system.*.dll",
 	"Telerik.*.dll",
 	"WebGrease.dll",
+	"phantomjs.exe",
+	"Moq.dll",
 }

@@ -3,18 +3,16 @@ package main
 import (
 	"fmt"
 	"strings"
-
-	"github.com/dustin/go-humanize"
 )
 
 func (data Data) analyzeModules() {
 	var report strings.Builder
 
-	if data.PrescanModuleList.TotalSize > 1e+9 {
-		report.WriteString(fmt.Sprintf(
-			"⚠️  The size of the modules was %s. This is a very large scan and will likely take a long time to run\n",
-			humanize.Bytes(uint64(data.PrescanModuleList.TotalSize))))
-	}
+	// if data.PrescanModuleList.TotalSize > 1e+9 {
+	// 	report.WriteString(fmt.Sprintf(
+	// 		"⚠️  The size of the modules was %s. This is a very large scan and will likely take a long time to run\n",
+	// 		humanize.Bytes(uint64(data.PrescanModuleList.TotalSize))))
+	// }
 
 	if len(data.PrescanModuleList.Modules) > 1000 {
 		report.WriteString(fmt.Sprintf(
@@ -66,20 +64,28 @@ func (data Data) analyzeModules() {
 func (data Data) analyzeModuleFatalErrors() {
 	var report strings.Builder
 
-	var errors []string
+	errors := make(map[string][]string)
 
 	for _, module := range data.PrescanModuleList.Modules {
 		if module.HasFatalErrors {
-			formattedError := fmt.Sprintf("\"%s\": %s", module.Name, module.Status)
+			reason := module.getFatalReason()
 
-			if !isStringInStringArray(formattedError, errors) {
-				errors = append(errors, formattedError)
+			if _, isReasonInMap := errors[reason]; !isReasonInMap {
+				errors[reason] = []string{}
+			}
+
+			if !isStringInStringArray(module.Name, errors[reason]) {
+				errors[reason] = append(errors[reason], module.Name)
 			}
 		}
 	}
 
-	for _, errors := range errors {
-		report.WriteString(fmt.Sprintf("⚠️  %s\n", errors))
+	for errorMessage, affectedModules := range errors {
+		report.WriteString(fmt.Sprintf(
+			"❌ %d %s: %s\n",
+			len(affectedModules),
+			errorMessage,
+			top5StringList(affectedModules)))
 	}
 
 	if report.Len() > 0 {
@@ -91,9 +97,13 @@ func (data Data) analyzeModuleFatalErrors() {
 func (data Data) analyzeModuleWarnings() {
 	var report strings.Builder
 
-	var warnings []string
+	warnings := make(map[string][]string)
 
 	for _, module := range data.PrescanModuleList.Modules {
+		if module.HasFatalErrors {
+			continue
+		}
+
 		if module.IsThirdParty {
 			continue
 		}
@@ -127,39 +137,53 @@ func (data Data) analyzeModuleWarnings() {
 				data.makeRecommendation("Ensure you include PDB files for all 1st and 2nd party .NET components. This enables Veracode to accurately report line numbers for any found flaws")
 			}
 
-			formattedIssue := fmt.Sprintf("\"%s\": %s", module.Name, issue.Details)
+			if _, isMessageInMap := warnings[issue.Details]; !isMessageInMap {
+				warnings[issue.Details] = []string{}
+			}
 
-			if !isStringInStringArray(formattedIssue, warnings) {
-				warnings = append(warnings, formattedIssue)
+			if !isStringInStringArray(module.Name, warnings[issue.Details]) {
+				warnings[issue.Details] = append(warnings[issue.Details], module.Name)
 			}
 		}
 
-		for _, statusMessage := range strings.Split(module.Status, ",") {
-			if module.Status == "OK" {
-				continue
-			}
+		// for _, statusMessage := range strings.Split(module.Status, ",") {
+		// 	if module.Status == "OK" {
+		// 		continue
+		// 	}
 
-			formattedStatusMessage := strings.TrimSpace(statusMessage)
+		// 	formattedStatusMessage := strings.TrimSpace(statusMessage)
 
-			if strings.HasPrefix(formattedStatusMessage, "Unsupported Framework") {
-				// These are captured under the issue details
-				continue
-			}
+		// 	if strings.HasPrefix(formattedStatusMessage, "Unsupported Framework") {
+		// 		// These are captured under the issue details
+		// 		continue
+		// 	}
 
-			formattedIssue := fmt.Sprintf("\"%s\": %s", module.Name, formattedStatusMessage)
+		// 	if _, isMessageInMap := warnings[formattedStatusMessage]; !isMessageInMap {
+		// 		warnings[formattedStatusMessage] = []string{}
+		// 	}
 
-			if !isStringInStringArray(formattedIssue, warnings) {
-				warnings = append(warnings, formattedIssue)
+		// 	if !isStringInStringArray(module.Name, warnings[formattedStatusMessage]) {
+		// 		warnings[formattedStatusMessage] = append(warnings[formattedStatusMessage], module.Name)
+		// 	}
 
-				if strings.Contains(formattedStatusMessage, "Missing Supporting Files") {
-					data.makeRecommendation("Be sure to include all the components that make up the application within the upload. Do not omit any 2nd or third party libraries from the upload")
-				}
-			}
-		}
+		// 	formattedIssue := fmt.Sprintf("\"%s\": %s", module.Name, formattedStatusMessage)
+
+		// 	if !isStringInStringArray(formattedIssue, warnings) {
+		// 		warnings = append(warnings, formattedIssue)
+
+		// 		if strings.Contains(formattedStatusMessage, "Missing Supporting Files") {
+		// 			data.makeRecommendation("Be sure to include all the components that make up the application within the upload. Do not omit any 2nd or third party libraries from the upload")
+		// 		}
+		// 	}
+		// }
 	}
 
-	for _, warning := range warnings {
-		report.WriteString(fmt.Sprintf("⚠️  %s\n", warning))
+	for warningMessage, affectedModules := range warnings {
+		report.WriteString(fmt.Sprintf(
+			"⚠️  %d %s: %s\n",
+			len(affectedModules),
+			warningMessage,
+			top5StringList(affectedModules)))
 	}
 
 	if report.Len() > 0 {

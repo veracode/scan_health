@@ -25,6 +25,7 @@ func (data Data) analyzeUploadedFiles() {
 	}
 
 	detectSensitiveFiles(data, &report, files)
+	detectTestArtefacts(data, &report, files)
 	detectNodeModules(data, &report)
 	detectRoslyn(data, &report, files)
 	detectGit(data, &report, files)
@@ -36,7 +37,9 @@ func (data Data) analyzeUploadedFiles() {
 	detectUnwantedFiles(data, &report, files, ".sln", ".NET solution file", []string{"Do not upload C# source code. They will not be scanned", "Veracode requires the .NET application to be compiled"})
 	detectUnwantedFiles(data, &report, files, ".csproj", "C# project file", []string{"Do not upload C# source code. They will not be scanned", "Veracode requires the .NET application to be compiled"})
 	detectUnwantedFiles(data, &report, files, ".c", "C source code file", []string{"Do not upload C source code. They will not be scanned", "Veracode requires the application to be compiled with debug symbols"})
-	detectUnwantedFiles(data, &report, files, ".test.dll", "test artifact", []string{"Do not upload any test code"})
+	detectUnwantedFiles(data, &report, files, ".test.dll", "test artifact", []string{"Do not upload any testing artefacts"})
+	detectUnwantedFiles(data, &report, files, ".unittests.dll", "test artifact", []string{"Do not upload any testing artefacts"})
+	detectUnwantedFiles(data, &report, files, ".unittest.dll", "test artifact", []string{"Do not upload any testing artefacts"})
 	detectUnwantedFiles(data, &report, files, ".coffee", "CoffeeScript file", []string{"CoffeeScript source code files will not be scanned", "Review the JavaScript/TypeScript packaging cheatsheet: https://nhinv11.github.io/#/JavaScript%20/%20TypeScript", "Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager"})
 
 	if report.Len() > 0 {
@@ -50,7 +53,9 @@ func detectSensitiveFiles(data Data, report *strings.Builder, files []string) {
 
 	for _, fileName := range files {
 		if isFileNameInFancyList(fileName, secretFileNames) {
-			foundFiles = append(foundFiles, fileName)
+			if !isStringInStringArray(fileName, foundFiles) {
+				foundFiles = append(foundFiles, fileName)
+			}
 		}
 	}
 
@@ -67,18 +72,46 @@ func detectSensitiveFiles(data Data, report *strings.Builder, files []string) {
 	data.makeRecommendation("Do not upload any secrets, certificates or key files")
 }
 
+func detectTestArtefacts(data Data, report *strings.Builder, files []string) {
+	var foundFiles []string
+
+	for _, fileName := range files {
+		if isFileNameInFancyList(fileName, testFileNames) {
+			if !isStringInStringArray(fileName, foundFiles) {
+				foundFiles = append(foundFiles, fileName)
+			}
+		}
+	}
+
+	if len(foundFiles) == 0 {
+		return
+	}
+
+	report.WriteString(fmt.Sprintf(
+		"❌ %d test artefact%s were found: %s\n",
+		len(foundFiles),
+		pluralise(len(foundFiles)),
+		top5StringList(foundFiles)))
+
+	data.makeRecommendation("Do not upload any testing artefacts")
+}
+
 func detectNodeModules(data Data, report *strings.Builder) {
 	var foundFiles []string
 
 	for _, file := range data.PrescanFileList.Files {
 		if strings.Contains(strings.ToLower(file.Name), "_nodemodule_") {
-			foundFiles = append(foundFiles, file.Name)
+			if !isStringInStringArray(file.Name, foundFiles) {
+				foundFiles = append(foundFiles, file.Name)
+			}
 		}
 	}
 
 	for _, module := range data.DetailedReport.StaticAnalysis.Modules {
 		if strings.Contains(strings.ToLower(module.Name), "_nodemodule_") {
-			foundFiles = append(foundFiles, module.Name)
+			if !isStringInStringArray(module.Name, foundFiles) {
+				foundFiles = append(foundFiles, module.Name)
+			}
 		}
 	}
 
@@ -134,7 +167,9 @@ func detectUnwantedFiles(data Data, report *strings.Builder, files []string, suf
 
 	for _, fileName := range files {
 		if strings.HasSuffix(strings.ToLower(fileName), suffix) && !isStringInStringArray(fileName, foundFiles) {
-			foundFiles = append(foundFiles, fileName)
+			if !isStringInStringArray(fileName, foundFiles) {
+				foundFiles = append(foundFiles, fileName)
+			}
 		}
 	}
 

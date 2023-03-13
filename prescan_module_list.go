@@ -62,13 +62,13 @@ func (api API) getPrescanModuleList(appId, buildId int) PrescanModuleList {
 
 func calculateModuleSize(size string) int {
 	var totalModuleSize = 0
-	totalModuleSize += foo(size, "GB", 1e+9)
-	totalModuleSize += foo(size, "MB", 1e+6)
-	totalModuleSize += foo(size, "KB", 1000)
+	totalModuleSize += convertSize(size, "GB", 1e+9)
+	totalModuleSize += convertSize(size, "MB", 1e+6)
+	totalModuleSize += convertSize(size, "KB", 1000)
 	return totalModuleSize
 }
 
-func foo(size, measurement string, multiplier int) int {
+func convertSize(size, measurement string, multiplier int) int {
 	if !strings.HasSuffix(size, measurement) {
 		return 0
 	}
@@ -97,7 +97,7 @@ func (moduleList PrescanModuleList) getFromName(moduleName string) PrescanModule
 func (module PrescanModule) getFatalReason() string {
 	for _, issue := range strings.Split(module.Status, ",") {
 		if strings.HasPrefix(issue, "(Fatal)") {
-			return strings.Replace(issue, "(Fatal)", ": ", 1)
+			return strings.Replace(strings.Replace(issue, "(Fatal)", "", 1), " - 1 File", "", 1)
 		}
 	}
 
