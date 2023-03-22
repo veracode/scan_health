@@ -82,3 +82,23 @@ func top5StringList(items []string) string {
 
 	return strings.Join(items, ", ")
 }
+
+func formatWarningStringFormat(format string, a ...any) string {
+	return fmt.Sprintf(icon_warning+" "+format, a...)
+}
+
+func formatWarningString(a string) string {
+	return formatWarningStringFormat("%s", a)
+}
+
+func formatErrorStringFormat(format string, a ...any) string {
+	return fmt.Sprintf(icon_error+" "+format, a...)
+}
+
+func formatErrorString(a string) string {
+	return formatErrorStringFormat("%s", a)
+}
+
+func formatRecommendationStringFormat(format string, a ...any) string {
+	return fmt.Sprintf(icon_recommendation+" "+format, a...)
+}

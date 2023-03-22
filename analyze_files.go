@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"sort"
 	"strings"
 )
@@ -19,8 +18,8 @@ func (data Data) analyzeUploadedFiles() {
 	sort.Strings(files[:])
 
 	if len(files) > 10000 {
-		report.WriteString(fmt.Sprintf(
-			"⚠️  %d files were present. This is a lot of files which is usually an indicator that something is not correct\n",
+		report.WriteString(formatWarningStringFormat(
+			"%d files were present. This is a lot of files which is usually an indicator that something is not correct\n",
 			len(files)))
 	}
 
@@ -63,8 +62,8 @@ func detectSensitiveFiles(data Data, report *strings.Builder, files []string) {
 		return
 	}
 
-	report.WriteString(fmt.Sprintf(
-		"❌ %d sensitive file%s were found: %s\n",
+	report.WriteString(formatErrorStringFormat(
+		"%d sensitive file%s were found: %s\n",
 		len(foundFiles),
 		pluralise(len(foundFiles)),
 		top5StringList(foundFiles)))
@@ -87,8 +86,8 @@ func detectTestArtefacts(data Data, report *strings.Builder, files []string) {
 		return
 	}
 
-	report.WriteString(fmt.Sprintf(
-		"❌ %d test artefact%s were found: %s\n",
+	report.WriteString(formatErrorStringFormat(
+		"%d test artefact%s were found: %s\n",
 		len(foundFiles),
 		pluralise(len(foundFiles)),
 		top5StringList(foundFiles)))
@@ -123,7 +122,7 @@ func detectNodeModules(data Data, report *strings.Builder) {
 	data.makeRecommendation("Review the JavaScript/TypeScript packaging cheatsheet: https://nhinv11.github.io/#/JavaScript%20/%20TypeScript")
 	data.makeRecommendation("Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager")
 
-	report.WriteString("⚠️  One or more node_modules folders were detected\n")
+	report.WriteString(formatWarningString("One or more node_modules folders were detected\n"))
 }
 
 func detectGit(data Data, report *strings.Builder, files []string) {
@@ -139,7 +138,7 @@ func detectGit(data Data, report *strings.Builder, files []string) {
 		return
 	}
 
-	report.WriteString("❌ A git repository was found\n")
+	report.WriteString(formatErrorString("A git repository was found\n"))
 
 	data.makeRecommendation("Do not upload .git folders")
 }
@@ -157,7 +156,7 @@ func detectRoslyn(data Data, report *strings.Builder, files []string) {
 		return
 	}
 
-	report.WriteString("⚠️  The .NET Roslyn compiler was found\n")
+	report.WriteString(formatWarningString("The .NET Roslyn compiler was found\n"))
 
 	data.makeRecommendation("Review the .NET packaging cheatsheet: https://nhinv11.github.io/#/.NET")
 }
@@ -181,8 +180,8 @@ func detectUnwantedFiles(data Data, report *strings.Builder, files []string, suf
 		data.makeRecommendation(recommendation)
 	}
 
-	report.WriteString(fmt.Sprintf(
-		"❌ %d %s%s: %s\n",
+	report.WriteString(formatErrorStringFormat(
+		"%d %s%s: %s\n",
 		len(foundFiles),
 		name,
 		pluralise(len(foundFiles)),
@@ -217,14 +216,14 @@ func (data Data) reportDuplicateFiles() {
 
 		if len(md5s) > 1 {
 			if count == len(md5s) {
-				warningReport.WriteString(fmt.Sprintf(
-					"⚠️  %d duplicate occurance%s of \"%s\"\n",
+				warningReport.WriteString(formatWarningStringFormat(
+					"%d duplicate occurance%s of \"%s\"\n",
 					count,
 					pluralise(count),
 					file.Name))
 			} else {
-				errorReport.WriteString(fmt.Sprintf(
-					"❌ %d duplicate occurance%s of \"%s\" with %d different MD5 hashes\n",
+				errorReport.WriteString(formatErrorStringFormat(
+					"%d duplicate occurance%s of \"%s\" with %d different MD5 hashes\n",
 					count,
 					pluralise(count),
 					file.Name,

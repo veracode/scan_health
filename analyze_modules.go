@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"strings"
 )
 
@@ -9,20 +8,20 @@ func (data Data) analyzeModules() {
 	var report strings.Builder
 
 	// if data.PrescanModuleList.TotalSize > 1e+9 {
-	// 	report.WriteString(fmt.Sprintf(
-	// 		"⚠️  The size of the modules was %s. This is a very large scan and will likely take a long time to run\n",
+	// 	report.WriteString(formatWarningStringFormat(
+	// 		"The size of the modules was %s. This is a very large scan and will likely take a long time to run\n",
 	// 		humanize.Bytes(uint64(data.PrescanModuleList.TotalSize))))
 	// }
 
 	if len(data.PrescanModuleList.Modules) > 1000 {
-		report.WriteString(fmt.Sprintf(
-			"⚠️  %d modules were identified. This is a lot of modules which is usually an indicator that something is not correct\n",
+		report.WriteString(formatWarningStringFormat(
+			"%d modules were identified. This is a lot of modules which is usually an indicator that something is not correct\n",
 			len(data.PrescanModuleList.Modules)))
 	}
 
 	if len(data.DetailedReport.StaticAnalysis.Modules) > 100 {
-		report.WriteString(fmt.Sprintf(
-			"⚠️  %d modules were selected for analysis. This is a lot of modules which is usually an indicator that something is not correct\n",
+		report.WriteString(formatWarningStringFormat(
+			"%d modules were selected for analysis. This is a lot of modules which is usually an indicator that something is not correct\n",
 			len(data.DetailedReport.StaticAnalysis.Modules)))
 	}
 
@@ -40,16 +39,16 @@ func (data Data) analyzeModules() {
 	}
 
 	if len(thirdPartyModules) > 0 {
-		report.WriteString(fmt.Sprintf(
-			"⚠️  %d 3rd-party module%s selected that likely should not be: %s\n",
+		report.WriteString(formatWarningStringFormat(
+			"%d 3rd-party module%s selected that likely should not be: %s\n",
 			len(thirdPartyModules),
 			pluralise(len(thirdPartyModules)),
 			top5StringList(thirdPartyModules)))
 	}
 
 	if len(junkModulesSelected) > 0 {
-		report.WriteString(fmt.Sprintf(
-			"⚠️  %d module%s selected that likely should not be: %s\n",
+		report.WriteString(formatWarningStringFormat(
+			"%d module%s selected that likely should not be: %s\n",
 			len(junkModulesSelected),
 			pluralise(len(junkModulesSelected)),
 			top5StringList(junkModulesSelected)))
@@ -81,8 +80,8 @@ func (data Data) analyzeModuleFatalErrors() {
 	}
 
 	for errorMessage, affectedModules := range errors {
-		report.WriteString(fmt.Sprintf(
-			"❌ %d %s: %s\n",
+		report.WriteString(formatErrorStringFormat(
+			"%d %s: %s\n",
 			len(affectedModules),
 			errorMessage,
 			top5StringList(affectedModules)))
@@ -179,8 +178,8 @@ func (data Data) analyzeModuleWarnings() {
 	}
 
 	for warningMessage, affectedModules := range warnings {
-		report.WriteString(fmt.Sprintf(
-			"⚠️  %d %s: %s\n",
+		report.WriteString(formatWarningStringFormat(
+			"%d %s: %s\n",
 			len(affectedModules),
 			warningMessage,
 			top5StringList(affectedModules)))

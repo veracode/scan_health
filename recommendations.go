@@ -28,8 +28,8 @@ func (data Data) outputRecommendations(region string) {
 
 	var report strings.Builder
 	for _, recommendation := range *data.Recommendations {
-		report.WriteString(fmt.Sprintf(
-			"💡 %s\n",
+		report.WriteString(formatRecommendationStringFormat(
+			"%s\n",
 			recommendation))
 	}
 
