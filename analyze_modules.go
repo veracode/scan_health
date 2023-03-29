@@ -114,6 +114,10 @@ func (data Data) analyzeModuleWarnings() {
 				continue
 			}
 
+			if strings.HasPrefix(issue.Details, "Support Issue: ") {
+				issue.Details = strings.Replace(issue.Details, "Support Issue: ", "", 1)
+			}
+
 			if issue.Details == "No supporting files or PDB files" {
 				if strings.HasSuffix(formattedModuleName, ".jar") ||
 					strings.HasSuffix(formattedModuleName, ".war") ||
@@ -182,11 +186,18 @@ func (data Data) analyzeModuleWarnings() {
 	}
 
 	for warningMessage, affectedModules := range warnings {
-		report.WriteString(formatWarningStringFormat(
-			"%d %s: %s\n",
-			len(affectedModules),
-			warningMessage,
-			top5StringList(affectedModules)))
+		if len(affectedModules) > 1 {
+			report.WriteString(formatWarningStringFormat(
+				"%dx %s: %s\n",
+				len(affectedModules),
+				warningMessage,
+				top5StringList(affectedModules)))
+		} else {
+			report.WriteString(formatWarningStringFormat(
+				"%s: %s\n",
+				warningMessage,
+				top5StringList(affectedModules)))
+		}
 	}
 
 	if report.Len() > 0 {

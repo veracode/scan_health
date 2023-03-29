@@ -11,7 +11,7 @@ import (
 )
 
 func colorPrintf(format string) {
-	color.New().Printf(format)
+	color.New().Print(format)
 }
 
 func isStringInStringArray(input string, list []string) bool {
