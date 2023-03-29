@@ -1,7 +1,7 @@
 # !/usr/bin/env sh
 
 ESCAPE=$'\e'
-export VERSION="1.14"
+export VERSION="1.15"
 
 ./build.sh && \
 

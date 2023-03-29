@@ -70,6 +70,22 @@ func (data Data) analyzeModuleFatalErrors() {
 		if module.HasFatalErrors {
 			reason := module.getFatalReason()
 
+			if strings.HasPrefix(reason, "No Scannable Binaries") {
+				if strings.HasSuffix(strings.ToLower(module.Name), ".war") {
+					data.makeRecommendation("Java war files with no compiled Java classes suggests incorrect packaging and will not be scanned for Java flaws")
+					data.makeRecommendation("Veracode requires Java application to be compiled into a .jar, .war or .ear file")
+					data.makeRecommendation("Do not upload Java source code files. They will not be scanned")
+				} else if strings.HasSuffix(strings.ToLower(module.Name), ".ear") {
+					data.makeRecommendation("Java ear files with no compiled Java classes suggests incorrect packaging and will not be scanned for Java flaws")
+					data.makeRecommendation("Veracode requires Java application to be compiled into a .jar, .war or .ear file")
+					data.makeRecommendation("Do not upload Java source code files. They will not be scanned")
+				} else if strings.HasSuffix(strings.ToLower(module.Name), ".jar") {
+					data.makeRecommendation("Java .jar files with no compiled Java classes suggests incorrect packaging and will not be scanned for Java flaws")
+					data.makeRecommendation("Veracode requires Java application to be compiled into a .jar, .war or .ear file")
+					data.makeRecommendation("Do not upload Java source code files. They will not be scanned")
+				}
+			}
+
 			if _, isReasonInMap := errors[reason]; !isReasonInMap {
 				errors[reason] = []string{}
 			}
