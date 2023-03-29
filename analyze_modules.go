@@ -110,6 +110,10 @@ func (data Data) analyzeModuleWarnings() {
 		formattedModuleName := strings.ToLower(module.Name)
 
 		for _, issue := range module.Issues {
+			if strings.HasPrefix(issue.Details, "Unsupported framework") {
+				continue
+			}
+
 			if issue.Details == "No supporting files or PDB files" {
 				if strings.HasSuffix(formattedModuleName, ".jar") ||
 					strings.HasSuffix(formattedModuleName, ".war") ||
