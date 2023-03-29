@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"strings"
 )
 
@@ -80,11 +81,18 @@ func (data Data) analyzeModuleFatalErrors() {
 	}
 
 	for errorMessage, affectedModules := range errors {
-		report.WriteString(formatErrorStringFormat(
-			"%d %s: %s\n",
-			len(affectedModules),
-			errorMessage,
-			top5StringList(affectedModules)))
+		if len(affectedModules) > 1 {
+			report.WriteString(formatErrorStringFormat(
+				"%dx %s: %s\n",
+				len(affectedModules),
+				errorMessage,
+				top5StringList(affectedModules)))
+		} else {
+			report.WriteString(formatErrorStringFormat(
+				"%s: %s\n",
+				errorMessage,
+				top5StringList(affectedModules)))
+		}
 	}
 
 	if report.Len() > 0 {
@@ -120,6 +128,13 @@ func (data Data) analyzeModuleWarnings() {
 
 			if strings.HasPrefix(issue.Details, "Support Issue: ") {
 				issue.Details = strings.Replace(issue.Details, "Support Issue: ", "", 1)
+			}
+
+			if strings.HasPrefix(issue.Details, "No precompiled files were found for this .NET web application") {
+				recommendation := "If this is an ASP.NET application, please precompile the project and upload all generated assemblies"
+				issue.Details = strings.Replace(issue.Details, fmt.Sprintf(". %s.", recommendation), "", 1)
+				data.makeRecommendation(recommendation)
+				data.makeRecommendation("When precompiling ASP.NET WebForms and MVC View ensure you specify the -fixednames flag")
 			}
 
 			if issue.Details == "No supporting files or PDB files" {
