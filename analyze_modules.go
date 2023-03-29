@@ -114,6 +114,10 @@ func (data Data) analyzeModuleWarnings() {
 				continue
 			}
 
+			if strings.HasPrefix(issue.Details, "This application is using Typescript") {
+				continue
+			}
+
 			if strings.HasPrefix(issue.Details, "Support Issue: ") {
 				issue.Details = strings.Replace(issue.Details, "Support Issue: ", "", 1)
 			}
