@@ -80,7 +80,7 @@ func (data Data) analyzeModuleFatalErrors() {
 					data.makeRecommendation("Veracode requires Java application to be compiled into a .jar, .war or .ear file")
 					data.makeRecommendation("Do not upload Java source code files. They will not be scanned")
 				} else if strings.HasSuffix(strings.ToLower(module.Name), ".jar") {
-					data.makeRecommendation("Java .jar files with no compiled Java classes suggests incorrect packaging and will not be scanned for Java flaws")
+					data.makeRecommendation("Java jar files with no compiled Java classes suggests incorrect packaging and will not be scanned for Java flaws")
 					data.makeRecommendation("Veracode requires Java application to be compiled into a .jar, .war or .ear file")
 					data.makeRecommendation("Do not upload Java source code files. They will not be scanned")
 				}
