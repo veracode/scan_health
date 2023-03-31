@@ -5,6 +5,27 @@ import (
 	"strings"
 )
 
+func (data Data) reportSelectedModules() {
+	var report strings.Builder
+
+	// No point in listing every module if there are loads
+	if len(data.DetailedReport.StaticAnalysis.Modules) > 25 {
+		return
+	}
+
+	for _, module := range data.DetailedReport.StaticAnalysis.Modules {
+		report.WriteString(fmt.Sprintf(
+			"* %s\n",
+			module.Name))
+
+	}
+
+	if report.Len() > 0 {
+		printTitle("Modules Selected For Analysis")
+		colorPrintf(report.String() + "\n")
+	}
+}
+
 func (data Data) analyzeModules() {
 	var report strings.Builder
 
@@ -22,7 +43,7 @@ func (data Data) analyzeModules() {
 
 	if len(data.DetailedReport.StaticAnalysis.Modules) > 100 {
 		report.WriteString(formatWarningStringFormat(
-			"%d modules were selected for analysis. This is a lot of modules which is usually an indicator that something is not correct\n",
+			"%d modules were selected as entry points for analysis. This is a lot of modules which is usually an indicator that something is not correct\n",
 			len(data.DetailedReport.StaticAnalysis.Modules)))
 	}
 
@@ -104,15 +125,19 @@ func (data Data) analyzeModuleFatalErrors() {
 	}
 
 	for errorMessage, affectedModules := range errors {
+		if len(errorMessage) > 1 {
+			errorMessage = errorMessage + ": "
+		}
+
 		if len(affectedModules) > 1 {
 			report.WriteString(formatErrorStringFormat(
-				"%dx %s: %s\n",
+				"%dx %s%s\n",
 				len(affectedModules),
 				errorMessage,
 				top5StringList(affectedModules)))
 		} else {
 			report.WriteString(formatErrorStringFormat(
-				"%s: %s\n",
+				"%s%s\n",
 				errorMessage,
 				top5StringList(affectedModules)))
 		}
@@ -173,6 +198,11 @@ func (data Data) analyzeModuleWarnings() {
 			}
 
 			if issue.Details == "No supporting files or PDB files" {
+				if strings.Contains(module.Name, "Class files within") {
+					issue.Details = ""
+					data.makeRecommendation("Veracode requires Java application to be compiled into a .jar, .war or .ear file")
+				}
+
 				if strings.HasSuffix(formattedModuleName, ".jar") ||
 					strings.HasSuffix(formattedModuleName, ".war") ||
 					strings.HasSuffix(formattedModuleName, ".ear") {
@@ -240,15 +270,19 @@ func (data Data) analyzeModuleWarnings() {
 	}
 
 	for warningMessage, affectedModules := range warnings {
+		if len(warningMessage) > 1 {
+			warningMessage = warningMessage + ": "
+		}
+
 		if len(affectedModules) > 1 {
 			report.WriteString(formatWarningStringFormat(
-				"%dx %s: %s\n",
+				"%dx %s%s\n",
 				len(affectedModules),
 				warningMessage,
 				top5StringList(affectedModules)))
 		} else {
 			report.WriteString(formatWarningStringFormat(
-				"%s: %s\n",
+				"%s%s\n",
 				warningMessage,
 				top5StringList(affectedModules)))
 		}
