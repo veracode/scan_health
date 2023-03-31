@@ -36,6 +36,7 @@ func (data Data) analyzeUploadedFiles() {
 	detectUnwantedFiles(data, &report, files, ".sln", ".NET solution file", []string{"Do not upload C# source code. They will not be scanned", "Veracode requires the .NET application to be compiled"})
 	detectUnwantedFiles(data, &report, files, ".csproj", "C# project file", []string{"Do not upload C# source code. They will not be scanned", "Veracode requires the .NET application to be compiled"})
 	detectUnwantedFiles(data, &report, files, ".c", "C source code file", []string{"Do not upload C source code. They will not be scanned", "Veracode requires the application to be compiled with debug symbols"})
+	detectUnwantedFiles(data, &report, files, ".cpp", "C++ source code file", []string{"Do not upload C++ source code. They will not be scanned", "Veracode requires the application to be compiled with debug symbols"})
 	detectUnwantedFiles(data, &report, files, ".test.dll", "test artifact", []string{"Do not upload any testing artefacts"})
 	detectUnwantedFiles(data, &report, files, ".unittests.dll", "test artifact", []string{"Do not upload any testing artefacts"})
 	detectUnwantedFiles(data, &report, files, ".unittest.dll", "test artifact", []string{"Do not upload any testing artefacts"})
