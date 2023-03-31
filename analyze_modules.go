@@ -41,10 +41,12 @@ func (data Data) analyzeModules() {
 
 	if len(thirdPartyModules) > 0 {
 		report.WriteString(formatWarningStringFormat(
-			"%d 3rd-party module%s selected that likely should not be: %s\n",
+			"%d 3rd party module%s selected as an entry point which likely should not be: %s\n",
 			len(thirdPartyModules),
 			pluralise(len(thirdPartyModules)),
 			top5StringList(thirdPartyModules)))
+
+		data.makeRecommendation("We recommend only selecting 1st party components as the entry points for the analysis. This would typically be any standalone binary or the modules that contains views/controllers")
 	}
 
 	if len(junkModulesSelected) > 0 {
@@ -138,7 +140,7 @@ func (data Data) analyzeModuleWarnings() {
 				continue
 			}
 
-			if strings.HasPrefix(issue.Details, "This application is using Typescript") {
+			if strings.Contains(issue.Details, "This application is using Typescript") {
 				continue
 			}
 
@@ -153,11 +155,16 @@ func (data Data) analyzeModuleWarnings() {
 				data.makeRecommendation("When precompiling ASP.NET WebForms and MVC View ensure you specify the -fixednames flag")
 			}
 
-			if strings.Contains(issue.Details, "because we think it is minified") {
+			if strings.Contains(issue.Details, "because we think it is minified") ||
+				(strings.HasSuffix(strings.ToLower(issue.Details), ".js") && strings.Contains(issue.Details, "dist/")) {
 				data.makeRecommendation("Veracode requires that you submit JavaScript as source code in a format readable by developers. Avoid build steps that minify, obfuscate, bundle, or otherwise compress JavaScript sources")
 				data.makeRecommendation("Do not upload files that are concatenated or minified. Veracode ignores files that have filenames that suggest that they are concatenated or minified")
 				data.makeRecommendation("Review the JavaScript/TypeScript packaging cheatsheet: https://nhinv11.github.io/#/JavaScript%20/%20TypeScript")
 				data.makeRecommendation("Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager")
+			}
+
+			if strings.Contains(issue.Details, "test/") {
+				data.makeRecommendation("Do not upload any testing artefacts")
 			}
 
 			if issue.Details == "No supporting files or PDB files" {
