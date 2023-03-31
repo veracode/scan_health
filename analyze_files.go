@@ -236,7 +236,7 @@ func (data Data) reportDuplicateFiles() {
 					data.makeRecommendation("Be careful not to upload duplicate file names with different contents as this can lead to indeterminate scan results")
 				}
 
-				data.makeRecommendation("Ensure you only upload one version of an applicaiton/component of your application in each scan")
+				data.makeRecommendation("Ensure you only upload one version of an application/component of your application in each scan")
 			}
 		}
 

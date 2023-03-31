@@ -46,7 +46,7 @@ func (data Data) analyzeModules() {
 			pluralise(len(thirdPartyModules)),
 			top5StringList(thirdPartyModules)))
 
-		data.makeRecommendation("We recommend only selecting 1st party components as the entry points for the analysis. This would typically be any standalone binary or the modules that contains views/controllers")
+		data.makeRecommendation("We recommend only selecting 1st party components as the entry points for the analysis. This would typically be any standalone binary or the modules that contain views/controllers")
 	}
 
 	if len(junkModulesSelected) > 0 {
