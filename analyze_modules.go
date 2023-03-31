@@ -88,6 +88,11 @@ func (data Data) analyzeModuleFatalErrors() {
 				}
 			}
 
+			if strings.HasSuffix(strings.ToLower(module.Name), ".docx") {
+				// We report on word documents elsewhere
+				continue
+			}
+
 			if _, isReasonInMap := errors[reason]; !isReasonInMap {
 				errors[reason] = []string{}
 			}

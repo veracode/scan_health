@@ -41,6 +41,8 @@ func (data Data) analyzeUploadedFiles() {
 	detectUnwantedFiles(data, &report, files, ".unittests.dll", "test artifact", []string{"Do not upload any testing artefacts"})
 	detectUnwantedFiles(data, &report, files, ".unittest.dll", "test artifact", []string{"Do not upload any testing artefacts"})
 	detectUnwantedFiles(data, &report, files, ".coffee", "CoffeeScript file", []string{"CoffeeScript source code files will not be scanned", "Review the JavaScript/TypeScript packaging cheatsheet: https://nhinv11.github.io/#/JavaScript%20/%20TypeScript", "Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager"})
+	detectUnwantedFiles(data, &report, files, ".docx", "Word document", []string{"Do not upload unnecessary files", "Office documents could contain sensitive information or secrets and should not be uploaded"})
+	detectUnwantedFiles(data, &report, files, ".xlsx", "Spreadsheet", []string{"Do not upload unnecessary files", "Office documents could contain sensitive information or secrets and should not be uploaded"})
 
 	if report.Len() > 0 {
 		printTitle("Files Uploaded")
@@ -233,6 +235,8 @@ func (data Data) reportDuplicateFiles() {
 				if strings.HasSuffix(strings.ToLower(file.Name), ".dll") || strings.HasSuffix(strings.ToLower(file.Name), ".exe") {
 					data.makeRecommendation("Be careful not to upload duplicate file names with different contents as this can lead to indeterminate scan results")
 				}
+
+				data.makeRecommendation("Ensure you only upload one version of an applicaiton/component of your application in each scan")
 			}
 		}
 
