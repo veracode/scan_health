@@ -153,6 +153,13 @@ func (data Data) analyzeModuleWarnings() {
 				data.makeRecommendation("When precompiling ASP.NET WebForms and MVC View ensure you specify the -fixednames flag")
 			}
 
+			if strings.Contains(issue.Details, "because we think it is minified") {
+				data.makeRecommendation("Veracode requires that you submit JavaScript as source code in a format readable by developers. Avoid build steps that minify, obfuscate, bundle, or otherwise compress JavaScript sources")
+				data.makeRecommendation("Do not upload files that are concatenated or minified. Veracode ignores files that have filenames that suggest that they are concatenated or minified")
+				data.makeRecommendation("Review the JavaScript/TypeScript packaging cheatsheet: https://nhinv11.github.io/#/JavaScript%20/%20TypeScript")
+				data.makeRecommendation("Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager")
+			}
+
 			if issue.Details == "No supporting files or PDB files" {
 				if strings.HasSuffix(formattedModuleName, ".jar") ||
 					strings.HasSuffix(formattedModuleName, ".war") ||
