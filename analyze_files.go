@@ -28,21 +28,20 @@ func (data Data) analyzeUploadedFiles() {
 	detectNodeModules(data, &report)
 	detectRoslyn(data, &report, files)
 	detectGit(data, &report, files)
-	detectUnwantedFiles(data, &report, files, ".zip", "nested zip file", []string{"Do not upload archives (nested archives) within the upload package"})
-	detectUnwantedFiles(data, &report, files, ".7z", "7-zip file", []string{"Veracode does not support 7-zip. Consider zip files instead"})
-	detectUnwantedFiles(data, &report, files, ".java", "Java source code file", []string{"Do not upload Java source code files. They will not be scanned", "Veracode requires Java application to be compiled into a .jar, .war or .ear file"})
-	detectUnwantedFiles(data, &report, files, ".class", "Java class file", []string{"Do not upload Java class files", "Package Java applications into .jar, .war, .ear files"})
-	detectUnwantedFiles(data, &report, files, ".cs", "C# source code file", []string{"Do not upload C# source code. They will not be scanned", "Veracode requires the .NET application to be compiled with debug symbols"})
-	detectUnwantedFiles(data, &report, files, ".sln", ".NET solution file", []string{"Do not upload C# source code. They will not be scanned", "Veracode requires the .NET application to be compiled with debug symbols"})
-	detectUnwantedFiles(data, &report, files, ".csproj", "C# project file", []string{"Do not upload C# source code. They will not be scanned", "Veracode requires the .NET application to be compiled with debug symbols"})
-	detectUnwantedFiles(data, &report, files, ".c", "C source code file", []string{"Do not upload C source code. They will not be scanned", "Veracode requires the application to be compiled with debug symbols"})
-	detectUnwantedFiles(data, &report, files, ".cpp", "C++ source code file", []string{"Do not upload C++ source code. They will not be scanned", "Veracode requires the application to be compiled with debug symbols"})
-	detectUnwantedFiles(data, &report, files, ".test.dll", "test artifact", []string{"Do not upload any testing artefacts"})
-	detectUnwantedFiles(data, &report, files, ".unittests.dll", "test artifact", []string{"Do not upload any testing artefacts"})
-	detectUnwantedFiles(data, &report, files, ".unittest.dll", "test artifact", []string{"Do not upload any testing artefacts"})
-	detectUnwantedFiles(data, &report, files, ".coffee", "CoffeeScript file", []string{"CoffeeScript source code files will not be scanned", "Review the JavaScript/TypeScript packaging cheatsheet: https://nhinv11.github.io/#/JavaScript%20/%20TypeScript", "Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager"})
-	detectUnwantedFiles(data, &report, files, ".docx", "Word document", []string{"Do not upload unnecessary files", "Office documents could contain sensitive information or secrets and should not be uploaded"})
-	detectUnwantedFiles(data, &report, files, ".xlsx", "Spreadsheet", []string{"Do not upload unnecessary files", "Office documents could contain sensitive information or secrets and should not be uploaded"})
+	detectUnwantedFiles(data, &report, files, []string{".zip"}, "nested zip file", []string{"Do not upload archives (nested archives) within the upload package"})
+	detectUnwantedFiles(data, &report, files, []string{".7z"}, "7-zip file", []string{"Veracode does not support 7-zip. Consider zip files instead"})
+	detectUnwantedFiles(data, &report, files, []string{".java"}, "Java source code file", []string{"Do not upload Java source code files. They will not be scanned", "Veracode requires Java application to be compiled into a .jar, .war or .ear file"})
+	detectUnwantedFiles(data, &report, files, []string{".class"}, "Java class file", []string{"Do not upload Java class files", "Package Java applications into .jar, .war, .ear files"})
+	detectUnwantedFiles(data, &report, files, []string{".cs"}, "C# source code file", []string{"Do not upload C# source code. They will not be scanned", "Veracode requires the .NET application to be compiled with debug symbols"})
+	detectUnwantedFiles(data, &report, files, []string{".sln"}, ".NET solution file", []string{"Do not upload C# source code. They will not be scanned", "Veracode requires the .NET application to be compiled with debug symbols"})
+	detectUnwantedFiles(data, &report, files, []string{".csproj"}, "C# project file", []string{"Do not upload C# source code. They will not be scanned", "Veracode requires the .NET application to be compiled with debug symbols"})
+	detectUnwantedFiles(data, &report, files, []string{".c"}, "C source code file", []string{"Do not upload C source code. They will not be scanned", "Veracode requires the application to be compiled with debug symbols"})
+	detectUnwantedFiles(data, &report, files, []string{".cpp"}, "C++ source code file", []string{"Do not upload C++ source code. They will not be scanned", "Veracode requires the application to be compiled with debug symbols"})
+	detectUnwantedFiles(data, &report, files, []string{".test.dll", ".unittests.dll", ".unittest.dll"}, "test artifact", []string{"Do not upload any testing artefacts"})
+	detectUnwantedFiles(data, &report, files, []string{".coffee"}, "CoffeeScript file", []string{"CoffeeScript source code files will not be scanned", "Review the JavaScript/TypeScript packaging cheatsheet: https://nhinv11.github.io/#/JavaScript%20/%20TypeScript", "Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager"})
+	detectUnwantedFiles(data, &report, files, []string{".docx"}, "Word document", []string{"Do not upload unnecessary files", "Office documents could contain sensitive information or secrets and should not be uploaded"})
+	detectUnwantedFiles(data, &report, files, []string{".xlsx"}, "Spreadsheet", []string{"Do not upload unnecessary files", "Office documents could contain sensitive information or secrets and should not be uploaded"})
+	detectUnwantedFiles(data, &report, files, []string{".sh", ".ps", ".ps1", ".bat"}, "Batch script", []string{"Do not upload batch scripts. They will not be scanned"})
 
 	if report.Len() > 0 {
 		printTitle("Files Uploaded")
@@ -164,13 +163,15 @@ func detectRoslyn(data Data, report *strings.Builder, files []string) {
 	data.makeRecommendation("Review the .NET packaging cheatsheet: https://nhinv11.github.io/#/.NET")
 }
 
-func detectUnwantedFiles(data Data, report *strings.Builder, files []string, suffix, name string, recommendations []string) {
+func detectUnwantedFiles(data Data, report *strings.Builder, files []string, suffixes []string, name string, recommendations []string) {
 	var foundFiles []string
 
 	for _, fileName := range files {
-		if strings.HasSuffix(strings.ToLower(fileName), suffix) && !isStringInStringArray(fileName, foundFiles) {
-			if !isStringInStringArray(fileName, foundFiles) {
-				foundFiles = append(foundFiles, fileName)
+		for _, suffix := range suffixes {
+			if strings.HasSuffix(strings.ToLower(fileName), suffix) && !isStringInStringArray(fileName, foundFiles) {
+				if !isStringInStringArray(fileName, foundFiles) {
+					foundFiles = append(foundFiles, fileName)
+				}
 			}
 		}
 	}
