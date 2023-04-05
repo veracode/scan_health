@@ -2,11 +2,11 @@ package main
 
 import "strings"
 
-// / Fancy List
-// / Use a single * for wildcard search
-// / Use ! for case comparison
-// / Use ^ for contains
-// / Otherwise will check for equality
+// Fancy List:
+// Use a single * for wildcard search, e.g. "*.exe"
+// Use ! for case-sensitive comparison e.g. "!*.EXE"
+// Use ^ for contains e.g. "^test"
+// Otherwise will check for equality (case-insensitive)
 func isFileNameInFancyList(fileName string, fancyList []string) bool {
 	preFormattedFileName := strings.TrimSpace(fileName)
 
