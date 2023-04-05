@@ -14,7 +14,7 @@ func (data Data) outputRecommendations(region string) {
 
 	if strings.Contains(allRecommendations, ".NET") || strings.Contains(allRecommendations, "C#") {
 		data.makeRecommendation("Review the .NET packaging cheatsheet: https://nhinv11.github.io/#/.NET")
-		data.makeRecommendation("Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/nhinv11/veracode-dotnet-packager")
+		data.makeRecommendation("Consider using the unofficial .NET packaging tool: https://github.com/nhinv11/veracode-dotnet-packager")
 	}
 
 	if strings.Contains(allRecommendations, "Java ") {

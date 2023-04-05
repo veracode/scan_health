@@ -197,35 +197,17 @@ func (data Data) analyzeModuleWarnings() {
 				data.makeRecommendation("Do not upload any testing artefacts")
 			}
 
+			if strings.Contains(module.Name, "Class files within") {
+				issue.Details = ""
+				data.makeRecommendation("Veracode requires Java application to be compiled into a .jar, .war or .ear file")
+			}
+
 			if issue.Details == "No supporting files or PDB files" {
-				if strings.Contains(module.Name, "Class files within") {
-					issue.Details = ""
-					data.makeRecommendation("Veracode requires Java application to be compiled into a .jar, .war or .ear file")
-				}
-
-				if strings.HasSuffix(formattedModuleName, ".jar") ||
-					strings.HasSuffix(formattedModuleName, ".war") ||
-					strings.HasSuffix(formattedModuleName, ".ear") {
+				if strings.HasSuffix(formattedModuleName, ".dll") || strings.HasSuffix(formattedModuleName, ".exe") {
+					data.makeRecommendation("Ensure you include PDB files for all 1st and 2nd party .NET components. This enables Veracode to accurately report line numbers for any found flaws")
+				} else {
 					continue
 				}
-
-				if strings.HasSuffix(formattedModuleName, ".map") || strings.Contains(formattedModuleName, "_nodemodule_") {
-					continue
-				}
-
-				if strings.HasPrefix(formattedModuleName, "js files within") {
-					continue
-				}
-
-				if strings.EqualFold(formattedModuleName, "TSQL Files") {
-					continue
-				}
-
-				if strings.EqualFold(formattedModuleName, "Python Files") {
-					continue
-				}
-			} else if strings.HasSuffix(formattedModuleName, ".dll") || strings.HasSuffix(formattedModuleName, ".exe") {
-				data.makeRecommendation("Ensure you include PDB files for all 1st and 2nd party .NET components. This enables Veracode to accurately report line numbers for any found flaws")
 			}
 
 			if _, isMessageInMap := warnings[issue.Details]; !isMessageInMap {

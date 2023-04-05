@@ -3,9 +3,7 @@ package main
 var fileExtensionsToIgnore = []string{
 	"!LICENSE*",
 	".*",
-	"*.asax",
 	"*.asmx",
-	"*.aspx",
 	"*.config",
 	"*.cs",
 	"*.doc",

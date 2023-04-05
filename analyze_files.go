@@ -41,7 +41,9 @@ func (data Data) analyzeUploadedFiles() {
 	detectUnwantedFiles(data, &report, files, []string{".coffee"}, "CoffeeScript file", []string{"CoffeeScript source code files will not be scanned", "Review the JavaScript/TypeScript packaging cheatsheet: https://nhinv11.github.io/#/JavaScript%20/%20TypeScript", "Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager"})
 	detectUnwantedFiles(data, &report, files, []string{".docx"}, "Word document", []string{"Do not upload unnecessary files", "Office documents could contain sensitive information or secrets and should not be uploaded"})
 	detectUnwantedFiles(data, &report, files, []string{".xlsx"}, "Spreadsheet", []string{"Do not upload unnecessary files", "Office documents could contain sensitive information or secrets and should not be uploaded"})
+	detectUnwantedFiles(data, &report, files, []string{".bac", ".back", ".backup", ".old", ".orig"}, "Backup/old/scratch file", []string{"Do not upload old/backup files", "these files could contain sensitive information or secrets and should not be uploaded"})
 	detectUnwantedFiles(data, &report, files, []string{".sh", ".ps", ".ps1", ".bat"}, "Batch/shell script", []string{"Do not upload batch/shell scripts. They will not be scanned"})
+	detectDotnetTemplateFiles(data, &report, files)
 
 	if report.Len() > 0 {
 		printTitle("Files Uploaded")
@@ -161,6 +163,38 @@ func detectRoslyn(data Data, report *strings.Builder, files []string) {
 	report.WriteString(formatWarningString("The .NET Roslyn compiler was found\n"))
 
 	data.makeRecommendation("Review the .NET packaging cheatsheet: https://nhinv11.github.io/#/.NET")
+}
+
+func detectDotnetTemplateFiles(data Data, report *strings.Builder, files []string) {
+	var templateFileList = []string{
+		"*.cshtml",
+		"*.ascx",
+		"*.aspx",
+		"*.asax",
+	}
+
+	var foundFiles []string
+
+	for _, fileName := range files {
+		if isFileNameInFancyList(fileName, templateFileList) {
+			if !isStringInStringArray(fileName, foundFiles) {
+				foundFiles = append(foundFiles, fileName)
+			}
+		}
+	}
+
+	if len(foundFiles) == 0 {
+		return
+	}
+
+	report.WriteString(formatErrorStringFormat(
+		"%d .NET view/template/control file%s were found: %s\n",
+		len(foundFiles),
+		pluralise(len(foundFiles)),
+		top5StringList(foundFiles)))
+
+	data.makeRecommendation("If this is an ASP.NET application, please precompile the project and upload all generated assemblies")
+	data.makeRecommendation("When precompiling ASP.NET WebForms and MVC View ensure you specify the -fixednames flag")
 }
 
 func detectUnwantedFiles(data Data, report *strings.Builder, files []string, suffixes []string, name string, recommendations []string) {
