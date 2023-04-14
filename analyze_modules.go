@@ -92,24 +92,17 @@ func (data Data) analyzeModuleFatalErrors() {
 	for _, module := range data.PrescanModuleList.Modules {
 		if module.HasFatalErrors {
 			reason := module.getFatalReason()
+			lowerCaseModuleName := strings.ToLower(module.Name)
 
 			if strings.HasPrefix(reason, "No Scannable Binaries") {
-				if strings.HasSuffix(strings.ToLower(module.Name), ".war") {
-					data.makeRecommendation("Java war files with no compiled Java classes suggests incorrect packaging and will not be scanned for Java flaws")
-					data.makeRecommendation("Veracode requires Java application to be compiled into a .jar, .war or .ear file")
-					data.makeRecommendation("Do not upload Java source code files. They will not be scanned")
-				} else if strings.HasSuffix(strings.ToLower(module.Name), ".ear") {
-					data.makeRecommendation("Java ear files with no compiled Java classes suggests incorrect packaging and will not be scanned for Java flaws")
-					data.makeRecommendation("Veracode requires Java application to be compiled into a .jar, .war or .ear file")
-					data.makeRecommendation("Do not upload Java source code files. They will not be scanned")
-				} else if strings.HasSuffix(strings.ToLower(module.Name), ".jar") {
-					data.makeRecommendation("Java jar files with no compiled Java classes suggests incorrect packaging and will not be scanned for Java flaws")
-					data.makeRecommendation("Veracode requires Java application to be compiled into a .jar, .war or .ear file")
+				if strings.HasSuffix(lowerCaseModuleName, ".war") || strings.HasSuffix(lowerCaseModuleName, ".ear") || strings.HasSuffix(lowerCaseModuleName, ".jar") {
+					data.makeRecommendation(fmt.Sprintf("Java %s files with no compiled Java classes suggests incorrect packaging and will not be scanned for Java flaws", lowerCaseModuleName))
+					data.makeRecommendation("Veracode requires the Java application to be compiled into a .jar, .war or .ear file")
 					data.makeRecommendation("Do not upload Java source code files. They will not be scanned")
 				}
 			}
 
-			if strings.HasSuffix(strings.ToLower(module.Name), ".docx") {
+			if strings.HasSuffix(lowerCaseModuleName, ".docx") {
 				// We report on word documents elsewhere
 				continue
 			}
@@ -219,36 +212,26 @@ func (data Data) analyzeModuleWarnings() {
 			}
 		}
 
-		// for _, statusMessage := range strings.Split(module.Status, ",") {
-		// 	if module.Status == "OK" {
-		// 		continue
-		// 	}
+		for _, statusMessage := range strings.Split(module.Status, ",") {
+			if module.Status == "OK" {
+				continue
+			}
 
-		// 	formattedStatusMessage := strings.TrimSpace(statusMessage)
+			formattedStatusMessage := strings.TrimSpace(statusMessage)
 
-		// 	if strings.HasPrefix(formattedStatusMessage, "Unsupported Framework") {
-		// 		// These are captured under the issue details
-		// 		continue
-		// 	}
+			if strings.HasPrefix(formattedStatusMessage, "Unsupported Framework") {
+				// Ignore this
+				continue
+			}
 
-		// 	if _, isMessageInMap := warnings[formattedStatusMessage]; !isMessageInMap {
-		// 		warnings[formattedStatusMessage] = []string{}
-		// 	}
+			if strings.Contains(formattedStatusMessage, "Missing Supporting Files") {
+				data.makeRecommendation("Be sure to include all the components that make up the application within the upload. Do not omit any 2nd or third party libraries from the upload")
+			}
 
-		// 	if !isStringInStringArray(module.Name, warnings[formattedStatusMessage]) {
-		// 		warnings[formattedStatusMessage] = append(warnings[formattedStatusMessage], module.Name)
-		// 	}
-
-		// 	formattedIssue := fmt.Sprintf("\"%s\": %s", module.Name, formattedStatusMessage)
-
-		// 	if !isStringInStringArray(formattedIssue, warnings) {
-		// 		warnings = append(warnings, formattedIssue)
-
-		// 		if strings.Contains(formattedStatusMessage, "Missing Supporting Files") {
-		// 			data.makeRecommendation("Be sure to include all the components that make up the application within the upload. Do not omit any 2nd or third party libraries from the upload")
-		// 		}
-		// 	}
-		// }
+			if !isStringInStringArray(module.Name, warnings[formattedStatusMessage]) {
+				warnings[formattedStatusMessage] = append(warnings[formattedStatusMessage], module.Name)
+			}
+		}
 	}
 
 	for warningMessage, affectedModules := range warnings {
