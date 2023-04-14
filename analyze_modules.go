@@ -170,7 +170,7 @@ func (data Data) analyzeModuleWarnings() {
 			if !found {
 				key := "JavaScript module was not selected for analysis"
 				warnings[key] = append(warnings[key], module.Name)
-				data.makeRecommendation("Veracode extracted JavaScript from the uploaded application. Consider selecting the relevant 'JS files within ...' modules for analysis to cover the JavaScript risk.")
+				data.makeRecommendation("Veracode extracted JavaScript from the uploaded application. Consider selecting the relevant 'JS files within ...' modules for analysis to cover the JavaScript risk")
 			}
 		}
 
