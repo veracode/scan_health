@@ -30,7 +30,7 @@ func (data Data) analyzeUploadedFiles() {
 	detectGit(data, &report, files)
 	detectUnwantedFiles(data, &report, files, []string{"*.zip"}, "nested zip file", []string{"Do not upload archives (nested archives) within the upload package"})
 	detectUnwantedFiles(data, &report, files, []string{"*.7z"}, "7-zip file", []string{"Veracode does not support 7-zip. Consider zip files instead"})
-	detectUnwantedFiles(data, &report, files, []string{"*.java"}, "Java source code file", []string{"Do not upload Java source code files. They will not be scanned", "Veracode requires Java application to be compiled into a .jar, .war or .ear file"})
+	detectUnwantedFiles(data, &report, files, []string{"*.java"}, "Java source code file", []string{"Do not upload Java source code files. They will not be scanned", "Veracode requires the Java application to be compiled into a .jar, .war or .ear file"})
 	detectUnwantedFiles(data, &report, files, []string{"*.class"}, "Java class file", []string{"Do not upload Java class files", "Package Java applications into .jar, .war, .ear files"})
 	detectUnwantedFiles(data, &report, files, []string{"*.cs"}, "C# source code file", []string{"Do not upload C# source code. They will not be scanned", "Veracode requires the .NET application to be compiled with debug symbols"})
 	detectUnwantedFiles(data, &report, files, []string{"*.sln"}, ".NET solution file", []string{"Do not upload C# source code. They will not be scanned", "Veracode requires the .NET application to be compiled with debug symbols"})
