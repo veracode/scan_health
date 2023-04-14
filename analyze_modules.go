@@ -158,6 +158,22 @@ func (data Data) analyzeModuleWarnings() {
 
 		formattedModuleName := strings.ToLower(module.Name)
 
+		// Look for instances where we are not selecting JS files within
+		if strings.Contains(formattedModuleName, "js files within") {
+			found := false
+			for _, selectedModule := range data.DetailedReport.StaticAnalysis.Modules {
+				if strings.EqualFold(selectedModule.Name, module.Name) {
+					found = true
+				}
+			}
+
+			if !found {
+				key := "JavaScript module was not selected for analysis"
+				warnings[key] = append(warnings[key], module.Name)
+				data.makeRecommendation("Veracode extracted JavaScript from the uploaded application. Consider selecting the relevant 'JS files within ...' modules for analysis to cover the JavaScript risk.")
+			}
+		}
+
 		for _, issue := range module.Issues {
 			if strings.HasPrefix(issue.Details, "Unsupported framework") {
 				continue
@@ -224,7 +240,22 @@ func (data Data) analyzeModuleWarnings() {
 				continue
 			}
 
+			if strings.HasPrefix(formattedStatusMessage, "Support Issue") {
+				// Ignore this
+				continue
+			}
+
+			if strings.HasPrefix(formattedStatusMessage, "PDB Files Missing") {
+				if strings.HasSuffix(formattedModuleName, ".dll") || strings.HasSuffix(formattedModuleName, ".exe") {
+					formattedStatusMessage = "Modules with missing PDB files"
+					data.makeRecommendation("Ensure you include PDB files for all 1st and 2nd party .NET components. This enables Veracode to accurately report line numbers for any found flaws")
+				} else {
+					continue
+				}
+			}
+
 			if strings.Contains(formattedStatusMessage, "Missing Supporting Files") {
+				formattedStatusMessage = "Modules with missing supporting files"
 				data.makeRecommendation("Be sure to include all the components that make up the application within the upload. Do not omit any 2nd or third party libraries from the upload")
 			}
 
