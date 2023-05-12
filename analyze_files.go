@@ -41,7 +41,7 @@ func (data Data) analyzeUploadedFiles() {
 	detectUnwantedFiles(data, &report, files, []string{"*.coffee"}, "CoffeeScript file", []string{"CoffeeScript source code files will not be scanned", "Review the JavaScript/TypeScript packaging cheatsheet: https://nhinv11.github.io/#/JavaScript%20/%20TypeScript", "Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager"})
 	detectUnwantedFiles(data, &report, files, []string{"*.docx"}, "Word document", []string{"Do not upload unnecessary files", "Office documents could contain sensitive information or secrets and should not be uploaded"})
 	detectUnwantedFiles(data, &report, files, []string{"*.xlsx"}, "Spreadsheet", []string{"Do not upload unnecessary files", "Office documents could contain sensitive information or secrets and should not be uploaded"})
-	detectUnwantedFiles(data, &report, files, []string{"*.bac", "*.back", "*.backup", "*.old", "*.orig"}, "Backup/old/scratch file", []string{"Do not upload old/backup files", "these files could contain sensitive information or secrets and should not be uploaded"})
+	detectUnwantedFiles(data, &report, files, []string{"*.bac", "*.back", "*.backup", "*.old", "*.orig", "*.bak"}, "Backup/old/scratch file", []string{"Do not upload old/backup files", "these files could contain sensitive information or secrets and should not be uploaded"})
 	detectUnwantedFiles(data, &report, files, []string{"*.sh", "*.ps", "*.ps1", "*.bat"}, "Batch/shell script", []string{"Do not upload batch/shell scripts. They will not be scanned"})
 	detectDotnetTemplateFiles(data, &report, files)
 
