@@ -24,7 +24,7 @@ func (data Data) analyzeUploadedFiles() {
 	}
 
 	detectSensitiveFiles(data, &report, files)
-	detectTestArtefacts(data, &report, files)
+	detectTestArtifacts(data, &report, files)
 	detectNodeModules(data, &report)
 	detectRoslyn(data, &report, files)
 	detectGit(data, &report, files)
@@ -37,7 +37,7 @@ func (data Data) analyzeUploadedFiles() {
 	detectUnwantedFiles(data, &report, files, []string{"*.csproj"}, "C# project file", []string{"Do not upload C# source code. They will not be scanned", "Veracode requires the .NET application to be compiled with debug symbols"})
 	detectUnwantedFiles(data, &report, files, []string{"*.c"}, "C source code file", []string{"Do not upload C source code. They will not be scanned", "Veracode requires the application to be compiled with debug symbols"})
 	detectUnwantedFiles(data, &report, files, []string{"*.cpp"}, "C++ source code file", []string{"Do not upload C++ source code. They will not be scanned", "Veracode requires the application to be compiled with debug symbols"})
-	detectUnwantedFiles(data, &report, files, []string{"*.test.dll", "*.unittests.dll", "*.unittest.dll", "^mock", "^unittest", "^harness"}, "test artifact", []string{"Do not upload any testing artefacts"})
+	detectUnwantedFiles(data, &report, files, []string{"*.test.dll", "*.unittests.dll", "*.unittest.dll", "^mock", "^unittest", "^harness"}, "test artifact", []string{"Do not upload any testing artifacts"})
 	detectUnwantedFiles(data, &report, files, []string{"*.coffee"}, "CoffeeScript file", []string{"CoffeeScript source code files will not be scanned", "Review the JavaScript/TypeScript packaging cheatsheet: https://nhinv11.github.io/#/JavaScript%20/%20TypeScript", "Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager"})
 	detectUnwantedFiles(data, &report, files, []string{"*.docx"}, "Word document", []string{"Do not upload unnecessary files", "Office documents could contain sensitive information or secrets and should not be uploaded"})
 	detectUnwantedFiles(data, &report, files, []string{"*.xlsx"}, "Spreadsheet", []string{"Do not upload unnecessary files", "Office documents could contain sensitive information or secrets and should not be uploaded"})
@@ -75,7 +75,7 @@ func detectSensitiveFiles(data Data, report *strings.Builder, files []string) {
 	data.makeRecommendation("Do not upload any secrets, certificates or key files")
 }
 
-func detectTestArtefacts(data Data, report *strings.Builder, files []string) {
+func detectTestArtifacts(data Data, report *strings.Builder, files []string) {
 	var foundFiles []string
 
 	for _, fileName := range files {
@@ -96,7 +96,7 @@ func detectTestArtefacts(data Data, report *strings.Builder, files []string) {
 		pluralise(len(foundFiles)),
 		top5StringList(foundFiles)))
 
-	data.makeRecommendation("Do not upload any testing artefacts")
+	data.makeRecommendation("Do not upload any testing artifacts")
 }
 
 func detectNodeModules(data Data, report *strings.Builder) {

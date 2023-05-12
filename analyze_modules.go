@@ -203,7 +203,7 @@ func (data Data) analyzeModuleWarnings() {
 			}
 
 			if strings.Contains(issue.Details, "test/") {
-				data.makeRecommendation("Do not upload any testing artefacts")
+				data.makeRecommendation("Do not upload any testing artifacts")
 			}
 
 			if strings.Contains(module.Name, "Class files within") {
