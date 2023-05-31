@@ -67,7 +67,7 @@ func printTitle(title string) {
 	fmt.Println(strings.Repeat("=", len(title)))
 }
 
-func pluralise(count int) string {
+func pluralize(count int) string {
 	if count > 1 {
 		return "s"
 	}

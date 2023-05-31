@@ -84,16 +84,6 @@ func convertSize(size, measurement string, multiplier int) int {
 
 }
 
-func (moduleList PrescanModuleList) getFromName(moduleName string) PrescanModule {
-	for _, moduleFromlist := range moduleList.Modules {
-		if moduleFromlist.Name == moduleName {
-			return moduleFromlist
-		}
-	}
-
-	return PrescanModule{}
-}
-
 func (module PrescanModule) getFatalReason() string {
 	for _, issue := range strings.Split(module.Status, ",") {
 		if strings.HasPrefix(issue, "(Fatal)") {

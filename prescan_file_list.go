@@ -41,13 +41,3 @@ func (api API) getPrescanFileList(appId, buildId int) PrescanFileList {
 
 	return fileList
 }
-
-func (fileList PrescanFileList) getFromName(moduleName string) PrescanFile {
-	for _, file := range fileList.Files {
-		if file.Name == moduleName {
-			return file
-		}
-	}
-
-	return PrescanFile{}
-}

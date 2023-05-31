@@ -175,23 +175,3 @@ func (report DetailedReport) getOpenNonPolicyAffectingFlawCount() int {
 
 	return count
 }
-
-func (report DetailedReport) isFlawInReport(flawId int) bool {
-	for _, flaw := range report.Flaws {
-		if flaw.ID == flawId {
-			return true
-		}
-	}
-
-	return false
-}
-
-func (module DetailedReportModule) isModuleNameInDetailedReportModuleArray(modules []DetailedReportModule) bool {
-	for _, moduleInList := range modules {
-		if module.Name == moduleInList.Name {
-			return true
-		}
-	}
-
-	return false
-}

@@ -64,7 +64,7 @@ func (data Data) analyzeModules() {
 		report.WriteString(formatWarningStringFormat(
 			"%d 3rd party module%s selected as an entry point which likely should not be: %s\n",
 			len(thirdPartyModules),
-			pluralise(len(thirdPartyModules)),
+			pluralize(len(thirdPartyModules)),
 			top5StringList(thirdPartyModules)))
 
 		data.makeRecommendation("We recommend only selecting 1st party components as the entry points for the analysis. This would typically be any standalone binary or the modules that contain views/controllers")
@@ -74,7 +74,7 @@ func (data Data) analyzeModules() {
 		report.WriteString(formatWarningStringFormat(
 			"%d module%s selected that likely should not be: %s\n",
 			len(junkModulesSelected),
-			pluralise(len(junkModulesSelected)),
+			pluralize(len(junkModulesSelected)),
 			top5StringList(junkModulesSelected)))
 	}
 
