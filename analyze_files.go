@@ -250,27 +250,28 @@ func (data Data) reportDuplicateFiles() {
 			}
 		}
 
-		if len(md5s) > 1 {
-			if count == len(md5s) {
-				warningReport.WriteString(formatWarningStringFormat(
-					"%d duplicate occurance%s of \"%s\"\n",
-					count,
-					pluralise(count),
-					file.Name))
-			} else {
-				errorReport.WriteString(formatErrorStringFormat(
-					"%d duplicate occurance%s of \"%s\" with %d different MD5 hashes\n",
-					count,
-					pluralise(count),
-					file.Name,
-					len(md5s)))
+		if len(md5s) == 1 && count == 1 {
+			// Ignore - no duplicate here
+		} else if len(md5s) == 1 {
+			warningReport.WriteString(formatWarningStringFormat(
+				"%d duplicate occurrence%s of \"%s\" with MD5: %s\n",
+				count,
+				pluralise(count),
+				file.Name,
+				md5s[0]))
+		} else {
+			errorReport.WriteString(formatErrorStringFormat(
+				"%d duplicate occurrence%s of \"%s\" with %d different MD5 hashes\n",
+				count,
+				pluralise(count),
+				file.Name,
+				len(md5s)))
 
-				if strings.HasSuffix(strings.ToLower(file.Name), ".dll") || strings.HasSuffix(strings.ToLower(file.Name), ".exe") {
-					data.makeRecommendation("Be careful not to upload duplicate file names with different contents as this can lead to indeterminate scan results")
-				}
-
-				data.makeRecommendation("Ensure you only upload one version of an application/component of your application in each scan")
+			if strings.HasSuffix(strings.ToLower(file.Name), ".dll") || strings.HasSuffix(strings.ToLower(file.Name), ".exe") {
+				data.makeRecommendation("Be careful not to upload duplicate file names with different contents as this can lead to indeterminate scan results")
 			}
+
+			data.makeRecommendation("Ensure you only upload one version of an application/component of your application in each scan")
 		}
 
 		processedFiles = append(processedFiles, file.Name)
