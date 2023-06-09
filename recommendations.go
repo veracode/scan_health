@@ -13,12 +13,12 @@ func (data Data) outputRecommendations(region string) {
 	allRecommendations := strings.Join(*data.Recommendations, "")
 
 	if strings.Contains(allRecommendations, ".NET") || strings.Contains(allRecommendations, "C#") {
-		data.makeRecommendation("Review the .NET packaging cheatsheet: https://nhinv11.github.io/#/.NET")
+		data.makeRecommendation("Review the .NET packaging cheat sheet: https://docs.veracode.com/cheatsheet/")
 		data.makeRecommendation("Consider using the unofficial .NET packaging tool: https://github.com/nhinv11/veracode-dotnet-packager")
 	}
 
 	if strings.Contains(allRecommendations, "Java ") {
-		data.makeRecommendation("Review the Java packaging cheatsheet: https://nhinv11.github.io/#/Java")
+		data.makeRecommendation("Review the Java packaging cheat sheet: https://docs.veracode.com/cheatsheet/")
 	}
 
 	data.makeRecommendation(fmt.Sprintf("Review the module configuration: %s", data.DetailedReport.getReviewModulesUrl(region)))

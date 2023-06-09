@@ -38,7 +38,7 @@ func (data Data) analyzeUploadedFiles() {
 	detectUnwantedFiles(data, &report, files, []string{"*.c"}, "C source code file", []string{"Do not upload C source code. They will not be scanned", "Veracode requires the application to be compiled with debug symbols"})
 	detectUnwantedFiles(data, &report, files, []string{"*.cpp"}, "C++ source code file", []string{"Do not upload C++ source code. They will not be scanned", "Veracode requires the application to be compiled with debug symbols"})
 	detectUnwantedFiles(data, &report, files, []string{"*.test.dll", "*.unittests.dll", "*.unittest.dll", "^mock", "^unittest", "^harness"}, "test artifact", []string{"Do not upload any testing artifacts"})
-	detectUnwantedFiles(data, &report, files, []string{"*.coffee"}, "CoffeeScript file", []string{"CoffeeScript source code files will not be scanned", "Review the JavaScript/TypeScript packaging cheat sheet: https://nhinv11.github.io/#/JavaScript%20/%20TypeScript", "Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager"})
+	detectUnwantedFiles(data, &report, files, []string{"*.coffee"}, "CoffeeScript file", []string{"CoffeeScript source code files will not be scanned", "Review the JavaScript/TypeScript packaging cheat sheet: https://docs.veracode.com/cheatsheet/", "Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager"})
 	detectUnwantedFiles(data, &report, files, []string{"*.docx"}, "Word document", []string{"Do not upload unnecessary files", "Office documents could contain sensitive information or secrets and should not be uploaded"})
 	detectUnwantedFiles(data, &report, files, []string{"*.xlsx"}, "Spreadsheet", []string{"Do not upload unnecessary files", "Office documents could contain sensitive information or secrets and should not be uploaded"})
 	detectUnwantedFiles(data, &report, files, []string{"*.bac", "*.back", "*.backup", "*.old", "*.orig", "*.bak"}, "Backup/old/scratch file", []string{"Do not upload old/backup files", "these files could contain sensitive information or secrets and should not be uploaded"})
@@ -67,12 +67,12 @@ func detectSensitiveFiles(data Data, report *strings.Builder, files []string) {
 	}
 
 	report.WriteString(formatErrorStringFormat(
-		"%d sensitive file%s were found: %s\n",
+		"%d potentially sensitive file%s were found: %s\n",
 		len(foundFiles),
 		pluralize(len(foundFiles)),
 		top5StringList(foundFiles)))
 
-	data.makeRecommendation("Do not upload any secrets, certificates or key files")
+	data.makeRecommendation("Do not upload any secrets, certificates, or key files")
 }
 
 func detectTestArtifacts(data Data, report *strings.Builder, files []string) {
@@ -122,11 +122,11 @@ func detectNodeModules(data Data, report *strings.Builder) {
 		return
 	}
 
-	data.makeRecommendation("Do not upload the node_modules folder as Veracode does not scan this directory")
-	data.makeRecommendation("Review the JavaScript/TypeScript packaging cheat sheet: https://nhinv11.github.io/#/JavaScript%20/%20TypeScript")
+	data.makeRecommendation("Do not upload the \"node_modules\" folder as Veracode does not scan this directory")
+	data.makeRecommendation("Review the JavaScript/TypeScript packaging cheat sheet: https://docs.veracode.com/cheatsheet/")
 	data.makeRecommendation("Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager")
 
-	report.WriteString(formatWarningString("One or more node_modules folders were detected\n"))
+	report.WriteString(formatWarningString("One or more \"node_modules\" folders were detected\n"))
 }
 
 func detectGit(data Data, report *strings.Builder, files []string) {
@@ -162,7 +162,7 @@ func detectRoslyn(data Data, report *strings.Builder, files []string) {
 
 	report.WriteString(formatWarningString("The .NET Roslyn compiler was found\n"))
 
-	data.makeRecommendation("Review the .NET packaging cheat sheet: https://nhinv11.github.io/#/.NET")
+	data.makeRecommendation("Review the .NET packaging cheat sheet: https://docs.veracode.com/cheatsheet/")
 }
 
 func detectDotnetTemplateFiles(data Data, report *strings.Builder, files []string) {
@@ -194,7 +194,7 @@ func detectDotnetTemplateFiles(data Data, report *strings.Builder, files []strin
 		top5StringList(foundFiles)))
 
 	data.makeRecommendation("If this is an ASP.NET application, please precompile the project and upload all generated assemblies")
-	data.makeRecommendation("When precompiling ASP.NET WebForms and MVC View ensure you specify the -fixednames flag")
+	data.makeRecommendation("When precompiling ASP.NET WebForms and MVC View ensure you specify the \"-fixednames\" flag")
 }
 
 func detectUnwantedFiles(data Data, report *strings.Builder, files []string, suffixes []string, name string, recommendations []string) {

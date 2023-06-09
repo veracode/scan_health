@@ -191,14 +191,14 @@ func (data Data) analyzeModuleWarnings() {
 				recommendation := "If this is an ASP.NET application, please precompile the project and upload all generated assemblies"
 				issue.Details = strings.Replace(issue.Details, fmt.Sprintf(". %s.", recommendation), "", 1)
 				data.makeRecommendation(recommendation)
-				data.makeRecommendation("When precompiling ASP.NET WebForms and MVC View ensure you specify the -fixednames flag")
+				data.makeRecommendation("When precompiling ASP.NET WebForms and MVC View ensure you specify the \"-fixednames\" flag")
 			}
 
 			if strings.Contains(issue.Details, "because we think it is minified") ||
 				(strings.HasSuffix(strings.ToLower(issue.Details), ".js") && strings.Contains(issue.Details, "dist/")) {
 				data.makeRecommendation("Veracode requires that you submit JavaScript as source code in a format readable by developers. Avoid build steps that minify, obfuscate, bundle, or otherwise compress JavaScript sources")
 				data.makeRecommendation("Do not upload files that are concatenated or minified. Veracode ignores files that have filenames that suggest that they are concatenated or minified")
-				data.makeRecommendation("Review the JavaScript/TypeScript packaging cheatsheet: https://nhinv11.github.io/#/JavaScript%20/%20TypeScript")
+				data.makeRecommendation("Review the JavaScript/TypeScript packaging cheat sheet: https://docs.veracode.com/cheatsheet/")
 				data.makeRecommendation("Consider using the unofficial JavaScript/TypeScript packaging tool: https://github.com/fw10/veracode-javascript-packager")
 			}
 
@@ -213,7 +213,7 @@ func (data Data) analyzeModuleWarnings() {
 
 			if issue.Details == "No supporting files or PDB files" {
 				if strings.HasSuffix(formattedModuleName, ".dll") || strings.HasSuffix(formattedModuleName, ".exe") {
-					data.makeRecommendation("Ensure you include PDB files for all 1st and 2nd party .NET components. This enables Veracode to accurately report line numbers for any found flaws")
+					data.makeRecommendation("Ensure you include PDB files for all first and second party .NET components. This enables Veracode to accurately report line numbers for any found flaws")
 				} else {
 					continue
 				}
@@ -248,7 +248,7 @@ func (data Data) analyzeModuleWarnings() {
 			if strings.HasPrefix(formattedStatusMessage, "PDB Files Missing") {
 				if strings.HasSuffix(formattedModuleName, ".dll") || strings.HasSuffix(formattedModuleName, ".exe") {
 					formattedStatusMessage = "Modules with missing PDB files"
-					data.makeRecommendation("Ensure you include PDB files for all 1st and 2nd party .NET components. This enables Veracode to accurately report line numbers for any found flaws")
+					data.makeRecommendation("Ensure you include PDB files for all first and second party .NET components. This enables Veracode to accurately report line numbers for any found flaws")
 				} else {
 					continue
 				}
@@ -256,7 +256,7 @@ func (data Data) analyzeModuleWarnings() {
 
 			if strings.Contains(formattedStatusMessage, "Missing Supporting Files") {
 				formattedStatusMessage = "Modules with missing supporting files"
-				data.makeRecommendation("Be sure to include all the components that make up the application within the upload. Do not omit any 2nd or third party libraries from the upload")
+				data.makeRecommendation("Be sure to include all the components that make up the application within the upload. Do not omit any second or third-party libraries from the upload")
 			}
 
 			if !isStringInStringArray(module.Name, warnings[formattedStatusMessage]) {
