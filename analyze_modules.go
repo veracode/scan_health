@@ -98,7 +98,7 @@ func (data Data) analyzeModuleFatalErrors() {
 				if strings.HasSuffix(lowerCaseModuleName, ".war") || strings.HasSuffix(lowerCaseModuleName, ".ear") || strings.HasSuffix(lowerCaseModuleName, ".jar") {
 					data.makeRecommendation(fmt.Sprintf("Java %s files with no compiled Java classes suggests incorrect packaging and will not be scanned for Java flaws", lowerCaseModuleName))
 					data.makeRecommendation("Veracode requires the Java application to be compiled into a .jar, .war or .ear file")
-					data.makeRecommendation("Do not upload Java source code files. They will not be scanned")
+					data.makeRecommendation("Do not upload Java source code files.")
 				}
 			}
 
