@@ -6,7 +6,7 @@
 
 This is an unofficial Veracode product. It does not come with any support or warranty.
 
-Use this console tool to see the health of Veracode Static Analysis (SAST) scans and get some suggestions to improve scan performance anf flaw quality. The scans must have completed for the tool to work.
+Use this console tool to see the health of Veracode Static Analysis (SAST) scans and get some suggestions to improve scan performance and flaw quality. The scans must have completed for the tool to work.
 
 ## Key Features ✅
 
