@@ -73,5 +73,5 @@ func thirdParty(r *report.Report) {
 	}
 
 	r.ReportIssue(message, report.IssueSeverityMedium)
-	r.MakeRecommendation("Only select first party components as the entry points for the analysis. This would typically be any standalone binary or the modules that contain views/controllers")
+	r.MakeRecommendation("Only select first party components as the entry points for the analysis. This would typically be any standalone binary or the modules that contain views/controllers.")
 }

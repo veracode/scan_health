@@ -74,11 +74,11 @@ Flaw Summary
 Total (less fixed):         49
 Fixed (no longer reported): 0
 Policy affecting:           35
-Mtigated:                   2
+Mitigated:                  2
 Open affecting policy:      33
 Open not affecting policy:  14
 
-Modules Selected For Analysis
+Modules Selected for Analysis
 =============================
 * app.war
 
@@ -87,7 +87,7 @@ Issues
 ❌ A Java module was identified that contained no compiled Java classes: "common-0.1.0-SNAPSHOT.jar". Sometimes this can indicate the file contained only Java source code which is not processed by Veracode.
 ⚠️ 2 unnecessary files were uploaded: ".DS_Store", "._.DS_Store".
 ⚠️ 2 JavaScript modules were not selected for analysis: "JS files within common-0.1.0-SNAPSHOT.jar", "JS files within auth-0.1.0-SNAPSHOT.jar".
-⚠️ There have not been recent scans of this application The applciation was last scanned on 2023-01-31 08:52:10 +0000 GMT which was 148d 5h 52m 24.452762s ago. It is not uncommon for new flaws to be reported over time because Veracode is continuously improving their products, and because new SCA vulnerabilities are reported every day, and this could impact the application.
+⚠️ There have not been recent scans of this application The application was last scanned on 2023-01-31 08:52:10 +0000 GMT which was 148d 5h 52m 24.452762s ago. It is not uncommon for new flaws to be reported over time because Veracode is continuously improving their products, and because new SCA vulnerabilities are reported every day, and this could impact the application.
 
 Recommendations
 ===============

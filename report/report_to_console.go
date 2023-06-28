@@ -58,7 +58,7 @@ func renderFlawSummaryToConsole(flaws FlawSummary) {
 
 	fmt.Printf("Fixed (no longer reported): %d\n", flaws.Fixed)
 	fmt.Printf("Policy affecting:           %d\n", flaws.TotalAffectingPolicy)
-	fmt.Printf("Mtigated:                   %d\n", flaws.Mitigated)
+	fmt.Printf("Mitigated:                  %d\n", flaws.Mitigated)
 	fmt.Printf("Open affecting policy:      %d\n", flaws.OpenAffectingPolicy)
 	fmt.Printf("Open not affecting policy:  %d\n", flaws.OpenButNotAffectingPolicy)
 }
@@ -69,7 +69,7 @@ func renderSelectedModulesToConsole(report *Report) {
 		return
 	}
 
-	utils.PrintTitle("Modules Selected For Analysis")
+	utils.PrintTitle("Modules Selected for Analysis")
 
 	for _, module := range report.GetSelectedModules() {
 		fmt.Printf("* %s\n", module.Name)
