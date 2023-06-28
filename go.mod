@@ -4,6 +4,7 @@ go 1.19
 
 require (
 	github.com/antfie/veracode-go-hmac-authentication v1.0.0
+	github.com/dustin/go-humanize v1.0.1
 	github.com/fatih/color v1.15.0
 	gopkg.in/ini.v1 v1.67.0
 )

@@ -3,11 +3,11 @@ package main
 import (
 	"errors"
 	"fmt"
+	"github.com/antfie/scan_health/v2/utils"
 	"os"
 	"path/filepath"
 	"strings"
 
-	"github.com/fatih/color"
 	"gopkg.in/ini.v1"
 )
 
@@ -30,18 +30,15 @@ func getCredentials(id, key string, profile string) (string, string) {
 	}
 
 	if len(id) > 0 && len(id) != 32 {
-		color.HiRed("Error: Invalid value for -vid")
-		os.Exit(1)
+		utils.ErrorAndExit("Invalid value for -vid", nil)
 	}
 
 	if len(key) > 0 && len(key) != 128 {
-		color.HiRed("Error: Invalid value for -vkey")
-		os.Exit(1)
+		utils.ErrorAndExit("Invalid value for -vkey", nil)
 	}
 
 	if len(id) > 0 && len(key) == 0 || len(key) > 0 && len(id) == 0 {
-		color.HiRed("Error: If passing Veracode API key via command line both -vid and -vkey are required")
-		os.Exit(1)
+		utils.ErrorAndExit("If passing Veracode API key via command line both -vid and -vkey are required", nil)
 	}
 
 	id = ""
@@ -59,18 +56,15 @@ func getCredentials(id, key string, profile string) (string, string) {
 	}
 
 	if len(id) > 0 && len(id) != 32 {
-		color.HiRed("Error: Invalid value for VERACODE_API_KEY_ID")
-		os.Exit(1)
+		utils.ErrorAndExit("Invalid value for VERACODE_API_KEY_ID", nil)
 	}
 
 	if len(key) > 0 && len(key) != 128 {
-		color.HiRed("Error: Invalid value for VERACODE_API_KEY_SECRET")
-		os.Exit(1)
+		utils.ErrorAndExit("Invalid value for VERACODE_API_KEY_SECRET", nil)
 	}
 
 	if len(id) > 0 && len(key) == 0 || len(key) > 0 && len(id) == 0 {
-		color.HiRed("Error: If passing Veracode API key via environment variables both VERACODE_API_KEY_ID and VERACODE_API_KEY_SECRET are required")
-		os.Exit(1)
+		utils.ErrorAndExit("If passing Veracode API key via environment variables both VERACODE_API_KEY_ID and VERACODE_API_KEY_SECRET are required", nil)
 	}
 
 	id = ""
@@ -80,26 +74,26 @@ func getCredentials(id, key string, profile string) (string, string) {
 	homePath, err := os.UserHomeDir()
 
 	if err != nil {
-		color.HiRed("Error: Could not locate your home directory")
-		os.Exit(1)
+		utils.ErrorAndExit("Could not locate your home directory", err)
+
 	}
 
 	var credentialsFilePath = filepath.Join(homePath, ".veracode", "credentials")
 
 	if _, err := os.Stat(credentialsFilePath); errors.Is(err, os.ErrNotExist) {
-		color.HiRed("Error: Could not resolve any API credentials. Use either -vid and -vkey command line arguments, set VERACODE_API_KEY_ID and VERACODE_API_KEY_SECRET environment variables or create a Veracode credentials file. See https://docs.veracode.com/r/c_configure_api_cred_file")
-		os.Exit(1)
+		utils.ErrorAndExit("Could not resolve any API credentials. Use either -vid and -vkey command line arguments, set VERACODE_API_KEY_ID and VERACODE_API_KEY_SECRET environment variables or create a Veracode credentials file. See https://docs.veracode.com/r/c_configure_api_cred_file", err)
+
 	}
 
 	cfg, err := ini.Load(credentialsFilePath)
 	if err != nil {
-		color.HiRed("Error: Could not open the Veracode credentials file. See https://docs.veracode.com/r/c_configure_api_cred_file")
-		os.Exit(1)
+		utils.ErrorAndExit("Could not open the Veracode credentials file. See https://docs.veracode.com/r/c_configure_api_cred_file", err)
+
 	}
 
 	if !cfg.HasSection(profile) {
-		color.HiRed(fmt.Sprintf("Error: Could not find the profile [%s] within the Veracode credentials file. See https://docs.veracode.com/r/c_httpie_tool", profile))
-		os.Exit(1)
+		utils.ErrorAndExit(fmt.Sprintf("Could not find the profile [%s] within the Veracode credentials file. See https://docs.veracode.com/r/c_httpie_tool", profile), nil)
+
 	}
 
 	id = cfg.Section(profile).Key("veracode_api_key_id").String()
@@ -110,19 +104,19 @@ func getCredentials(id, key string, profile string) (string, string) {
 		key = formatCredential(key)
 
 		if len(id) != 32 {
-			color.HiRed("Error: Invalid value for veracode_api_key_id in file \"%s\"", credentialsFilePath)
-			os.Exit(1)
+			utils.ErrorAndExit(fmt.Sprintf("Invalid value for veracode_api_key_id in file \"%s\"", credentialsFilePath), nil)
+
 		}
 
 		if len(key) != 128 {
-			color.HiRed("Error: Invalid value for veracode_api_key_secret in file \"%s\"", credentialsFilePath)
-			os.Exit(1)
+			utils.ErrorAndExit(fmt.Sprintf("Invalid value for veracode_api_key_secret in file \"%s\"", credentialsFilePath), nil)
+
 		}
 
 		return id, key
 	}
 
-	color.HiRed("Error: Could not parse credentials from the Veracode credentials file. See https://docs.veracode.com/r/c_configure_api_cred_file")
-	os.Exit(1)
+	utils.ErrorAndExit("Could not parse credentials from the Veracode credentials file. See https://docs.veracode.com/r/c_configure_api_cred_file", nil)
+
 	return "", ""
 }
