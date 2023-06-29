@@ -13,7 +13,7 @@ type HealthTool struct {
 
 type Scan struct {
 	AccountId            int           `json:"account_id,omitempty"`
-	BusinessUnit         string        `json:"account_id,omitempty"`
+	BusinessUnit         string        `json:"business_unit,omitempty"`
 	ApplicationId        int           `json:"application_id,omitempty"`
 	ApplicationName      string        `json:"application_name,omitempty"`
 	ScanName             string        `json:"scan_name,omitempty"`

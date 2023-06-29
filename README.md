@@ -46,7 +46,7 @@ Usage:
 Here is an example output of the tool.
 
 ```
-Scan Health v2.00
+Scan Health v2.2
 Copyright © Veracode, Inc. 2023. All Rights Reserved.
 This is an unofficial Veracode product. It does not come with any support or warranty.
 
@@ -55,6 +55,7 @@ Warning: This is not the latest scan
 
 Scan Summary
 ============
+Business unit:      Cyber Security
 Application:        Secure File Transfer
 Sandbox:            Development
 Scan name:          15 Nov 2022 Static
@@ -97,6 +98,93 @@ Recommendations
 💡 Under-selection of first party modules affects results quality. Ensure the correct entry points have been selected as recommended and refer to this article: https://community.veracode.com/s/article/What-are-Modules-and-how-do-my-results-change-based-on-what-I-select.
 💡 Regular scanning, preferably via automation will allow the application team to respond faster to any new issues reported.
 💡 Consider scheduling a consultation to review the packaging and module configuration: https://docs.veracode.com/r/t_schedule_consultation.
+```
+
+The tool also outputs JSON if the `-format json` flag is set. An example can be seen below:
+
+```json
+{
+    "health_tool": {
+        "report_date": "2023-06-29T12:20:49.769824+01:00",
+        "version": "2.1",
+        "region": "commercial"
+    },
+    "scan": {
+        "account_id": 75603,
+        "business_unit": "Cyber Security",
+        "application_id": 793744,
+        "application_name": "Secure File Transfer",
+        "scan_name": "30 Jan 2023 Static",
+        "sandbox_id": 5139524,
+        "sandbox_name": "Dart and Flutter",
+        "build_id": 23664244,
+        "review_modules_url": "https://analysiscenter.veracode.com/auth/index.jsp#AnalyzeAppModuleList:75603:793744:23664244:23635472:23651122::::5139524",
+        "triage_flaws_url": "https://analysiscenter.veracode.com/auth/index.jsp#ReviewResultsStaticFlaws:75603:793744:23664244:23635472:23651122::::5139524",
+        "engine_version": "20230123231701",
+        "submitted_date": "2023-01-30T12:17:19Z",
+        "published_data": "2023-01-30T12:27:38Z",
+        "scan_duration": 619000000000,
+        "analysis_size": 157513561,
+        "is_latest_scan": false
+    },
+    "flaws": {
+        "total": 5,
+        "total_affecting_policy": 5,
+        "open_affecting_policy": 5
+    },
+    "uploaded_files": [
+        {
+            "id": 10552845755,
+            "name": "wonderous.ipa",
+            "status": "Uploaded",
+            "md5": "502f1a945eb85a0d09da917bba5d7de0",
+            "is_ignored": false,
+            "is_third_party": false
+        }
+    ],
+    "modules": [
+        {
+            "name": "wonderous.ipa",
+            "compiler": "DART",
+            "operating_system": "Dart",
+            "architecture": "DART",
+            "is_ignored": false,
+            "is_third_party": false,
+            "is_dependency": false,
+            "is_selected": true,
+            "has_fatal_errors": false,
+            "flaw_summary": {}
+        },
+        {
+            "id": 1756110687,
+            "name": "wonderous.ipa",
+            "is_ignored": false,
+            "is_third_party": false,
+            "is_dependency": false,
+            "is_selected": false,
+            "has_fatal_errors": false,
+            "status": "OK",
+            "platform": "DART / Dart / DART",
+            "size": "150MB",
+            "md5": "502f1a945eb85a0d09da917bba5d7de0",
+            "issues": [
+                "No supporting files or PDB files"
+            ],
+            "flaw_summary": {}
+        }
+    ],
+    "issues": [
+        {
+            "description": "There have not been recent scans of this application The application was last scanned on 2023-01-31 08:52:10 +0000 GMT which was 149d 2h 28m 42.711006s ago. It is not uncommon for new flaws to be reported over time because Veracode is continuously improving their products, and because new SCA vulnerabilities are reported every day, and this could impact the application.",
+            "severity": "medium"
+        }
+    ],
+    "recommendations": [
+        "Regular scanning, preferably via automation will allow the application team to respond faster to any new issues reported.",
+        "Consider scheduling a consultation to review the packaging and module configuration: https://docs.veracode.com/r/t_schedule_consultation."
+    ],
+    "last_activity": "2023-01-31T08:52:10Z"
+}
 ```
 
 ## Different ways to run
