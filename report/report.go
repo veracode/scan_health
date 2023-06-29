@@ -13,6 +13,7 @@ type HealthTool struct {
 
 type Scan struct {
 	AccountId            int           `json:"account_id,omitempty"`
+	BusinessUnit         string        `json:"account_id,omitempty"`
 	ApplicationId        int           `json:"application_id,omitempty"`
 	ApplicationName      string        `json:"application_name,omitempty"`
 	ScanName             string        `json:"scan_name,omitempty"`
@@ -70,11 +71,11 @@ type Module struct {
 	Flaws          FlawSummary `json:"flaw_summary,omitempty"`
 }
 
-type IssueSeverity int
+type IssueSeverity string
 
 const (
-	IssueSeverityHigh   IssueSeverity = 0
-	IssueSeverityMedium IssueSeverity = 1
+	IssueSeverityHigh   IssueSeverity = "high"
+	IssueSeverityMedium IssueSeverity = "medium"
 )
 
 type Issue struct {
@@ -105,35 +106,22 @@ func NewReport(buildId int, region, version string) *Report {
 	}
 }
 
-func (report *Report) ReportIssue(issue string, severity IssueSeverity) {
-	report.Issues = append(report.Issues, Issue{Description: issue, Severity: severity})
+func (r *Report) ReportIssue(issue string, severity IssueSeverity) {
+	r.Issues = append(r.Issues, Issue{Description: issue, Severity: severity})
 }
 
-func (report *Report) MakeRecommendation(recommendation string) {
-	if !utils.IsStringInStringArray(recommendation, report.Recommendations) {
-		report.Recommendations = append(report.Recommendations, recommendation)
+func (r *Report) MakeRecommendation(recommendation string) {
+	if !utils.IsStringInStringArray(recommendation, r.Recommendations) {
+		r.Recommendations = append(r.Recommendations, recommendation)
 	}
 }
 
-func (report *Report) Render(format string) {
+func (r *Report) Render(format string) {
 	if format == "json" {
-		report.renderToJson()
+		r.renderToJson()
 	} else {
-		report.renderToConsole()
+		r.renderToConsole()
 	}
-}
-
-func (report *Report) GetSelectedModules() []Module {
-	var selectedModules []Module
-
-	for _, module := range report.Modules {
-		if module.IsSelected {
-			selectedModules = append(selectedModules, module)
-		}
-
-	}
-
-	return selectedModules
 }
 
 func (r *Report) PrioritizeIssues() {

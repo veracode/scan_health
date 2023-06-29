@@ -7,21 +7,25 @@ import (
 	"time"
 )
 
-func (report *Report) renderToConsole() {
+func (r *Report) renderToConsole() {
 	println()
-	renderScanSummaryToConsole(report)
+	renderScanSummaryToConsole(r)
 	println()
-	renderFlawSummaryToConsole(report.Flaws)
+	renderFlawSummaryToConsole(r.Flaws)
 	println()
-	renderSelectedModulesToConsole(report)
+	renderSelectedModulesToConsole(r)
 	println()
-	renderIssues(report.Issues)
+	renderIssues(r.Issues)
 	println()
-	renderRecommendations(report.Recommendations)
+	renderRecommendations(r.Recommendations)
 }
 
 func renderScanSummaryToConsole(report *Report) {
 	utils.PrintTitle("Scan Summary")
+
+	if report.Scan.BusinessUnit != "Not Specified" {
+		fmt.Printf("Business unit:      %s\n", report.Scan.BusinessUnit)
+	}
 
 	fmt.Printf("Application:        %s\n", report.Scan.ApplicationName)
 
@@ -30,8 +34,8 @@ func renderScanSummaryToConsole(report *Report) {
 	}
 
 	fmt.Printf("Scan name:          %s\n", report.Scan.ScanName)
-	fmt.Printf("Review Modules URL: %s\n", report.Scan.ReviewModulesUrl)
-	fmt.Printf("Triage Flaws URL:   %s\n", report.Scan.TriageFlawsUrl)
+	fmt.Printf("Review modules URL: %s\n", report.Scan.ReviewModulesUrl)
+	fmt.Printf("Triage flaws URL:   %s\n", report.Scan.TriageFlawsUrl)
 	fmt.Printf("Files uploaded:     %d\n", len(report.UploadedFiles))
 	fmt.Printf("Total modules:      %d\n", len(report.Modules))
 	fmt.Printf("Modules selected:   %d\n", len(report.GetSelectedModules()))

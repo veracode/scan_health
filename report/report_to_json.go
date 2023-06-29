@@ -6,8 +6,8 @@ import (
 	"github.com/antfie/scan_health/v2/utils"
 )
 
-func (report *Report) renderToJson() {
-	formattedJson, err := json.MarshalIndent(report, "", "    ")
+func (r *Report) renderToJson() {
+	formattedJson, err := json.MarshalIndent(r, "", "    ")
 
 	if err != nil {
 		utils.ErrorAndExit("Could not render to JSON", err)

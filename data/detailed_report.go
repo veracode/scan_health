@@ -25,6 +25,7 @@ type detailedReport struct {
 	StaticAnalysis       detailedReportStaticAnalysis `xml:"static-analysis"`
 	Flaws                []detailedReportFlaw         `xml:"severity>category>cwe>staticflaws>flaw"`
 	IsLatestScan         bool                         `xml:"is_latest_build,attr"`
+	BusinessUnit         string                       `xml:"business_unit,attr"`
 }
 
 type detailedReportStaticAnalysis struct {
@@ -76,6 +77,8 @@ func (api API) populateDetailedReport(r *report.Report) {
 		utils.ErrorAndExit("Could not parse detailedreport.do API response", err)
 	}
 
+	r.Scan.AccountId = detailedReport.AccountId
+	r.Scan.BusinessUnit = detailedReport.BusinessUnit
 	r.Scan.ApplicationId = detailedReport.AppId
 	r.Scan.ApplicationName = detailedReport.AppName
 	r.Scan.SandboxId = detailedReport.SandboxId

@@ -5,10 +5,23 @@ import (
 	"strings"
 )
 
-func (report *Report) FancyListMatchUploadedFiles(fancyList []string) []string {
+func (r *Report) GetSelectedModules() []Module {
+	var selectedModules []Module
+
+	for _, module := range r.Modules {
+		if module.IsSelected {
+			selectedModules = append(selectedModules, module)
+		}
+
+	}
+
+	return selectedModules
+}
+
+func (r *Report) FancyListMatchUploadedFiles(fancyList []string) []string {
 	var foundFiles []string
 
-	for _, uploadedFile := range report.UploadedFiles {
+	for _, uploadedFile := range r.UploadedFiles {
 
 		if utils.IsFileNameInFancyList(uploadedFile.Name, fancyList) {
 			if !utils.IsStringInStringArray(uploadedFile.Name, foundFiles) {
@@ -20,10 +33,10 @@ func (report *Report) FancyListMatchUploadedFiles(fancyList []string) []string {
 	return foundFiles
 }
 
-func (report *Report) FancyListMatchModules(fancyList []string) []string {
+func (r *Report) FancyListMatchModules(fancyList []string) []string {
 	var selectedModules []string
 
-	for _, module := range report.Modules {
+	for _, module := range r.Modules {
 		if utils.IsFileNameInFancyList(module.Name, fancyList) {
 			if !utils.IsStringInStringArray(module.Name, selectedModules) {
 				selectedModules = append(selectedModules, module.Name)
@@ -34,10 +47,10 @@ func (report *Report) FancyListMatchModules(fancyList []string) []string {
 	return selectedModules
 }
 
-func (report *Report) FancyListMatchSelectedModules(fancyList []string) []string {
+func (r *Report) FancyListMatchSelectedModules(fancyList []string) []string {
 	var selectedModules []string
 
-	for _, module := range report.Modules {
+	for _, module := range r.Modules {
 		if module.IsSelected && utils.IsFileNameInFancyList(module.Name, fancyList) {
 			if !utils.IsStringInStringArray(module.Name, selectedModules) {
 				selectedModules = append(selectedModules, module.Name)
