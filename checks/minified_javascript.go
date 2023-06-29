@@ -30,7 +30,7 @@ func detectMinifiedJSUploads(r *report.Report) {
 		return
 	}
 
-	message := fmt.Sprintf("A minified JavaScript file was uploaded: %s. This file will not be scanned.", foundFiles[0])
+	message := fmt.Sprintf("A minified JavaScript file was uploaded: \"%s\". This file will not be scanned.", foundFiles[0])
 
 	if len(foundFiles) > 1 {
 		message = fmt.Sprintf("%d minified JavaScript files were uploaded: %s. These files will not be scanned.", len(foundFiles), utils.Top5StringList(foundFiles))
@@ -62,7 +62,7 @@ func detectMinifiedJSModules(r *report.Report) {
 		return
 	}
 
-	message := fmt.Sprintf("A minified JavaScript file was found within this module: %s. This file might not be scanned.", foundModules[0])
+	message := fmt.Sprintf("A minified JavaScript file was found within this module: \"%s\". This file might not be scanned.", foundModules[0])
 
 	if len(foundModules) > 1 {
 		message = fmt.Sprintf("%d minified JavaScript files were found within this module: %s. These files might not be scanned.", len(foundModules), utils.Top5StringList(foundModules))

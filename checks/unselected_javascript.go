@@ -6,6 +6,14 @@ import (
 	"github.com/antfie/scan_health/v2/utils"
 )
 
+// Test cases
+// ==========
+// Negative:
+// https://analysiscenter.veracode.com/auth/index.jsp#ReviewResultsStaticFlaws:29692:1206933:27113269:27084165:27099815:::3763747 - has JS files module and is selected
+//
+// Positive:
+//
+
 func unselectedJavaScriptModules(r *report.Report) {
 	var foundModules []string
 
@@ -26,7 +34,7 @@ func unselectedJavaScriptModules(r *report.Report) {
 		return
 	}
 
-	message := fmt.Sprintf("A JavaScript module was not selected for analysis: %s.", foundModules[0])
+	message := fmt.Sprintf("A JavaScript module was not selected for analysis: \"%s\".", foundModules[0])
 
 	if len(foundModules) > 1 {
 		message = fmt.Sprintf("%d JavaScript modules were not selected for analysis: %s.", len(foundModules), utils.Top5StringList(foundModules))
