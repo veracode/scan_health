@@ -231,10 +231,12 @@ If you find a bug, please file an Issue right here in GitHub, and I will try to 
 
 This tool makes the following API requests:
 
-* <https://github.com/antfie/scan_health/releases/latest> - to determine if a new version of the tool is available.
-* <https://analysiscenter.veracode.com/api/3.0/getmaintenancescheduleinfo.do> Documentation: (https://docs.veracode.com/r/r_getmaintenancescheduleinfo)
-* <https://analysiscenter.veracode.com/api/5.0/detailedreport.do> Documentation: (https://docs.veracode.com/r/r_detailedreport)
-* <https://analysiscenter.veracode.com/api/5.0/getbuildinfo.do> Documentation: (<https://docs.veracode.com/r/r_getbuildinfo>)
-* <https://analysiscenter.veracode.com/api/5.0/getappinfo.do> Documentation: (<https://docs.veracode.com/r/r_getappinfo>)
-* <https://analysiscenter.veracode.com/api/5.0/getfilelist.do> Documentation: (https://docs.veracode.com/r/r_getfilelist)
-* <https://analysiscenter.veracode.com/api/5.0/getprescanresults.do> Documentation: (https://docs.veracode.com/r/r_getprescanresults)
+| API                                                                         | Notes/Documentation                                        |
+|-----------------------------------------------------------------------------|------------------------------------------------------------|
+| <https://github.com/antfie/scan_health/releases/latest>                     | To determine if a new version of the tool is available.    |
+| <https://analysiscenter.veracode.com/api/3.0/getmaintenancescheduleinfo.do> | <https://docs.veracode.com/r/r_getmaintenancescheduleinfo> |
+| <https://analysiscenter.veracode.com/api/5.0/detailedreport.do>             | <https://docs.veracode.com/r/r_detailedreport>             |
+| <https://analysiscenter.veracode.com/api/5.0/getbuildinfo.do>               | <https://docs.veracode.com/r/r_getbuildinfo>               |
+| <https://analysiscenter.veracode.com/api/5.0/getappinfo.do>                 | <https://docs.veracode.com/r/r_getappinfo>                 |
+| <https://analysiscenter.veracode.com/api/5.0/getfilelist.do>                | <https://docs.veracode.com/r/r_getfilelist>                |
+| <https://analysiscenter.veracode.com/api/5.0/getprescanresults.do>          | <https://docs.veracode.com/r/r_getprescanresults>          |
