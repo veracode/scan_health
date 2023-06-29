@@ -231,7 +231,7 @@ If you find a bug, please file an Issue right here in GitHub, and I will try to 
 
 This tool makes the following API requests:
 
-| API                                                                         | Notes/Documentation                                        |
+| API                                                                         | Notes / API Documentation                                  |
 |-----------------------------------------------------------------------------|------------------------------------------------------------|
 | <https://github.com/antfie/scan_health/releases/latest>                     | To determine if a new version of the tool is available.    |
 | <https://analysiscenter.veracode.com/api/3.0/getmaintenancescheduleinfo.do> | <https://docs.veracode.com/r/r_getmaintenancescheduleinfo> |
