@@ -4,7 +4,6 @@ import (
 	"flag"
 	"fmt"
 	"os"
-	"reflect"
 	"sort"
 	"strconv"
 	"strings"
@@ -29,26 +28,6 @@ func IsStringInStringArray(input string, list []string) bool {
 
 func StringToFloat(input string) (float64, error) {
 	return strconv.ParseFloat(input, 64)
-}
-
-func DedupeArray[T interface{}](array []T) []T {
-	var result []T
-
-	for _, item := range array {
-		found := false
-
-		for _, processedItem := range result {
-			if !found && reflect.DeepEqual(item, processedItem) {
-				found = true
-			}
-		}
-
-		if !found {
-			result = append(result, item)
-		}
-	}
-
-	return result
 }
 
 func FormatDuration(duration time.Duration) string {

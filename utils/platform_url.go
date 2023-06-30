@@ -60,34 +60,6 @@ func ParseBaseUrlFromRegion(region string) string {
 	return "https://analysiscenter.veracode.com"
 }
 
-func ParseAccountIdFromPlatformUrl(urlOrAccountId string) int {
-	accountId, err := strconv.Atoi(urlOrAccountId)
-
-	if err == nil {
-		return accountId
-	}
-
-	if !IsPlatformURL(urlOrAccountId) {
-		PlatformUrlInvalid(urlOrAccountId)
-	}
-
-	var urlFragment = strings.Split(urlOrAccountId, "#")[1]
-
-	if IsParseableURL(urlFragment) {
-		accountId, err := strconv.Atoi(strings.Split(urlFragment, ":")[1])
-
-		if err != nil {
-			PlatformUrlInvalid(urlOrAccountId)
-		}
-
-		return accountId
-
-	}
-
-	PlatformUrlInvalid(urlOrAccountId)
-	return -1
-}
-
 func ParseBuildIdFromPlatformUrl(urlOrBuildId string) int {
 	buildId, err := strconv.Atoi(urlOrBuildId)
 
