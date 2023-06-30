@@ -29,6 +29,7 @@ func (api API) PopulateReportWithDataFromAPI(report *report.Report) {
 		executeApiCall(report, &wg, api.populateBuildInfo)
 	}
 
+	executeApiCall(report, &wg, api.populateSandboxInfo)
 	executeApiCall(report, &wg, api.getPrescanFileList)
 	executeApiCall(report, &wg, api.getPrescanModuleList)
 

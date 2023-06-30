@@ -15,7 +15,7 @@ type buildInfo struct {
 
 type buildInfoBuild struct {
 	XMLName xml.Name `xml:"build"`
-	Name    string   `xml:"version,attr"`
+	Version string   `xml:"version,attr"`
 }
 
 func (api API) populateBuildInfo(report *report.Report) {
@@ -29,5 +29,5 @@ func (api API) populateBuildInfo(report *report.Report) {
 		utils.ErrorAndExit("Could not parse response from getbuildinfo.do API response", err)
 	}
 
-	report.Scan.ScanName = data.Build.Name
+	report.Scan.ScanName = data.Build.Version
 }

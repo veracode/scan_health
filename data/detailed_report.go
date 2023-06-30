@@ -16,7 +16,6 @@ type detailedReport struct {
 	AppId                int                          `xml:"app_id,attr"`
 	AppName              string                       `xml:"app_name,attr"`
 	SandboxId            int                          `xml:"sandbox_id,attr"`
-	SandboxName          string                       `xml:"sandbox_name,attr"`
 	BuildId              int                          `xml:"build_id,attr"`
 	AnalysisId           int                          `xml:"analysis_id,attr"`
 	StaticAnalysisUnitId int                          `xml:"static_analysis_unit_id,attr"`
@@ -82,7 +81,6 @@ func (api API) populateDetailedReport(r *report.Report) {
 	r.Scan.ApplicationId = detailedReport.AppId
 	r.Scan.ApplicationName = detailedReport.AppName
 	r.Scan.SandboxId = detailedReport.SandboxId
-	r.Scan.SandboxName = detailedReport.SandboxName
 	r.Scan.ScanName = detailedReport.StaticAnalysis.ScanName
 	r.Scan.ReviewModulesUrl = detailedReport.getReviewModulesUrl(r.HealthTool.Region)
 	r.Scan.TriageFlawsUrl = detailedReport.getTriageFlawsUrl(r.HealthTool.Region)
