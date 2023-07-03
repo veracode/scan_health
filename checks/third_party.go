@@ -56,8 +56,10 @@ func thirdParty(r *report.Report) {
 		if utils.IsFileNameInFancyList(module.Name, thirdPartyFilePatterns) {
 			r.Modules[index].IsThirdParty = true
 
-			if !utils.IsStringInStringArray(module.Name, selectedModules) {
-				selectedModules = append(selectedModules, module.Name)
+			if r.Modules[index].IsSelected {
+				if !utils.IsStringInStringArray(module.Name, selectedModules) {
+					selectedModules = append(selectedModules, module.Name)
+				}
 			}
 		}
 	}
