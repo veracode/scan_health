@@ -86,9 +86,19 @@ func (api API) populateDetailedReport(r *report.Report) {
 	r.Scan.TriageFlawsUrl = detailedReport.getTriageFlawsUrl(r.HealthTool.Region)
 	r.Scan.EngineVersion = detailedReport.StaticAnalysis.EngineVersion
 	r.Scan.AnalysisSize = detailedReport.StaticAnalysis.AnalysisSizeBytes
-	r.Scan.SubmittedDate = utils.ParseVeracodeDate(detailedReport.StaticAnalysis.SubmittedDate).Local()
-	r.Scan.PublishedDate = utils.ParseVeracodeDate(detailedReport.StaticAnalysis.PublishedDate).Local()
-	r.Scan.ScanDuration = r.Scan.PublishedDate.Sub(r.Scan.SubmittedDate)
+
+	if detailedReport.StaticAnalysis.SubmittedDate != "" {
+		r.Scan.SubmittedDate = utils.ParseVeracodeDate(detailedReport.StaticAnalysis.SubmittedDate).Local()
+	}
+
+	if detailedReport.StaticAnalysis.PublishedDate != "" {
+		r.Scan.PublishedDate = utils.ParseVeracodeDate(detailedReport.StaticAnalysis.PublishedDate).Local()
+	}
+
+	if detailedReport.StaticAnalysis.SubmittedDate != "" && detailedReport.StaticAnalysis.PublishedDate != "" {
+		r.Scan.ScanDuration = r.Scan.PublishedDate.Sub(r.Scan.SubmittedDate)
+	}
+
 	r.Scan.IsLatestScan = detailedReport.IsLatestScan
 
 	if r.Scan.IsLatestScan {
