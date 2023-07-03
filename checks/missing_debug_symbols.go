@@ -32,7 +32,7 @@ func missingDebugSymbols(r *report.Report) {
 	message := fmt.Sprintf("A module was found to lack debug symbols (e.g., PDB files): %s.", foundModules[0])
 
 	if len(foundModules) > 1 {
-		message = fmt.Sprintf("%d modules waer found lacking debug symbols (e.g., PDB files): %s.", len(foundModules), utils.Top5StringList(foundModules))
+		message = fmt.Sprintf("%d modules were found lacking debug symbols (e.g., PDB files): %s.", len(foundModules), utils.Top5StringList(foundModules))
 	}
 
 	r.ReportIssue(message, report.IssueSeverityMedium)

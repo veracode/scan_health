@@ -10,11 +10,20 @@ func duplicateModules(r *report.Report) {
 	sameDuplicates, differentDuplicates := detectDuplicates(r)
 
 	if len(differentDuplicates) > 0 {
-		r.ReportIssue(fmt.Sprintf("%d duplicate file names were uploaded but the file hashes were different. This can affect the quality of the scan, result in scans taking longer than expected and lead to indeterministic flaws being raised. This can also cause confusion when interpreting the results. Furthermore, if the scanner found no risk in the first file, risk could be missed in the second file because the scanner only analyses the first filename it comes across when we encounter duplicate files.", len(differentDuplicates)), report.IssueSeverityHigh)
+		var duplicates []string
+
+		for fileName, count := range differentDuplicates {
+			duplicates = append(duplicates, fmt.Sprintf("%s (x%d)", fileName, count))
+		}
+
+		r.ReportIssue(fmt.Sprintf("%d duplicate file names were uploaded but the file hashes were different: %s. This can affect the quality of the scan, result in scans taking longer than expected and lead to indeterministic flaws being raised. This can also cause confusion when interpreting the results. Furthermore, if the scanner found no risk in the first file, risk could be missed in the second file because the scanner only analyses the first filename it comes across when we encounter duplicate files.", len(differentDuplicates), utils.Top5StringList(duplicates)), report.IssueSeverityHigh)
 	}
 
 	if len(sameDuplicates) == 1 {
-		r.ReportIssue(fmt.Sprintf("A duplicate file was uploaded. This can affect result in scans taking longer than expected."), report.IssueSeverityMedium)
+		for key, value := range sameDuplicates {
+			r.ReportIssue(fmt.Sprintf("%d duplicates of the file \"%s\" were uploaded. This can affect result in scans taking longer than expected.", value, key), report.IssueSeverityMedium)
+		}
+
 	} else if len(sameDuplicates) > 0 {
 		r.ReportIssue(fmt.Sprintf("%d duplicate files were uploaded. This can affect result in scans taking longer than expected.", len(sameDuplicates)), report.IssueSeverityMedium)
 	}
