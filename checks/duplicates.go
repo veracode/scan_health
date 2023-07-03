@@ -13,7 +13,9 @@ func duplicateModules(r *report.Report) {
 		r.ReportIssue(fmt.Sprintf("%d duplicate file names were uploaded but the file hashes were different. This can affect the quality of the scan, result in scans taking longer than expected and lead to indeterministic flaws being raised. This can also cause confusion when interpreting the results. Furthermore, if the scanner found no risk in the first file, risk could be missed in the second file because the scanner only analyses the first filename it comes across when we encounter duplicate files.", len(differentDuplicates)), report.IssueSeverityHigh)
 	}
 
-	if len(sameDuplicates) > 0 {
+	if len(sameDuplicates) == 1 {
+		r.ReportIssue(fmt.Sprintf("A duplicate file was uploaded. This can affect result in scans taking longer than expected."), report.IssueSeverityMedium)
+	} else if len(sameDuplicates) > 0 {
 		r.ReportIssue(fmt.Sprintf("%d duplicate files were uploaded. This can affect result in scans taking longer than expected.", len(sameDuplicates)), report.IssueSeverityMedium)
 	}
 
