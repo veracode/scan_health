@@ -15,6 +15,6 @@ func flawCount(r *report.Report) {
 
 	if r.Flaws.Total > utils.MaximumFlawCountThreshold {
 		r.ReportIssue("A large number of flaws were reported in this scan.", report.IssueSeverityMedium)
-		r.MakeRecommendation(fmt.Sprintf("More than %d flaws were found which can be an indication that the scan is misconfigured.", utils.MaximumFlawCountThreshold))
+		r.MakeRecommendation(fmt.Sprintf("More than %d flaws were found which can be an indication that the scan could be misconfigured.", utils.MaximumFlawCountThreshold))
 	}
 }

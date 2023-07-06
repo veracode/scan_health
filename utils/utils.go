@@ -46,6 +46,7 @@ func FormatDuration(duration time.Duration) string {
 }
 
 func PrintTitle(title string) {
+	println()
 	color.HiCyan(title)
 	fmt.Println(strings.Repeat("=", len(title)))
 }

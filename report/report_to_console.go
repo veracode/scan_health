@@ -8,15 +8,11 @@ import (
 )
 
 func (r *Report) renderToConsole() {
-	println()
 	renderScanSummaryToConsole(r)
-	println()
-	renderFlawSummaryToConsole(r.Flaws)
-	println()
+	renderUploadedFilesToConsole(r)
 	renderSelectedModulesToConsole(r)
-	println()
+	renderFlawSummaryToConsole(r.Flaws)
 	renderIssues(r.Issues)
-	println()
 	renderRecommendations(r.Recommendations)
 }
 
@@ -67,8 +63,21 @@ func renderFlawSummaryToConsole(flaws FlawSummary) {
 	fmt.Printf("Open not affecting policy:  %d\n", flaws.OpenButNotAffectingPolicy)
 }
 
+func renderUploadedFilesToConsole(report *Report) {
+	// No point in listing every file if there are many
+	if len(report.UploadedFiles) > 25 {
+		return
+	}
+
+	utils.PrintTitle("Uploaded files")
+
+	for _, uploadedFile := range report.UploadedFiles {
+		fmt.Printf("* %s (MD5: %s)\n", uploadedFile.Name, uploadedFile.MD5)
+	}
+}
+
 func renderSelectedModulesToConsole(report *Report) {
-	// No point in listing every module if there are loads
+	// No point in listing every module if there are many
 	if len(report.GetSelectedModules()) > 25 {
 		return
 	}

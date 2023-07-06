@@ -15,6 +15,11 @@ func unsupportedPlatformOrCompiler(r *report.Report) {
 			continue
 		}
 
+		// Ignore junk
+		if module.IsIgnored || module.IsThirdParty {
+			continue
+		}
+
 		if strings.Contains(module.Status, "(Fatal)Unsupported Platform") || strings.Contains(module.Status, "(Fatal)Unsupported Compiler") {
 			if !utils.IsStringInStringArray(module.Name, foundModules) {
 				foundModules = append(foundModules, module.Name)
