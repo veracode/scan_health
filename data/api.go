@@ -25,6 +25,12 @@ func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
 		apiUrl = strings.Replace(apiUrl, ".com", ".eu", 1)
 	}
 
+	cachedResponse := getCachedResponse(apiUrl)
+
+	if cachedResponse != nil {
+		return cachedResponse
+	}
+
 	parsedUrl, err := url.Parse(apiUrl)
 
 	if err != nil {
@@ -75,6 +81,7 @@ func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
 		utils.ErrorAndExit("There was a problem processing the API response. Please check your connectivity and the service status page at https://status.veracode.com", err)
 	}
 
+	cacheResponse(apiUrl, body)
 	return body
 }
 
