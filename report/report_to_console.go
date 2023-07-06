@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/antfie/scan_health/v2/utils"
 	"github.com/fatih/color"
+	"strings"
 	"time"
 )
 
@@ -85,7 +86,35 @@ func renderSelectedModulesToConsole(report *Report) {
 	utils.PrintTitle("Modules Selected for Analysis")
 
 	for _, module := range report.GetSelectedModules() {
-		fmt.Printf("* %s\n", module.Name)
+		var notes []string
+
+		if len(module.MD5) > 0 {
+			notes = append(notes, fmt.Sprintf("MD5: %s", module.MD5))
+		}
+
+		if len(module.Os) > 0 {
+			notes = append(notes, fmt.Sprintf("OS: %s", module.Os))
+		}
+
+		if len(module.Architecture) > 0 {
+			notes = append(notes, fmt.Sprintf("Architecture: %s", module.Architecture))
+		}
+
+		if len(module.Compiler) > 0 {
+			notes = append(notes, fmt.Sprintf("Compiler: %s", module.Compiler))
+		}
+
+		if len(module.Platform) > 0 {
+			notes = append(notes, fmt.Sprintf("Platform: %s", module.Platform))
+		}
+
+		additionalNotes := ""
+
+		if len(notes) > 0 {
+			additionalNotes = " (" + strings.Join(notes, ", ") + ")"
+		}
+
+		fmt.Printf("* %s%s\n", module.Name, additionalNotes)
 	}
 }
 
