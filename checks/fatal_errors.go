@@ -26,6 +26,11 @@ func fatalMissingPrimaryDebugSymbols(r *report.Report) {
 			continue
 		}
 
+		// Ignore junk
+		if module.IsIgnored || module.IsThirdParty {
+			continue
+		}
+
 		if strings.Contains(module.Status, "Primary Files Compiled without Debug Symbols") {
 			if !utils.IsStringInStringArray(module.Name, foundModules) {
 				foundModules = append(foundModules, module.Name)

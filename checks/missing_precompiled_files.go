@@ -49,6 +49,11 @@ func detectMissingPrecompiledFilesFromModules(r *report.Report) {
 			continue
 		}
 
+		// Ignore junk
+		if module.IsIgnored || module.IsThirdParty {
+			continue
+		}
+
 		for _, issue := range module.Issues {
 			if strings.Contains(issue, "No precompiled files were found for this .NET web application") {
 				if !utils.IsStringInStringArray(module.Name, foundModules) {

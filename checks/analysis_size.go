@@ -12,6 +12,6 @@ func analysisSize(r *report.Report) {
 		return
 	}
 
-	r.ReportIssue(fmt.Sprintf("The analysis size of the scan was (%s). This is a very large size and will likely take a long time to upload and run.", humanize.Bytes(r.Scan.AnalysisSize)), report.IssueSeverityMedium)
+	r.ReportIssue(fmt.Sprintf("The analysis size of the scan was %s. This is a very large size and will likely take a long time to upload and run.", humanize.Bytes(r.Scan.AnalysisSize)), report.IssueSeverityMedium)
 	r.MakeRecommendation("Ensure the correct modules have been selected for analysis and that the packaging guidance has been followed.")
 }
