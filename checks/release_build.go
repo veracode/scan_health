@@ -42,6 +42,6 @@ func detectDotNetReleasePathsInModuleIssues(r *report.Report) {
 			utils.Top5StringList(foundModules))
 	}
 
-	r.ReportIssue(fmt.Sprintf("%s Unit tests and mocks can make it difficult to select the correct application entry points for analysis. This is because for most cases Veracode permits users to select only the components for analysis that are not themselves depended upon by other components within the upload. Furthermore, scanning unit tests will surface flaws that will not be present in a production environment and commonly they contain hard-coded credentials for testing purposes.", message), report.IssueSeverityMedium)
-	r.MakeRecommendation("Do not upload any testing artifacts unless they will go into the production environment.")
+	r.ReportIssue(message, report.IssueSeverityMedium)
+	r.MakeRecommendation("Ensure you compile the application with debug symbols (PDBs) and include them in the upload.")
 }
