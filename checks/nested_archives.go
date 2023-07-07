@@ -21,11 +21,11 @@ func nestedArchives(r *report.Report) {
 		return
 	}
 
-	message := fmt.Sprintf("A nested archives was uploaded: \"%s\".", nestedArchives[0])
+	message := fmt.Sprintf("A nested archive was uploaded: \"%s\".", nestedArchives[0])
 
 	if len(nestedArchives) > 1 {
 		message = fmt.Sprintf(
-			"%d appeared to be nested archives: %s.",
+			"%d nested archives had been uploaded: %s.",
 			len(nestedArchives),
 			utils.Top5StringList(nestedArchives))
 	}
