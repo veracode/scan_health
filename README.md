@@ -217,9 +217,9 @@ If you know the build IDs you can use them instead of URLs if preferred, like so
 
 ## Development 🛠️
 
-### Compiling
+You may want to run using the `-cache=true` flag to speed up development.
 
-You may want to enable the `cache` build flag to speed up development.
+### Compiling
 
 ```sh
 ./build.sh

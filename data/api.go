@@ -12,10 +12,11 @@ import (
 )
 
 type API struct {
-	Id         string
-	Key        string
-	Region     string
-	AppVersion string
+	Id            string
+	Key           string
+	Region        string
+	AppVersion    string
+	EnableCaching bool
 }
 
 func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
@@ -25,10 +26,12 @@ func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
 		apiUrl = strings.Replace(apiUrl, ".com", ".eu", 1)
 	}
 
-	cachedResponse := getCachedResponse(apiUrl)
+	if api.EnableCaching {
+		cachedResponse := getCachedResponse(apiUrl)
 
-	if cachedResponse != nil {
-		return cachedResponse
+		if cachedResponse != nil {
+			return cachedResponse
+		}
 	}
 
 	parsedUrl, err := url.Parse(apiUrl)
@@ -81,7 +84,10 @@ func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
 		utils.ErrorAndExit("There was a problem processing the API response. Please check your connectivity and the service status page at https://status.veracode.com", err)
 	}
 
-	cacheResponse(apiUrl, body)
+	if api.EnableCaching {
+		cacheResponse(apiUrl, body)
+	}
+
 	return body
 }
 

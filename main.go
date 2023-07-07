@@ -18,6 +18,7 @@ func main() {
 	region := flag.String("region", "", "Veracode Region [commercial, us, european]")
 	scan := flag.String("sast", "", "Veracode Platform URL or build ID for a SAST application health review")
 	outputFormat := flag.String("format", "console", "Output format [console, json]")
+	enableCaching := flag.Bool("cache", false, "Enable caching")
 
 	flag.Parse()
 
@@ -49,9 +50,8 @@ func main() {
 
 	notifyOfUpdates()
 
-	var apiId, apiKey = getCredentials(*vid, *vkey, *profile)
-	var api = data.API{Id: apiId, Key: apiKey, Region: regionToUse, AppVersion: AppVersion}
-
+	apiId, apiKey := getCredentials(*vid, *vkey, *profile)
+	api := data.API{Id: apiId, Key: apiKey, Region: regionToUse, AppVersion: AppVersion, EnableCaching: *enableCaching}
 	buildId := utils.ParseBuildIdFromPlatformUrl(*scan)
 
 	api.AssertCredentialsWork()

@@ -1,7 +1,3 @@
-//go:build cache
-
-// This is only used for development
-
 package data
 
 import (
