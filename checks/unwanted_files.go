@@ -13,6 +13,7 @@ func detectUnwantedFiles(r *report.Report) {
 	processUnwantedFiles(r, []string{"*.7z"}, "7-zip file", []string{"Veracode does not support 7-zip. Consider using zip files instead."})
 	processUnwantedFiles(r, []string{"*.coffee"}, "CoffeeScript file", []string{"CoffeeScript source code files will not be scanned because Veracode does not support CoffeeScript.", "Review the JavaScript/TypeScript packaging instructions: https://docs.veracode.com/r/compilation_jscript."})
 	processUnwantedFiles(r, []string{"*.sh", "*.ps", "*.ps1", "*.bat"}, "batch/shell script", []string{"Do not upload batch/shell scripts."})
+	processUnwantedFiles(r, []string{"setup.exe", "*.msi"}, "installer", []string{"Do not upload installers or setup programs."})
 }
 
 func processUnwantedFiles(r *report.Report, filePatterns []string, fileType string, recommendations []string) {
