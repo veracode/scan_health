@@ -42,6 +42,7 @@ func thirdParty(r *report.Report) {
 		"Moq.dll",
 		"ComponentSpace.SAML2.dll",
 		"*aspnet-codegenerator*",
+		"sni.dll",
 	}
 
 	var selectedModules []string

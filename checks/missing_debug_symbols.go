@@ -16,6 +16,11 @@ func missingDebugSymbols(r *report.Report) {
 			continue
 		}
 
+		// Ignore junk
+		if module.IsIgnored || module.IsThirdParty {
+			continue
+		}
+
 		for _, issue := range module.Issues {
 			if strings.Contains(issue, "No supporting files or PDB files") {
 				if !utils.IsStringInStringArray(module.Name, foundModules) {

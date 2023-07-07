@@ -8,8 +8,13 @@ import (
 )
 
 func releaseBuild(r *report.Report) {
-	detectDotNetReleasePathsInModuleIssues(r)
+
+	// TODO: we cannot do this test until we get file path data from the API
+	//detectDotNetReleasePathsInModuleIssues(r)
 }
+
+// Test cases:
+// https://analysiscenter.veracode.com/auth/index.jsp#AnalyzeAppModuleList:71832:1712306:26134566:26105587:26121237::::5355525
 
 func detectDotNetReleasePathsInModuleIssues(r *report.Report) {
 	var foundModules []string
@@ -17,6 +22,11 @@ func detectDotNetReleasePathsInModuleIssues(r *report.Report) {
 	for _, module := range r.Modules {
 		// Only applicable for .net modules
 		if !module.IsDotNetOrCPPModule() {
+			continue
+		}
+
+		// Ignore junk
+		if module.IsIgnored || module.IsThirdParty {
 			continue
 		}
 
