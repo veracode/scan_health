@@ -61,6 +61,7 @@ type Module struct {
 	IsThirdParty   bool        `json:"is_third_party"`
 	IsDependency   bool        `json:"is_dependency"`
 	IsSelected     bool        `json:"is_selected"`
+	WasScanned     bool        `json:"was_scanned"`
 	HasFatalErrors bool        `json:"has_fatal_errors"`
 	Status         string      `json:"status,omitempty"`
 	Platform       string      `json:"platform,omitempty"`

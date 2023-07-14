@@ -120,6 +120,7 @@ func populateDetailedReportModules(r *report.Report, staticAnalysis detailedRepo
 			Os:           module.Os,
 			Architecture: module.Architecture,
 			IsSelected:   true,
+			WasScanned:   true,
 		})
 	}
 }

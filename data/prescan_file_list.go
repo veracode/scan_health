@@ -10,11 +10,11 @@ import (
 )
 
 type prescanFileList struct {
-	XMLName xml.Name      `xml:"filelist"`
-	Files   []prescanFile `xml:"file"`
+	XMLName xml.Name       `xml:"filelist"`
+	Files   []fileListFile `xml:"file"`
 }
 
-type prescanFile struct {
+type fileListFile struct {
 	XMLName xml.Name `xml:"file"`
 	Id      int      `xml:"file_id,attr"`
 	Name    string   `xml:"file_name,attr"`

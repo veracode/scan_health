@@ -25,8 +25,15 @@ type prescanModule struct {
 	MD5            string               `xml:"checksum,attr"`
 	HasFatalErrors bool                 `xml:"has_fatal_errors,attr"`
 	IsDependency   bool                 `xml:"is_dependency,attr"`
+	Files          []prescanFileIssue   `xml:"file_issue"`
 	Issues         []prescanModuleIssue `xml:"issue"`
 	SizeBytes      int
+}
+
+type prescanFileIssue struct {
+	XMLName xml.Name `xml:"file_issue"`
+	Name    string   `xml:"filename,attr"`
+	Details string   `xml:"details,attr"`
 }
 
 type prescanModuleIssue struct {
