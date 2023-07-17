@@ -43,6 +43,7 @@ func thirdParty(r *report.Report) {
 		"ComponentSpace.SAML2.dll",
 		"*aspnet-codegenerator*",
 		"sni.dll",
+		"AntiXssLibrary.dll",
 	}
 
 	var selectedModules []string

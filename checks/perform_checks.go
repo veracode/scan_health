@@ -57,3 +57,9 @@ func PerformChecks(r *report.Report) {
 // * There were apparent external-facing application components (“TODO”, “TODO”) that had not been selected as entry points for analysis. This could result in the reduced scan coverage.
 // * Support Issue: The image \"X\" contains statically linked standard libraries. Proceeding with these libraries included will degrade the performance of the analysis and quality of the results. Disable static linking by omitting -static and -static-libstdc++ GCC options.",
 // * Java or .NET Files Compiled without Debug Symbols - 1 File
+// * obfuscation - Compiled using obfuscation &#x28;Optional&#x29;
+
+// Bugs:
+// * https://analysiscenter.veracode.com/auth/index.jsp#AnalyzeAppModuleList:17521:293966:26537614:26508585:26524235::::341599 - duplicate module, one as dependency, file sizes differ, both selected
+// * dependencies were selected here https://analysiscenter.veracode.com/auth/index.jsp#AnalyzeAppModuleList:17521:293966:26537614:26508585:26524235::::341599
+// * Fix "and 1 others"
