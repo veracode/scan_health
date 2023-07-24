@@ -84,6 +84,9 @@ func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
 		utils.ErrorAndExit("There was a problem processing the API response. Please check your connectivity and the service status page at https://status.veracode.com", err)
 	}
 
+	// Replace any null-encoded characters with a blank string
+	body = []byte(strings.ReplaceAll(string(body), "&#x0;", ""))
+
 	if api.EnableCaching {
 		cacheResponse(apiUrl, body)
 	}
