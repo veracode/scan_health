@@ -46,7 +46,7 @@ func thirdParty(r *report.Report) {
 		"AntiXssLibrary.dll",
 	}
 
-	var selectedModules []string
+	var selectedThirdPartyModules []string
 
 	for index, uploadedFile := range r.UploadedFiles {
 		if utils.IsFileNameInFancyList(uploadedFile.Name, thirdPartyFilePatterns) {
@@ -56,26 +56,26 @@ func thirdParty(r *report.Report) {
 
 	for index, module := range r.Modules {
 		if utils.IsFileNameInFancyList(module.Name, thirdPartyFilePatterns) {
-			r.Modules[index].IsThirdParty = true
+			r.Modules[index].MarkThirdParty()
 
-			if r.Modules[index].IsSelected {
-				if !utils.IsStringInStringArray(module.Name, selectedModules) {
-					selectedModules = append(selectedModules, module.Name)
+			if r.Modules[index].IsSelected() {
+				if !utils.IsStringInStringArray(module.Name, selectedThirdPartyModules) {
+					selectedThirdPartyModules = append(selectedThirdPartyModules, module.Name)
 				}
 			}
 		}
 	}
 
-	if len(selectedModules) == 0 {
+	if len(selectedThirdPartyModules) == 0 {
 		return
 	}
 
-	var message = fmt.Sprintf("A third-party component was selected as an entry point: \"%s\".", selectedModules[0])
+	var message = fmt.Sprintf("A third-party component was selected as an entry point: \"%s\".", selectedThirdPartyModules[0])
 
-	if len(selectedModules) > 1 {
-		message = fmt.Sprintf("%d third-party components were selected as an entry point: %s.", len(selectedModules), utils.Top5StringList(selectedModules))
+	if len(selectedThirdPartyModules) > 1 {
+		message = fmt.Sprintf("%d third-party components were selected as an entry point: %s.", len(selectedThirdPartyModules), utils.Top5StringList(selectedThirdPartyModules))
 	}
 
-	r.ReportIssue(message, report.IssueSeverityMedium)
+	r.ReportModuleIssue(message, report.IssueSeverityMedium, selectedThirdPartyModules)
 	r.MakeRecommendation("Only select first party components as the entry points for the analysis. This would typically be any standalone binary or the modules that contain views/controllers.")
 }

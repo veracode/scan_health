@@ -4,23 +4,22 @@ import (
 	"fmt"
 	"github.com/antfie/scan_health/v2/report"
 	"github.com/antfie/scan_health/v2/utils"
-	"strings"
 )
 
 func unsupportedPlatformOrCompiler(r *report.Report) {
 	var foundModules []string
 
 	for _, module := range r.Modules {
-		if !module.HasFatalErrors {
+		if !module.HasFatalErrors() {
 			continue
 		}
 
 		// Ignore junk
-		if module.IsIgnored || module.IsThirdParty {
+		if module.IsIgnored() || module.IsThirdParty() {
 			continue
 		}
 
-		if strings.Contains(module.Status, "(Fatal)Unsupported Platform") || strings.Contains(module.Status, "(Fatal)Unsupported Compiler") {
+		if module.HasStatus("(Fatal)Unsupported Platform") || module.HasStatus("(Fatal)Unsupported Compiler") {
 			if !utils.IsStringInStringArray(module.Name, foundModules) {
 				foundModules = append(foundModules, module.Name)
 			}
@@ -37,6 +36,6 @@ func unsupportedPlatformOrCompiler(r *report.Report) {
 		message = fmt.Sprintf("%d modules could not be scanned because the platforms and/or compilers are unsupported: %s.", len(foundModules), utils.Top5StringList(foundModules))
 	}
 
-	r.ReportIssue(message, report.IssueSeverityHigh)
+	r.ReportModuleIssue(message, report.IssueSeverityHigh, foundModules)
 	r.MakeRecommendation("Review the packaging documentation to ensure the vendor and version of the compiler is supported.")
 }

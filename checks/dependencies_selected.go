@@ -9,9 +9,9 @@ import (
 func dependenciesSelected(r *report.Report) {
 	var foundModules []string
 
-	for _, module := range r.Modules {
-		if module.IsSelected && module.IsDependency {
-			foundModules = append(foundModules, module.Name)
+	for _, selectedModule := range r.GetSelectedModules() {
+		if selectedModule.IsDependency() {
+			foundModules = append(foundModules, selectedModule.Name)
 		}
 	}
 
@@ -25,6 +25,6 @@ func dependenciesSelected(r *report.Report) {
 		message = fmt.Sprintf("%d dependencies were selected as entry points: %s. This could lead to flaws being raised relating to functionality that may be considered un-reachable or not actionable.", len(foundModules), utils.Top5StringList(foundModules))
 	}
 
-	r.ReportIssue(message, report.IssueSeverityMedium)
+	r.ReportModuleIssue(message, report.IssueSeverityMedium, foundModules)
 	r.MakeRecommendation("Only select the main entry points of the application and not libraries, as documented here: https://community.veracode.com/s/article/What-are-Modules-and-how-do-my-results-change-based-on-what-I-select.")
 }

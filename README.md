@@ -6,7 +6,8 @@
 
 This is an unofficial Veracode product. It does not come with any support or warranty.
 
-Use this console tool to see the health of Veracode Static Analysis (SAST) scans and get some suggestions to improve scan performance and flaw quality. The scans must have completed for the tool to work.
+Use this console tool to see the health of Veracode Static Analysis (SAST) scans and get some suggestions to improve
+scan performance and flaw quality. The scans must have completed for the tool to work.
 
 ## Key Features ✅
 
@@ -15,7 +16,10 @@ Use this console tool to see the health of Veracode Static Analysis (SAST) scans
 
 ## Usage
 
-To use the tool you will need Veracode API credentials. We recommend you configure a Veracode API credentials file as documented here: <https://docs.veracode.com/r/c_configure_api_cred_file>. Alternatively you can use environment variables (`VERACODE_API_KEY_ID` and `VERACODE_API_KEY_SECRET`) or the CLI flags (`-vid` and `-vkey`) to authenticate with the Veracode APIs.
+To use the tool you will need Veracode API credentials. We recommend you configure a Veracode API credentials file as
+documented here: <https://docs.veracode.com/r/c_configure_api_cred_file>. Alternatively you can use environment
+variables (`VERACODE_API_KEY_ID` and `VERACODE_API_KEY_SECRET`) or the CLI flags (`-vid` and `-vkey`) to authenticate
+with the Veracode APIs.
 
 ```sh
 ./scan_health -h
@@ -43,6 +47,7 @@ Usage:
 ```sh
 ./scan_health -sast https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002
 ```
+
 Here is an example output of the tool.
 
 ```

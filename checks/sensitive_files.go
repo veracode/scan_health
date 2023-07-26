@@ -46,7 +46,7 @@ func detectSecretFiles(r *report.Report) {
 			utils.Top5StringList(foundFiles), issueDescription)
 	}
 
-	r.ReportIssue(issueText, report.IssueSeverityHigh)
+	r.ReportFileIssue(issueText, report.IssueSeverityHigh, foundFiles)
 	r.MakeRecommendation("Do not upload any secrets, certificates, or key files.")
 	r.MakeRecommendation("Do not upload unnecessary files.")
 }
@@ -72,7 +72,7 @@ func detectBackupFiles(r *report.Report) {
 			utils.Top5StringList(foundFiles), issueDescription)
 	}
 
-	r.ReportIssue(issueText, report.IssueSeverityHigh)
+	r.ReportFileIssue(issueText, report.IssueSeverityHigh, foundFiles)
 	r.MakeRecommendation("Do not upload backup, old or scratch files.")
 	r.MakeRecommendation("Do not upload unnecessary files.")
 }
@@ -98,7 +98,7 @@ func detectWordDocuments(r *report.Report) {
 			utils.Top5StringList(foundFiles), issueDescription)
 	}
 
-	r.ReportIssue(issueText, report.IssueSeverityHigh)
+	r.ReportFileIssue(issueText, report.IssueSeverityHigh, foundFiles)
 	r.MakeRecommendation("Office documents could contain sensitive information or secrets and should not be uploaded.")
 	r.MakeRecommendation("Do not upload unnecessary files.")
 }
@@ -124,7 +124,7 @@ func detectSpreadsheets(r *report.Report) {
 			utils.Top5StringList(foundFiles), issueDescription)
 	}
 
-	r.ReportIssue(issueText, report.IssueSeverityHigh)
+	r.ReportFileIssue(issueText, report.IssueSeverityHigh, foundFiles)
 	r.MakeRecommendation("Office documents could contain sensitive information or secrets and should not be uploaded.")
 	r.MakeRecommendation("Do not upload unnecessary files.")
 }

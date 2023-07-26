@@ -36,7 +36,7 @@ func detectMinifiedJSUploads(r *report.Report) {
 		message = fmt.Sprintf("%d minified JavaScript files were uploaded: %s. These files will not be scanned.", len(foundFiles), utils.Top5StringList(foundFiles))
 	}
 
-	r.ReportIssue(message, report.IssueSeverityMedium)
+	r.ReportFileIssue(message, report.IssueSeverityMedium, foundFiles)
 	makeJSRecommendations(r)
 }
 
@@ -49,7 +49,7 @@ func detectMinifiedJSModules(r *report.Report) {
 			continue
 		}
 
-		for _, issue := range module.Issues {
+		for _, issue := range module.GetAllIssues() {
 			if strings.Contains(issue, "because we think it is minified") || strings.Contains(strings.ToLower(issue), "dist/") {
 				if !utils.IsStringInStringArray(module.Name, foundModules) {
 					foundModules = append(foundModules, module.Name)
@@ -68,7 +68,7 @@ func detectMinifiedJSModules(r *report.Report) {
 		message = fmt.Sprintf("%d minified JavaScript files were found within this module: %s. These files might not be scanned.", len(foundModules), utils.Top5StringList(foundModules))
 	}
 
-	r.ReportIssue(message, report.IssueSeverityMedium)
+	r.ReportModuleIssue(message, report.IssueSeverityMedium, foundModules)
 	makeJSRecommendations(r)
 }
 

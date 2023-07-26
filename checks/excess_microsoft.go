@@ -31,6 +31,6 @@ func excessMicrosoft(r *report.Report) {
 			utils.Top5StringList(foundFiles))
 	}
 
-	r.ReportIssue(message, report.IssueSeverityMedium)
+	r.ReportFileIssue(message, report.IssueSeverityMedium, foundFiles)
 	r.MakeRecommendation("Where possible do not include unnecessary Microsoft runtime components.")
 }

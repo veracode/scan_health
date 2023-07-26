@@ -35,7 +35,7 @@ func processSourceCodeFiles(r *report.Report, filePatterns []string, fileType st
 			utils.Top5StringList(foundFiles))
 	}
 
-	r.ReportIssue(message, report.IssueSeverityHigh)
+	r.ReportFileIssue(message, report.IssueSeverityHigh, foundFiles)
 
 	for _, recommendation := range recommendations {
 		r.MakeRecommendation(recommendation)

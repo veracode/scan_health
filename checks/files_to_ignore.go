@@ -55,7 +55,7 @@ func ignoreJunkFiles(r *report.Report) {
 
 	for index, module := range r.Modules {
 		if utils.IsFileNameInFancyList(module.Name, filePatternsToIgnore) {
-			r.Modules[index].IsIgnored = true
+			r.Modules[index].MarkIgnored()
 		}
 	}
 
@@ -69,6 +69,6 @@ func ignoreJunkFiles(r *report.Report) {
 		message = fmt.Sprintf("%d unnecessary files were uploaded: %s.", len(ignoredFiles), utils.Top5StringList(ignoredFiles))
 	}
 
-	r.ReportIssue(message, report.IssueSeverityMedium)
+	r.ReportFileIssue(message, report.IssueSeverityMedium, ignoredFiles)
 	r.MakeRecommendation("Follow the packaging instructions to keep the upload as small as possible in order to improve upload and scan times.")
 }

@@ -52,24 +52,28 @@ type UploadedFile struct {
 }
 
 type Module struct {
-	Id             int         `json:"id,omitempty"`
-	Name           string      `json:"name,omitempty"`
-	Compiler       string      `json:"compiler,omitempty"`
-	Os             string      `json:"operating_system,omitempty"`
-	Architecture   string      `json:"architecture,omitempty"`
-	IsIgnored      bool        `json:"is_ignored"`
-	IsThirdParty   bool        `json:"is_third_party"`
-	IsDependency   bool        `json:"is_dependency"`
-	IsSelected     bool        `json:"is_selected"`
-	WasScanned     bool        `json:"was_scanned"`
-	HasFatalErrors bool        `json:"has_fatal_errors"`
-	Status         string      `json:"status,omitempty"`
-	Platform       string      `json:"platform,omitempty"`
-	Size           string      `json:"size,omitempty"`
-	MD5            string      `json:"md5,omitempty"`
-	Issues         []string    `json:"issues,omitempty"`
-	SizeBytes      int         `json:"size_bytes,omitempty"`
-	Flaws          FlawSummary `json:"flaw_summary,omitempty"`
+	Name      string           `json:"name,omitempty"`
+	Instances []ModuleInstance `json:"instances,omitempty"`
+	Flaws     FlawSummary      `json:"flaw_summary,omitempty"`
+}
+
+type ModuleInstance struct {
+	Id              int      `json:"id,omitempty"`
+	Compiler        string   `json:"compiler,omitempty"`
+	OperatingSystem string   `json:"operating_system,omitempty"`
+	Architecture    string   `json:"architecture,omitempty"`
+	IsIgnored       bool     `json:"is_ignored"`
+	IsThirdParty    bool     `json:"is_third_party"`
+	IsDependency    bool     `json:"is_dependency"`
+	IsSelected      bool     `json:"is_selected"`
+	WasScanned      bool     `json:"was_scanned"`
+	HasFatalErrors  bool     `json:"has_fatal_errors"`
+	Status          string   `json:"status,omitempty"`
+	Platform        string   `json:"platform,omitempty"`
+	Size            string   `json:"size,omitempty"`
+	MD5             string   `json:"md5,omitempty"`
+	Issues          []string `json:"issues,omitempty"`
+	SizeBytes       int      `json:"size_bytes,omitempty"`
 }
 
 type IssueSeverity string
@@ -80,8 +84,10 @@ const (
 )
 
 type Issue struct {
-	Description string        `json:"description,omitempty"`
-	Severity    IssueSeverity `json:"severity,omitempty"`
+	Description     string        `json:"description,omitempty"`
+	Severity        IssueSeverity `json:"severity,omitempty"`
+	AffectedFiles   []string      `json:"affected_files,omitempty"`
+	AffectedModules []string      `json:"affected_modules,omitempty"`
 }
 
 type Report struct {
@@ -109,6 +115,28 @@ func NewReport(buildId int, region, version string) *Report {
 
 func (r *Report) ReportIssue(issue string, severity IssueSeverity) {
 	r.Issues = append(r.Issues, Issue{Description: issue, Severity: severity})
+}
+
+func (r *Report) ReportFileIssue(issue string, severity IssueSeverity, files []string) {
+	for index, existingIssue := range r.Issues {
+		if existingIssue.Description == issue {
+			r.Issues[index].AffectedFiles = files
+			return
+		}
+	}
+
+	r.Issues = append(r.Issues, Issue{Description: issue, Severity: severity, AffectedFiles: files})
+}
+
+func (r *Report) ReportModuleIssue(issue string, severity IssueSeverity, modules []string) {
+	for index, existingIssue := range r.Issues {
+		if existingIssue.Description == issue {
+			r.Issues[index].AffectedModules = modules
+			return
+		}
+	}
+
+	r.Issues = append(r.Issues, Issue{Description: issue, Severity: severity, AffectedModules: modules})
 }
 
 func (r *Report) MakeRecommendation(recommendation string) {

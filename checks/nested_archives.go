@@ -7,29 +7,29 @@ import (
 )
 
 func nestedArchives(r *report.Report) {
-	var nestedArchives []string
+	var foundFiles []string
 
 	for _, uploadedFile := range r.UploadedFiles {
 		if uploadedFile.Status == "Archive File Within Another Archive" {
-			if !utils.IsStringInStringArray(uploadedFile.Name, nestedArchives) {
-				nestedArchives = append(nestedArchives, uploadedFile.Name)
+			if !utils.IsStringInStringArray(uploadedFile.Name, foundFiles) {
+				foundFiles = append(foundFiles, uploadedFile.Name)
 			}
 		}
 	}
 
-	if len(nestedArchives) == 0 {
+	if len(foundFiles) == 0 {
 		return
 	}
 
-	message := fmt.Sprintf("A nested archive was uploaded: \"%s\".", nestedArchives[0])
+	message := fmt.Sprintf("A nested archive was uploaded: \"%s\".", foundFiles[0])
 
-	if len(nestedArchives) > 1 {
+	if len(foundFiles) > 1 {
 		message = fmt.Sprintf(
 			"%d nested archives had been uploaded: %s.",
-			len(nestedArchives),
-			utils.Top5StringList(nestedArchives))
+			len(foundFiles),
+			utils.Top5StringList(foundFiles))
 	}
 
-	r.ReportIssue(fmt.Sprintf("%s Veracode does not process nested archives so there may have been some components of this upload that were not analyzed.", message), report.IssueSeverityHigh)
+	r.ReportFileIssue(fmt.Sprintf("%s Veracode does not process nested archives so there may have been some components of this upload that were not analyzed.", message), report.IssueSeverityHigh, foundFiles)
 	r.MakeRecommendation("Ensure you do not upload any nested archives because these will not be scanned.")
 }

@@ -114,13 +114,12 @@ func (api API) populateDetailedReport(r *report.Report) {
 
 func populateDetailedReportModules(r *report.Report, staticAnalysis detailedReportStaticAnalysis) {
 	for _, module := range staticAnalysis.Modules {
-		r.Modules = append(r.Modules, report.Module{
-			Name:         module.Name,
-			Compiler:     module.Compiler,
-			Os:           module.Os,
-			Architecture: module.Architecture,
-			IsSelected:   true,
-			WasScanned:   true,
+		r.AddModuleInstance(module.Name, report.ModuleInstance{
+			Compiler:        module.Compiler,
+			OperatingSystem: module.Os,
+			Architecture:    module.Architecture,
+			IsSelected:      true,
+			WasScanned:      true,
 		})
 	}
 }
@@ -139,21 +138,9 @@ func populateModulesFromFlaws(r *report.Report, detailedReport detailedReport) {
 			isDependentModule = true
 		}
 
-		moduleFound := false
-
-		for _, module := range r.Modules {
-			if strings.EqualFold(flaw.Module, module.Name) {
-				moduleFound = true
-				break
-			}
-		}
-
-		if !moduleFound {
-			r.Modules = append(r.Modules, report.Module{
-				Name:         flaw.Module,
-				IsDependency: isDependentModule,
-			})
-		}
+		r.AddModuleInstance(flaw.Module, report.ModuleInstance{
+			IsDependency: isDependentModule,
+		})
 	}
 }
 

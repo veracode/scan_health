@@ -36,7 +36,7 @@ func detectMissingPrecompiledFilesFromUploadedFiles(r *report.Report) {
 		message = fmt.Sprintf("%d .NET views/templates/control files were uploaded: %s.", len(foundFiles), utils.Top5StringList(foundFiles))
 	}
 
-	r.ReportIssue(message, report.IssueSeverityHigh)
+	r.ReportFileIssue(message, report.IssueSeverityHigh, foundFiles)
 	recommendPrecompile(r)
 }
 
@@ -50,11 +50,11 @@ func detectMissingPrecompiledFilesFromModules(r *report.Report) {
 		}
 
 		// Ignore junk
-		if module.IsIgnored || module.IsThirdParty {
+		if module.IsIgnored() || module.IsThirdParty() {
 			continue
 		}
 
-		for _, issue := range module.Issues {
+		for _, issue := range module.GetAllIssues() {
 			if strings.Contains(issue, "No precompiled files were found for this .NET web application") {
 				if !utils.IsStringInStringArray(module.Name, foundModules) {
 					foundModules = append(foundModules, module.Name)
@@ -73,7 +73,7 @@ func detectMissingPrecompiledFilesFromModules(r *report.Report) {
 		message = fmt.Sprintf("%d .NET components were identified to not contain precompiled files (views/templates/controls): %s.", len(foundModules), utils.Top5StringList(foundModules))
 	}
 
-	r.ReportIssue(message, report.IssueSeverityMedium)
+	r.ReportModuleIssue(message, report.IssueSeverityMedium, foundModules)
 	recommendPrecompile(r)
 }
 

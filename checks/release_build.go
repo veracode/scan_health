@@ -26,11 +26,11 @@ func detectDotNetReleasePathsInModuleIssues(r *report.Report) {
 		}
 
 		// Ignore junk
-		if module.IsIgnored || module.IsThirdParty {
+		if module.IsIgnored() || module.IsThirdParty() {
 			continue
 		}
 
-		for _, issue := range module.Issues {
+		for _, issue := range module.GetAllIssues() {
 			if strings.Contains(strings.ToLower(issue), "release/") {
 				if !utils.IsStringInStringArray(module.Name, foundModules) {
 					foundModules = append(foundModules, module.Name)
@@ -52,6 +52,6 @@ func detectDotNetReleasePathsInModuleIssues(r *report.Report) {
 			utils.Top5StringList(foundModules))
 	}
 
-	r.ReportIssue(message, report.IssueSeverityMedium)
+	r.ReportModuleIssue(message, report.IssueSeverityMedium, foundModules)
 	r.MakeRecommendation("Ensure you compile the application with debug symbols (PDBs) and include them in the upload.")
 }

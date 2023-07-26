@@ -78,43 +78,45 @@ func renderUploadedFilesToConsole(report *Report) {
 }
 
 func renderSelectedModulesToConsole(report *Report) {
-	// No point in listing every module if there are many
+	// No point in listing every selected module if there are many
 	if len(report.GetSelectedModules()) > 25 {
 		return
 	}
 
 	utils.PrintTitle("Modules Selected for Analysis")
 
-	for _, module := range report.GetSelectedModules() {
-		var notes []string
+	for _, selectedModule := range report.GetSelectedModules() {
+		for _, moduleInstance := range selectedModule.Instances {
+			var notes []string
 
-		if len(module.MD5) > 0 {
-			notes = append(notes, fmt.Sprintf("MD5: %s", module.MD5))
+			if len(moduleInstance.MD5) > 0 {
+				notes = append(notes, fmt.Sprintf("MD5: %s", moduleInstance.MD5))
+			}
+
+			if len(moduleInstance.OperatingSystem) > 0 {
+				notes = append(notes, fmt.Sprintf("OS: %s", moduleInstance.OperatingSystem))
+			}
+
+			if len(moduleInstance.Architecture) > 0 {
+				notes = append(notes, fmt.Sprintf("Architecture: %s", moduleInstance.Architecture))
+			}
+
+			if len(moduleInstance.Compiler) > 0 {
+				notes = append(notes, fmt.Sprintf("Compiler: %s", moduleInstance.Compiler))
+			}
+
+			if len(moduleInstance.Platform) > 0 {
+				notes = append(notes, fmt.Sprintf("Platform: %s", moduleInstance.Platform))
+			}
+
+			additionalNotes := ""
+
+			if len(notes) > 0 {
+				additionalNotes = " (" + strings.Join(notes, ", ") + ")"
+			}
+
+			fmt.Printf("* %s%s\n", selectedModule.Name, additionalNotes)
 		}
-
-		if len(module.Os) > 0 {
-			notes = append(notes, fmt.Sprintf("OS: %s", module.Os))
-		}
-
-		if len(module.Architecture) > 0 {
-			notes = append(notes, fmt.Sprintf("Architecture: %s", module.Architecture))
-		}
-
-		if len(module.Compiler) > 0 {
-			notes = append(notes, fmt.Sprintf("Compiler: %s", module.Compiler))
-		}
-
-		if len(module.Platform) > 0 {
-			notes = append(notes, fmt.Sprintf("Platform: %s", module.Platform))
-		}
-
-		additionalNotes := ""
-
-		if len(notes) > 0 {
-			additionalNotes = " (" + strings.Join(notes, ", ") + ")"
-		}
-
-		fmt.Printf("* %s%s\n", module.Name, additionalNotes)
 	}
 }
 

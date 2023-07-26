@@ -23,7 +23,7 @@ func unselectedJavaScriptModules(r *report.Report) {
 			continue
 		}
 
-		if !module.HasFatalErrors && !module.IsIgnored && !module.IsSelected {
+		if !module.HasFatalErrors() && !module.IsIgnored() && !module.IsSelected() {
 			if !utils.IsStringInStringArray(module.Name, foundModules) {
 				foundModules = append(foundModules, module.Name)
 			}
@@ -40,7 +40,7 @@ func unselectedJavaScriptModules(r *report.Report) {
 		message = fmt.Sprintf("%d JavaScript modules were not selected for analysis: %s.", len(foundModules), utils.Top5StringList(foundModules))
 	}
 
-	r.ReportIssue(message, report.IssueSeverityMedium)
+	r.ReportModuleIssue(message, report.IssueSeverityMedium, foundModules)
 	r.MakeRecommendation("Veracode extracts JavaScript modules from the upload. Consider selecting the appropriate \"JS files within ...\" modules for analysis in order to cover the JavaScript risk from these components.")
 	r.MakeRecommendation("Under-selection of first party modules affects results quality. Ensure the correct entry points have been selected as recommended and refer to this article: https://community.veracode.com/s/article/What-are-Modules-and-how-do-my-results-change-based-on-what-I-select.")
 }

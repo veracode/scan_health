@@ -33,7 +33,7 @@ func processUnwantedFiles(r *report.Report, filePatterns []string, fileType stri
 			utils.Top5StringList(foundFiles))
 	}
 
-	r.ReportIssue(message, report.IssueSeverityMedium)
+	r.ReportFileIssue(message, report.IssueSeverityMedium, foundFiles)
 
 	for _, recommendation := range recommendations {
 		r.MakeRecommendation(recommendation)

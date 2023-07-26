@@ -17,11 +17,11 @@ func missingDebugSymbols(r *report.Report) {
 		}
 
 		// Ignore junk
-		if module.IsIgnored || module.IsThirdParty {
+		if module.IsIgnored() || module.IsThirdParty() {
 			continue
 		}
 
-		for _, issue := range module.Issues {
+		for _, issue := range module.GetAllIssues() {
 			if strings.Contains(issue, "No supporting files or PDB files") {
 				if !utils.IsStringInStringArray(module.Name, foundModules) {
 					foundModules = append(foundModules, module.Name)
@@ -40,6 +40,6 @@ func missingDebugSymbols(r *report.Report) {
 		message = fmt.Sprintf("%d modules were found lacking debug symbols (e.g., PDB files): %s.", len(foundModules), utils.Top5StringList(foundModules))
 	}
 
-	r.ReportIssue(message, report.IssueSeverityMedium)
+	r.ReportModuleIssue(message, report.IssueSeverityMedium, foundModules)
 	r.MakeRecommendation("Include PDB files for as many components as possible, especially first and second party components. This enables Veracode to accurately report line numbers for any flaws found within these components.")
 }

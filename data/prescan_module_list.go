@@ -66,11 +66,10 @@ func (api API) getPrescanModuleList(r *report.Report) {
 			issues = append(issues, issue.Details)
 		}
 
-		r.Modules = append(
-			r.Modules,
-			report.Module{
+		r.AddModuleInstance(
+			module.Name,
+			report.ModuleInstance{
 				Id:             module.Id,
-				Name:           module.Name,
 				Status:         module.Status,
 				Platform:       module.Platform,
 				Size:           module.Size,

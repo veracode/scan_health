@@ -38,7 +38,7 @@ func detectSelectedTestingModules(r *report.Report, testFilePatterns []string) {
 			utils.Top5StringList(selectedTestingModules))
 	}
 
-	r.ReportIssue(fmt.Sprintf("%s Unit tests and mocks can make it difficult to select the correct application entry points for analysis. This is because for most cases Veracode permits users to select only the components for analysis that are not themselves depended upon by other components within the upload. Furthermore, scanning unit tests will surface flaws that will not be present in a production environment and commonly they contain hard-coded credentials for testing purposes.", message), report.IssueSeverityHigh)
+	r.ReportModuleIssue(fmt.Sprintf("%s Unit tests and mocks can make it difficult to select the correct application entry points for analysis. This is because for most cases Veracode permits users to select only the components for analysis that are not themselves depended upon by other components within the upload. Furthermore, scanning unit tests will surface flaws that will not be present in a production environment and commonly they contain hard-coded credentials for testing purposes.", message), report.IssueSeverityHigh, selectedTestingModules)
 	r.MakeRecommendation("Do not upload any testing artifacts unless they will go into the production environment.")
 	r.MakeRecommendation("Do not select any testing artefacts as entry points for analysis.")
 }
@@ -59,7 +59,7 @@ func detectTestArtefactsInFileUploads(r *report.Report, testFilePatterns []strin
 			utils.Top5StringList(foundFiles))
 	}
 
-	r.ReportIssue(fmt.Sprintf("%s Unit tests and mocks can make it difficult to select the correct application entry points for analysis. This is because for most cases Veracode permits users to select only the components for analysis that are not themselves depended upon by other components within the upload. Furthermore, scanning unit tests will surface flaws that will not be present in a production environment and commonly they contain hard-coded credentials for testing purposes.", message), report.IssueSeverityMedium)
+	r.ReportFileIssue(fmt.Sprintf("%s Unit tests and mocks can make it difficult to select the correct application entry points for analysis. This is because for most cases Veracode permits users to select only the components for analysis that are not themselves depended upon by other components within the upload. Furthermore, scanning unit tests will surface flaws that will not be present in a production environment and commonly they contain hard-coded credentials for testing purposes.", message), report.IssueSeverityMedium, foundFiles)
 	r.MakeRecommendation("Do not upload any testing artifacts unless they will go into the production environment.")
 }
 
@@ -67,7 +67,7 @@ func detectTestArtefactsInModuleIssues(r *report.Report) {
 	var foundModules []string
 
 	for _, module := range r.Modules {
-		for _, issue := range module.Issues {
+		for _, issue := range module.GetAllIssues() {
 			if strings.Contains(strings.ToLower(issue), "test/") {
 				if !utils.IsStringInStringArray(module.Name, foundModules) {
 					foundModules = append(foundModules, module.Name)
@@ -89,6 +89,6 @@ func detectTestArtefactsInModuleIssues(r *report.Report) {
 			utils.Top5StringList(foundModules))
 	}
 
-	r.ReportIssue(fmt.Sprintf("%s Unit tests and mocks can make it difficult to select the correct application entry points for analysis. This is because for most cases Veracode permits users to select only the components for analysis that are not themselves depended upon by other components within the upload. Furthermore, scanning unit tests will surface flaws that will not be present in a production environment and commonly they contain hard-coded credentials for testing purposes.", message), report.IssueSeverityMedium)
+	r.ReportModuleIssue(fmt.Sprintf("%s Unit tests and mocks can make it difficult to select the correct application entry points for analysis. This is because for most cases Veracode permits users to select only the components for analysis that are not themselves depended upon by other components within the upload. Furthermore, scanning unit tests will surface flaws that will not be present in a production environment and commonly they contain hard-coded credentials for testing purposes.", message), report.IssueSeverityMedium, foundModules)
 	r.MakeRecommendation("Do not upload any testing artifacts unless they will go into the production environment.")
 }

@@ -14,7 +14,7 @@ func unselectedFirstParty(r *report.Report) {
 	var foundModules []string
 
 	for _, module := range r.Modules {
-		if !module.IsDependency && !module.IsIgnored && !module.IsSelected && !module.IsThirdParty {
+		if !module.IsDependency() && !module.IsIgnored() && !module.IsSelected() && !module.IsThirdParty() {
 			if !utils.IsStringInStringArray(module.Name, foundModules) {
 				foundModules = append(foundModules, module.Name)
 			}
@@ -31,6 +31,6 @@ func unselectedFirstParty(r *report.Report) {
 		message = fmt.Sprintf("%d potential first-party modules were not selected for analysis: %s.", len(foundModules), utils.Top5StringList(foundModules))
 	}
 
-	r.ReportIssue(message, report.IssueSeverityMedium)
+	r.ReportModuleIssue(message, report.IssueSeverityMedium, foundModules)
 	r.MakeRecommendation("Under-selection of first party modules affects results quality. Ensure the correct entry points have been selected as recommended and refer to this article: https://community.veracode.com/s/article/What-are-Modules-and-how-do-my-results-change-based-on-what-I-select.")
 }
