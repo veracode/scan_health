@@ -1,18 +1,18 @@
 {
-    "version": "0.2.0",
-    "configurations": [
-        {
-            "name": "Debug",
-            "type": "go",
-            "request": "launch",
-            "mode": "auto",
-            "program": "${fileDirname}",
-            "args":[
-                "-sast",
-                "https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22131762:22103089:22118739::::4999971",
-                "-profile",
-                "proxy"
-            ]
-        }
-    ]
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Debug",
+      "type": "go",
+      "request": "launch",
+      "mode": "auto",
+      "program": "${fileDirname}",
+      "args": [
+        "-sast",
+        "https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22131762:22103089:22118739::::4999971",
+        "-profile",
+        "proxy"
+      ]
+    }
+  ]
 }
