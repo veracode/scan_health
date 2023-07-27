@@ -18,17 +18,3 @@ func (r *Report) AddModuleInstance(moduleName string, moduleInstance ModuleInsta
 
 	r.Modules = append(r.Modules, module)
 }
-
-func (module *Module) MarkIgnored() {
-	for _, instance := range module.Instances {
-		instance.IsIgnored = true
-		return
-	}
-}
-
-func (module *Module) MarkThirdParty() {
-	for _, instance := range module.Instances {
-		instance.IsThirdParty = true
-		return
-	}
-}

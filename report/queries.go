@@ -97,29 +97,9 @@ func (module *Module) IsDependency() bool {
 	return false
 }
 
-func (module *Module) IsThirdParty() bool {
-	for _, instance := range module.Instances {
-		if instance.IsThirdParty {
-			return true
-		}
-	}
-
-	return false
-}
-
 func (module *Module) HasFatalErrors() bool {
 	for _, instance := range module.Instances {
 		if instance.HasFatalErrors {
-			return true
-		}
-	}
-
-	return false
-}
-
-func (module *Module) IsIgnored() bool {
-	for _, instance := range module.Instances {
-		if instance.IsIgnored {
 			return true
 		}
 	}

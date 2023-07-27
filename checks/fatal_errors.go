@@ -26,7 +26,7 @@ func fatalMissingPrimaryDebugSymbols(r *report.Report) {
 		}
 
 		// Ignore junk
-		if module.IsIgnored() || module.IsThirdParty() {
+		if module.IsIgnored || module.IsThirdParty {
 			continue
 		}
 

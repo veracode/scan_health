@@ -52,9 +52,11 @@ type UploadedFile struct {
 }
 
 type Module struct {
-	Name      string           `json:"name,omitempty"`
-	Instances []ModuleInstance `json:"instances,omitempty"`
-	Flaws     FlawSummary      `json:"flaws,omitempty"`
+	Name         string           `json:"name,omitempty"`
+	IsThirdParty bool             `json:"is_third_party"`
+	IsIgnored    bool             `json:"is_ignored"`
+	Instances    []ModuleInstance `json:"instances,omitempty"`
+	Flaws        FlawSummary      `json:"flaws,omitempty"`
 }
 
 type ModuleInstance struct {
@@ -62,8 +64,6 @@ type ModuleInstance struct {
 	Compiler        string   `json:"compiler,omitempty"`
 	OperatingSystem string   `json:"operating_system,omitempty"`
 	Architecture    string   `json:"architecture,omitempty"`
-	IsIgnored       bool     `json:"is_ignored"`
-	IsThirdParty    bool     `json:"is_third_party"`
 	IsDependency    bool     `json:"is_dependency"`
 	IsSelected      bool     `json:"is_selected"`
 	WasScanned      bool     `json:"was_scanned"`

@@ -14,7 +14,7 @@ func unselectedFirstParty(r *report.Report) {
 	var foundModules []string
 
 	for _, module := range r.Modules {
-		if !module.IsDependency() && !module.IsIgnored() && !module.IsSelected() && !module.IsThirdParty() {
+		if !module.IsDependency() && !module.IsIgnored && !module.IsSelected() && !module.IsThirdParty {
 			if !utils.IsStringInStringArray(module.Name, foundModules) {
 				foundModules = append(foundModules, module.Name)
 			}
