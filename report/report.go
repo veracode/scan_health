@@ -92,13 +92,13 @@ type Issue struct {
 
 type Report struct {
 	HealthTool      HealthTool     `json:"health_tool,omitempty"`
+	LastAppActivity time.Time      `json:"last_app_activity,omitempty"`
 	Scan            Scan           `json:"scan,omitempty"`
 	Flaws           FlawSummary    `json:"flaws,omitempty"`
 	UploadedFiles   []UploadedFile `json:"uploaded_files,omitempty"`
 	Modules         []Module       `json:"modules,omitempty"`
 	Issues          []Issue        `json:"issues,omitempty"`
 	Recommendations []string       `json:"recommendations,omitempty"`
-	LastAppActivity time.Time      `json:"last_activity,omitempty"`
 }
 
 func NewReport(buildId int, region, version string) *Report {
@@ -145,9 +145,13 @@ func (r *Report) MakeRecommendation(recommendation string) {
 	}
 }
 
-func (r *Report) Render(format string) {
+func (r *Report) Render(format, jsonFilePath string) {
+	if jsonFilePath != "" {
+		r.renderToJson(jsonFilePath)
+	}
+
 	if format == "json" {
-		r.renderToJson()
+		r.renderToJson("")
 	} else {
 		r.renderToConsole()
 	}

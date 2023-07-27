@@ -18,6 +18,7 @@ func main() {
 	region := flag.String("region", "", "Veracode Region [commercial, us, european]")
 	scan := flag.String("sast", "", "Veracode Platform URL or build ID for a SAST application health review")
 	outputFormat := flag.String("format", "console", "Output format [console, json]")
+	jsonFilePath := flag.String("json-file", "", "Optional file for writing JSON output to")
 	enableCaching := flag.Bool("cache", false, "Enable caching")
 
 	flag.Parse()
@@ -68,5 +69,5 @@ func main() {
 
 	healthReport.PrioritizeIssues()
 
-	healthReport.Render(*outputFormat)
+	healthReport.Render(*outputFormat, *jsonFilePath)
 }
