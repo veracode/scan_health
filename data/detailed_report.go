@@ -168,29 +168,29 @@ func (report detailedReport) getTriageFlawsUrl(region string) string {
 
 func populateFlawSummaries(r *report.Report, detailedReport detailedReport) {
 	for _, flaw := range detailedReport.Flaws {
-		for _, module := range r.Modules {
+		for moduleIndex, module := range r.Modules {
 			if strings.EqualFold(flaw.Module, module.Name) {
-				module.Flaws.Total++
+				r.Modules[moduleIndex].Flaws.Total++
 				r.Flaws.Total++
 
 				if flaw.AffectsPolicyCompliance {
-					module.Flaws.TotalAffectingPolicy++
+					r.Modules[moduleIndex].Flaws.TotalAffectingPolicy++
 					r.Flaws.TotalAffectingPolicy++
 				}
 
 				if flaw.isOpen() {
 					if flaw.AffectsPolicyCompliance {
-						module.Flaws.OpenAffectingPolicy++
+						r.Modules[moduleIndex].Flaws.OpenAffectingPolicy++
 						r.Flaws.OpenAffectingPolicy++
 					} else {
-						module.Flaws.OpenButNotAffectingPolicy++
+						r.Modules[moduleIndex].Flaws.OpenButNotAffectingPolicy++
 						r.Flaws.OpenButNotAffectingPolicy++
 					}
 				} else if flaw.isMitigated() {
-					module.Flaws.Mitigated++
+					r.Modules[moduleIndex].Flaws.Mitigated++
 					r.Flaws.Mitigated++
 				} else if flaw.isFixed() {
-					module.Flaws.Fixed++
+					r.Modules[moduleIndex].Flaws.Fixed++
 					r.Flaws.Fixed++
 				}
 			}

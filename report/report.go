@@ -54,7 +54,7 @@ type UploadedFile struct {
 type Module struct {
 	Name      string           `json:"name,omitempty"`
 	Instances []ModuleInstance `json:"instances,omitempty"`
-	Flaws     FlawSummary      `json:"flaw_summary,omitempty"`
+	Flaws     FlawSummary      `json:"flaws,omitempty"`
 }
 
 type ModuleInstance struct {
