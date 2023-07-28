@@ -33,7 +33,7 @@ func processUnwantedFiles(r *report.Report, filePatterns []string, fileType stri
 			utils.Top5StringList(foundFiles))
 	}
 
-	r.ReportFileIssue(message, report.IssueSeverityMedium, foundFiles)
+	r.ReportFileIssue(fmt.Sprintf("%s Veracode does not currently support SAST scanning of this file.", message), report.IssueSeverityMedium, foundFiles)
 
 	for _, recommendation := range recommendations {
 		r.MakeRecommendation(recommendation)
