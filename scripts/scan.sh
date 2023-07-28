@@ -2,10 +2,6 @@
 
 ESCAPE=$'\e'
 
-if [ ! -d "$DIRECTORY" ]; then
-  mkdir scan
-fi
-
 # Download and extract the pipeline scan
 if [ ! -f scan/pipeline-scan.jar ]; then
 
@@ -24,4 +20,6 @@ zip -r scan_health/scan/veracode.zip scan_health -x "scan_health/dist/*" -x "sca
 cd scan_health
 
 echo "${ESCAPE}[0;36mScanning...${ESCAPE}[0m"
-java -jar scan/pipeline-scan.jar --verbose true --file scan/veracode.zip
+cd scan
+java -jar pipeline-scan.jar --baseline_file baseline.json --file veracode.zip
+cd ..

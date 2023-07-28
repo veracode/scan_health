@@ -1,0 +1,58 @@
+{
+  "_links": {
+    "root": {
+      "href": "/"
+    },
+    "self": {
+      "href": "/scans/64677ffa-2a11-404c-b71c-f2cf07209108/findings"
+    },
+    "help": {
+      "href": "https://help.veracode.com/reader/tS9CaFwL4_lbIEWWomsJoA/ovfZGgu96UINQxIuTqRDwg"
+    }
+  },
+  "scan_id": "64677ffa-2a11-404c-b71c-f2cf07209108",
+  "scan_status": "SUCCESS",
+  "message": "Scan successful. Results size: 1435 bytes",
+  "modules": [
+    "veracode.zip_htmlgocode.veracodegen.htmla.goa"
+  ],
+  "modules_count": 1,
+  "findings": [
+    {
+      "title": "crypto::sha1::New",
+      "issue_id": 1001,
+      "gob": "B",
+      "severity": 3,
+      "issue_type_id": "crypto",
+      "issue_type": "Use of a Broken or Risky Cryptographic Algorithm",
+      "cwe_id": "327",
+      "display_text": "\u003cspan\u003eThis function uses the crypto::sha1::New() function, which uses a hash algorithm that is considered weak. In recent years, researchers have demonstrated ways to breach many uses of previously-thought-safe hash functions such as MD5. \u003c/span\u003e \u003cspan\u003eConsider using a stronger algorithm in order to prevent attackers from being able to manipulate hash results. If this algorithm is being used to hash passwords, then consider using a strong computationally-hard algorithm such as PBKDF2 or bcrypt instead of a plain hashing algorithm.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/327.html\"\u003eCWE\u003c/a\u003e\u003c/span\u003e",
+      "files": {
+        "source_file": {
+          "file": "github.com/antfie/scan_health/v2/data/cache.go",
+          "line": 64,
+          "function_name": "getHash",
+          "qualified_function_name": "github.com.antfie.scan_health.v2.data.getHash",
+          "function_prototype": "string getHash(string)",
+          "scope": "UNKNOWN"
+        }
+      },
+      "flaw_match": {
+        "procedure_hash": "2753114981",
+        "prototype_hash": "4034642098",
+        "flaw_hash": "1213881316",
+        "flaw_hash_count": 1,
+        "flaw_hash_ordinal": 1,
+        "cause_hash": "4282366815",
+        "cause_hash_count": 1,
+        "cause_hash_ordinal": 1,
+        "cause_hash2": "0",
+        "cause_hash2_ordinal": "0"
+      },
+      "stack_dumps": {}
+    }
+  ],
+  "selected_modules": [],
+  "pipeline_scan": "23.7.0-0",
+  "dev_stage": "DEVELOPMENT"
+}
