@@ -8,7 +8,7 @@ import (
 
 func flawCount(r *report.Report) {
 	if r.Flaws.Total == 0 {
-		r.ReportIssue("No flaws were found in this scan.", report.IssueSeverityMedium)
+		r.ReportIssue("No flaws were found in this scan. This is usually due to scan misconfiguration.", report.IssueSeverityMedium)
 		r.MakeRecommendation("When no flaws have been found this can be an indication that modules have not been selected.")
 		return
 	}
