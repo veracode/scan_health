@@ -20,6 +20,11 @@ func unselectedFirstParty(r *report.Report) {
 				continue
 			}
 
+			// We don't care for fatal errors
+			if module.HasFatalErrors() {
+				continue
+			}
+
 			if !utils.IsStringInStringArray(module.Name, foundModules) {
 				foundModules = append(foundModules, module.Name)
 			}
