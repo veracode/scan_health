@@ -9,6 +9,9 @@ func PerformChecks(r *report.Report) {
 	ignoreJunkFiles(r)
 	thirdParty(r)
 
+	// No flaws is a big deal
+	flawCount(r)
+
 	// Missing/unscannable components
 	fatalErrors(r)
 	detectUnwantedFiles(r)
@@ -43,7 +46,6 @@ func PerformChecks(r *report.Report) {
 	analysisSize(r)
 	moduleCount(r)
 	regularScans(r)
-	flawCount(r)
 
 	// Finally
 	generalRecommendations(r)
