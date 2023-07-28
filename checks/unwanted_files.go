@@ -15,7 +15,7 @@ func detectUnwantedFiles(r *report.Report) {
 	processUnwantedFiles(r, []string{"*.sh", "*.ps", "*.ps1", "*.bat"}, "batch/shell script", []string{"Do not upload batch/shell scripts."})
 	processUnwantedFiles(r, []string{"setup.exe", "*.msi"}, "installer", []string{"Do not upload installers or setup programs."})
 	processUnwantedFiles(r, []string{"*.pyd"}, "Python-compiled DLL", []string{"Do not upload Python-compiled DLLs (.pyd files)."})
-	processUnwantedFiles(r, []string{"*.pyc"}, "compiled Python file", []string{"Veracode requires Python source code for analysis."})
+	processUnwantedFiles(r, []string{"*.pyc"}, "compiled Python file", []string{"Veracode requires Python source code for analysis. Do not upload compiled Python files."})
 }
 
 func processUnwantedFiles(r *report.Report, filePatterns []string, fileType string, recommendations []string) {
