@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/antfie/scan_health/v2/report"
 	"github.com/antfie/scan_health/v2/utils"
+	"strings"
 )
 
 // Test cases
@@ -20,6 +21,16 @@ func unselectedJavaScriptModules(r *report.Report) {
 	for _, module := range r.Modules {
 		// Only applicable for JavaScript modules
 		if !module.IsJavaScriptModule() {
+			continue
+		}
+
+		// We don't care for node modules
+		if module.IsNodeModule() {
+			continue
+		}
+
+		// We don't care for modules from .map files
+		if strings.Contains(strings.ToLower(module.Name), "extracted from .map file") {
 			continue
 		}
 

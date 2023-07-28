@@ -15,6 +15,11 @@ func unselectedFirstParty(r *report.Report) {
 
 	for _, module := range r.Modules {
 		if !module.IsDependency() && !module.IsIgnored && !module.IsSelected() && !module.IsThirdParty {
+			// Unselected JS files are handled by unselected_javascript.go
+			if module.IsJavaScriptModule() {
+				continue
+			}
+
 			if !utils.IsStringInStringArray(module.Name, foundModules) {
 				foundModules = append(foundModules, module.Name)
 			}

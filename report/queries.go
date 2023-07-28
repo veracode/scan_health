@@ -84,7 +84,11 @@ func (module Module) IsJavaModule() bool {
 }
 
 func (module Module) IsJavaScriptModule() bool {
-	return strings.HasPrefix(strings.ToLower(module.Name), "js files within")
+	return strings.HasPrefix(strings.ToLower(module.Name), "js files within") || strings.HasPrefix(strings.ToLower(module.Name), "js files extracted from")
+}
+
+func (module Module) IsNodeModule() bool {
+	return strings.Contains(strings.ToLower(module.Name), "_nodemodule_")
 }
 
 func (module *Module) IsDependency() bool {
