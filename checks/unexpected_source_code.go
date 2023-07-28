@@ -35,7 +35,7 @@ func processSourceCodeFiles(r *report.Report, filePatterns []string, fileType st
 			utils.Top5StringList(foundFiles))
 	}
 
-	r.ReportFileIssue(message, report.IssueSeverityHigh, foundFiles)
+	r.ReportFileIssue(fmt.Sprintf("%s Veracode does not scan source code files for this technology. We required the compiled application instead.", message), report.IssueSeverityHigh, foundFiles)
 
 	for _, recommendation := range recommendations {
 		r.MakeRecommendation(recommendation)

@@ -62,7 +62,7 @@ func detectBackupFiles(r *report.Report) {
 		return
 	}
 
-	issueDescription := "These files could contain secrets and should not be upload to Veracode for SAST scanning."
+	issueDescription := "These files could contain secrets and should not be upload to Veracode for SAST scanning. Also be mindful that if the file has been uploaded to Veracode it could also be present in the production environment."
 	issueText := fmt.Sprintf("A potentially sensitive backup/old/scratch file was uploaded: \"%s\". %s", foundFiles[0], issueDescription)
 
 	if len(foundFiles) > 1 {
