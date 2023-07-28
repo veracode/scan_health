@@ -19,7 +19,7 @@ func main() {
 	scan := flag.String("sast", "", "Veracode Platform URL or build ID for a SAST application health review")
 	outputFormat := flag.String("format", "console", "Output format [console, json]")
 	jsonFilePath := flag.String("json-file", "", "Optional file for writing JSON output to")
-	enableCaching := flag.Bool("cache", false, "Enable caching")
+	enableCaching := flag.Bool("cache", false, "Enable caching of API responses (useful for development)")
 
 	flag.Parse()
 

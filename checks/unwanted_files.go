@@ -41,5 +41,5 @@ func processUnwantedFiles(r *report.Report, filePatterns []string, fileType stri
 		r.MakeRecommendation(recommendation)
 	}
 
-	r.MakeRecommendation("Follow the packaging instructions to keep the upload as small as possible in order to improve upload and scan times.")
+	r.MakeRecommendation("Follow the packaging instructions to keep the upload as small as possible to improve upload and scan times.")
 }

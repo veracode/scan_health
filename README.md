@@ -28,8 +28,12 @@ Copyright © Veracode, Inc. 2023. All Rights Reserved.
 This is an unofficial Veracode product. It does not come with any support or warranty.
 
 Usage:
+  -cache
+        Enable caching of API responses (useful for development)
   -format string
         Output format [console, json] (default "console")
+  -json-file string
+        Optional file for writing JSON output to
   -profile string
         Veracode credential profile - See https://docs.veracode.com/r/c_httpie_tool#using-multiple-profiles (default "default")
   -region string
@@ -97,7 +101,7 @@ Issues
 
 Recommendations
 ===============
-💡 Follow the packaging instructions to keep the upload as small as possible in order to improve upload and scan times.
+💡 Follow the packaging instructions to keep the upload as small as possible to improve upload and scan times.
 💡 Veracode requires the Java application to be compiled into a JAR, WAR or EAR file as per the packaging instructions.
 💡 Veracode extracts JavaScript modules from the upload. Consider selecting the appropriate "JS files within ..." modules for analysis in order to cover the JavaScript risk from these components.
 💡 Under-selection of first party modules affects results quality. Ensure the correct entry points have been selected as recommended and refer to this article: https://community.veracode.com/s/article/What-are-Modules-and-how-do-my-results-change-based-on-what-I-select.
