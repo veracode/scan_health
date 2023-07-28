@@ -8,7 +8,7 @@ fi
 
 FLAGS="-X main.AppVersion=$VERSION -s -w"
 
-echo "${ESCAPE}[0;32mBuilding v${VERSION}...${ESCAPE}[0m"
+echo "${ESCAPE}[0;36mBuilding v${VERSION}...${ESCAPE}[0m"
 
 GOOS=darwin GOARCH=arm64 go build -ldflags="$FLAGS" -trimpath -o "dist/scan_health-mac-arm64" . && \
 GOOS=darwin GOARCH=amd64 go build -ldflags="$FLAGS" -trimpath -o "dist/scan_health-mac-amd64" . && \

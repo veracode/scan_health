@@ -227,7 +227,7 @@ You may want to run using the `-cache=true` flag to speed up development.
 ### Compiling
 
 ```sh
-./build.sh
+./scripts/build.sh
 ```
 
 ## Bug Reports 🐞

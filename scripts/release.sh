@@ -1,12 +1,13 @@
 #!/usr/bin/env sh
 
 ESCAPE=$'\e'
-export VERSION="2.10"
+export VERSION="2.11"
 
-./build.sh && \
+./scripts/build.sh && \
 
-echo "${ESCAPE}[0;32mReleasing v${VERSION}...${ESCAPE}[0m" && \
+echo "${ESCAPE}[0;36mReleasing v${VERSION}...${ESCAPE}[0m" && \
 
+docker pull alpine
 docker build -t antfie/scan_health:$VERSION . && \
 docker build -t antfie/scan_health . && \
 docker push antfie/scan_health:$VERSION && \
