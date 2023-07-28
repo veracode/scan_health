@@ -14,6 +14,7 @@ func PerformChecks(r *report.Report) {
 
 	// Missing/unscannable components
 	fatalErrors(r)
+	unscannableJava(r)
 	detectUnwantedFiles(r)
 	nestedArchives(r)
 	unselectedFirstParty(r)

@@ -20,7 +20,7 @@ func gradleWrapper(r *report.Report) {
 
 	message := "The only module selected on this scan was \"gradle-wrapper.jar\". This is a known third-party build tool and not the main application to analyse."
 
-	if len(r.Modules) > 1 {
+	if len(selectedModules) > 1 {
 		message = "The \"gradle-wrapper.jar\" build tool selected on this scan for analysis. This is a known third-party component and not the main application to analyse."
 	}
 
