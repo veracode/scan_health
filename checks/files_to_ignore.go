@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/antfie/scan_health/v2/report"
 	"github.com/antfie/scan_health/v2/utils"
+	"strings"
 )
 
 // Test cases
@@ -48,6 +49,11 @@ func ignoreJunkFiles(r *report.Report) {
 
 	for index, uploadedFile := range r.UploadedFiles {
 		if utils.IsFileNameInFancyList(uploadedFile.Name, filePatternsToIgnore) {
+			// Deal with files named like this: .NETCoreApp_Version_v3.1.AssemblyAttributes.cs
+			if strings.HasSuffix(strings.ToLower(uploadedFile.Name), ".cs") {
+				continue
+			}
+
 			r.UploadedFiles[index].IsIgnored = true
 			ignoredFiles = append(ignoredFiles, uploadedFile.Name)
 		}
@@ -55,6 +61,11 @@ func ignoreJunkFiles(r *report.Report) {
 
 	for index, module := range r.Modules {
 		if utils.IsFileNameInFancyList(module.Name, filePatternsToIgnore) {
+			// Deal with modules named like this: .NETCoreApp_Version_v3.1.AssemblyAttributes.cs
+			if strings.HasSuffix(strings.ToLower(module.Name), ".cs") {
+				continue
+			}
+			
 			r.Modules[index].IsIgnored = true
 		}
 	}
