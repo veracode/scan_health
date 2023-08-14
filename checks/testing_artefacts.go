@@ -14,7 +14,14 @@ func testingArtefacts(r *report.Report) {
 	var testFilePatterns = []string{
 		"nunit.framework.dll",
 		"Moq.dll",
-		"*.test.dll", "*.unittests.dll", "*.unittest.dll", "^mock", "^unittest", "^harness",
+		"*.test.dll",
+		"*.unittests.dll",
+		"*.unittest.dll",
+		"^mock",
+		"^unittest",
+		"^harness",
+		"*.feature",
+		"*.js.snap", // React Jest Snap files
 	}
 
 	detectSelectedTestingModules(r, testFilePatterns)
