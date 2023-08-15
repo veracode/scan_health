@@ -87,11 +87,11 @@ func (api API) populateDetailedReport(r *report.Report) {
 	r.Scan.EngineVersion = detailedReport.StaticAnalysis.EngineVersion
 	r.Scan.AnalysisSize = detailedReport.StaticAnalysis.AnalysisSizeBytes
 
-	if detailedReport.StaticAnalysis.SubmittedDate != "" {
+	if len(detailedReport.StaticAnalysis.SubmittedDate) > 0 {
 		r.Scan.SubmittedDate = utils.ParseVeracodeDate(detailedReport.StaticAnalysis.SubmittedDate).Local()
 	}
 
-	if detailedReport.StaticAnalysis.PublishedDate != "" {
+	if len(detailedReport.StaticAnalysis.PublishedDate) > 0 {
 		r.Scan.PublishedDate = utils.ParseVeracodeDate(detailedReport.StaticAnalysis.PublishedDate).Local()
 	}
 

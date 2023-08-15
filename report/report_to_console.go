@@ -41,7 +41,7 @@ func renderScanSummaryToConsole(report *Report) {
 	fmt.Printf("Published:          %s (%s ago)\n", report.Scan.PublishedDate, utils.FormatDuration(time.Since(report.Scan.PublishedDate)))
 	fmt.Printf("Duration:           %s\n", utils.FormatDuration(report.Scan.ScanDuration))
 
-	if !report.Scan.IsLatestScan {
+	if !report.Scan.IsLatestScan && report.LastAppActivity.Year() > 2000 {
 		fmt.Printf("Latest app scan:    %s (%s ago)\n", report.LastAppActivity, utils.FormatDuration(time.Since(report.LastAppActivity)))
 	}
 }

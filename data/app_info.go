@@ -33,5 +33,8 @@ func (api API) populateAppInfo(report *report.Report) {
 
 	report.Scan.ApplicationId = data.Application.AppId
 	report.Scan.ApplicationName = data.Application.AppName
-	report.LastAppActivity = utils.ParseVeracodeDate(data.Application.Updated).Local()
+
+	if len(data.Application.Updated) > 0 {
+		report.LastAppActivity = utils.ParseVeracodeDate(data.Application.Updated).Local()
+	}
 }

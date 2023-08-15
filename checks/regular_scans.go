@@ -11,6 +11,11 @@ import (
 // https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview::1656378:24066707:24037910:24053560::::
 
 func regularScans(r *report.Report) {
+	// No LastAppActivity data
+	if r.LastAppActivity.Year() < 2000 {
+		return
+	}
+
 	if time.Since(r.LastAppActivity).Hours()/24 <= utils.NotUsingAutomationIfScanOlderThanDays {
 		return
 	}
