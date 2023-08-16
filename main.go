@@ -7,6 +7,7 @@ import (
 	"github.com/antfie/scan_health/v2/data"
 	"github.com/antfie/scan_health/v2/report"
 	"github.com/antfie/scan_health/v2/utils"
+	"os"
 	"strings"
 )
 
@@ -70,4 +71,11 @@ func main() {
 	healthReport.PrioritizeIssues()
 
 	healthReport.Render(*outputFormat, *jsonFilePath)
+
+	// Return exit code of 1 if any high severity issues found
+	for _, issue := range healthReport.Issues {
+		if issue.Severity == report.IssueSeverityHigh {
+			os.Exit(1)
+		}
+	}
 }
