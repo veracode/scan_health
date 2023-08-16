@@ -12,7 +12,7 @@ scan performance and flaw quality. The scans must have completed for the tool to
 ## Key Features ✅
 
 * Identification of configuration issues and recommendations for improvements
-* Can output to JSON
+* Outputs to the console and also JSON
 * Returns exit code 1 if there are any high severity issues found
 
 ## Usage
