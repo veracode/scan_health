@@ -13,6 +13,7 @@ scan performance and flaw quality. The scans must have completed for the tool to
 
 * Identification of configuration issues and recommendations for improvements
 * Can output to JSON
+* Returns exit code 1 if there are any high severity issues found
 
 ## Usage
 
