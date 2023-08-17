@@ -14,6 +14,7 @@ func sensitiveFiles(r *report.Report) {
 	detectBackupFiles(r)
 	detectWordDocuments(r)
 	detectSpreadsheets(r)
+	detectJupyterNotebooks(r)
 }
 
 func detectSecretFiles(r *report.Report) {
@@ -63,7 +64,7 @@ func detectBackupFiles(r *report.Report) {
 		return
 	}
 
-	issueDescription := "These files could contain secrets or sensitive information and should not be upload to Veracode for SAST scanning. Also be mindful that if the file has been uploaded to Veracode it could also be present in the production environment."
+	issueDescription := "These files could contain sensitive information or secrets and should not be upload to Veracode for SAST scanning. Also be mindful that if the file has been uploaded to Veracode it could also be present in the production environment."
 	issueText := fmt.Sprintf("A potentially sensitive backup/old/scratch file was uploaded: \"%s\". %s", foundFiles[0], issueDescription)
 
 	if len(foundFiles) > 1 {
@@ -89,7 +90,7 @@ func detectWordDocuments(r *report.Report) {
 		return
 	}
 
-	issueDescription := "These files could contain secrets or sensitive information and should not be upload to Veracode for SAST scanning."
+	issueDescription := "These files could contain sensitive information or secrets and should not be upload to Veracode for SAST scanning."
 	issueText := fmt.Sprintf("A Word document was uploaded: \"%s\". %s", foundFiles[0], issueDescription)
 
 	if len(foundFiles) > 1 {
@@ -115,7 +116,7 @@ func detectSpreadsheets(r *report.Report) {
 		return
 	}
 
-	issueDescription := "These files could contain secrets or sensitive information and should not be upload to Veracode for SAST scanning."
+	issueDescription := "These files could contain sensitive information or secrets and should not be upload to Veracode for SAST scanning."
 	issueText := fmt.Sprintf("A spreadsheet was uploaded: \"%s\". %s", foundFiles[0], issueDescription)
 
 	if len(foundFiles) > 1 {
@@ -127,5 +128,31 @@ func detectSpreadsheets(r *report.Report) {
 
 	r.ReportFileIssue(issueText, report.IssueSeverityHigh, foundFiles)
 	r.MakeRecommendation("Office documents could contain sensitive information or secrets and should not be uploaded.")
+	r.MakeRecommendation("Do not upload unnecessary files.")
+}
+
+func detectJupyterNotebooks(r *report.Report) {
+	var sensitiveFilePatterns = []string{
+		"*.ipynb",
+	}
+
+	var foundFiles = r.FancyListMatchUploadedFiles(sensitiveFilePatterns)
+
+	if len(foundFiles) == 0 {
+		return
+	}
+
+	issueDescription := "These files could contain sensitive data or secrets and should not be upload to Veracode for SAST scanning."
+	issueText := fmt.Sprintf("A Jupyter notebook was uploaded: \"%s\". %s", foundFiles[0], issueDescription)
+
+	if len(foundFiles) > 1 {
+		issueText = fmt.Sprintf(
+			"%d Jupyter notebooks were uploaded: %s. %s",
+			len(foundFiles),
+			utils.Top5StringList(foundFiles), issueDescription)
+	}
+
+	r.ReportFileIssue(issueText, report.IssueSeverityHigh, foundFiles)
+	r.MakeRecommendation("Jupyter notebooks could contain sensitive data or secrets and should not be uploaded.")
 	r.MakeRecommendation("Do not upload unnecessary files.")
 }
