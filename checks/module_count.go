@@ -34,6 +34,6 @@ func moduleCount(r *report.Report) {
 		}
 	}
 
-	r.ReportModuleIssue(fmt.Sprintf("%d modules were identified from the upload. This is a lot of modules and is an indicator that the compilation/upload may be suboptimal.", len(r.Modules)), report.IssueSeverityMedium, modules)
+	r.ReportModuleIssue(fmt.Sprintf("%d uniquely named modules were identified from the upload. This is a lot of modules and is an indicator that the compilation/upload may be suboptimal.", len(r.Modules)), report.IssueSeverityMedium, modules)
 	r.MakeRecommendation("Ensure the correct modules have been selected for analysis and that the packaging guidance has been followed.")
 }

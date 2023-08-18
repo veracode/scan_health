@@ -13,6 +13,7 @@ func thirdParty(r *report.Report) {
 	var thirdPartyFilePatterns = []string{
 		"7z.dll",
 		"7za.exe",
+		"AutoMapper.dll",
 		"AutoMapper.*.dll",
 		"Azure.*.dll",
 		"BouncyCastle.*",
@@ -20,6 +21,7 @@ func thirdParty(r *report.Report) {
 		"Castle.Windsor.*",
 		"componentspace.saml2.dll",
 		"Dapper.dll",
+		"Dapper.*.dll",
 		"devexpress.*",
 		"entityframework.*",
 		"Google.Protobuf.dll",
@@ -45,6 +47,7 @@ func thirdParty(r *report.Report) {
 		"sni.dll",
 		"AntiXssLibrary.dll",
 		"Antlr3.Runtime.dll",
+		"FluentValidation.dll",
 	}
 
 	var selectedThirdPartyModules []string
