@@ -21,6 +21,7 @@ func main() {
 	outputFormat := flag.String("format", "console", "Output format [console, json]")
 	jsonFilePath := flag.String("json-file", "", "Optional file for writing JSON output to")
 	enableCaching := flag.Bool("cache", false, "Enable caching of API responses (useful for development)")
+	errorOnHighSeverity := flag.Bool("error-on-high-severity", false, "Return a non-zero exit code if any high severity issues are found")
 
 	flag.Parse()
 
@@ -72,10 +73,12 @@ func main() {
 
 	healthReport.Render(*outputFormat, *jsonFilePath)
 
-	// Return exit code of 1 if any high severity issues found
-	for _, issue := range healthReport.Issues {
-		if issue.Severity == report.IssueSeverityHigh {
-			os.Exit(1)
+	if *errorOnHighSeverity {
+		// Return exit code of 1 if any high severity issues found
+		for _, issue := range healthReport.Issues {
+			if issue.Severity == report.IssueSeverityHigh {
+				os.Exit(1)
+			}
 		}
 	}
 }
