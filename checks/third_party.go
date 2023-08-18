@@ -44,6 +44,7 @@ func thirdParty(r *report.Report) {
 		"*aspnet-codegenerator*",
 		"sni.dll",
 		"AntiXssLibrary.dll",
+		"Antlr3.Runtime.dll",
 	}
 
 	var selectedThirdPartyModules []string

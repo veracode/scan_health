@@ -30,7 +30,7 @@ func detectMissingPrecompiledFilesFromUploadedFiles(r *report.Report) {
 		return
 	}
 
-	message := fmt.Sprintf("A .NET view/template/control file was uploaded: %s.", foundFiles[0])
+	message := fmt.Sprintf("A .NET view/template/control file was uploaded: \"%s\".", foundFiles[0])
 
 	if len(foundFiles) > 1 {
 		message = fmt.Sprintf("%d .NET views/templates/control files were uploaded: %s.", len(foundFiles), utils.Top5StringList(foundFiles))
@@ -67,7 +67,7 @@ func detectMissingPrecompiledFilesFromModules(r *report.Report) {
 		return
 	}
 
-	message := fmt.Sprintf("A .NET component was identified to not contain precompiled files (views/templates/controls): %s.", foundModules[0])
+	message := fmt.Sprintf("A .NET component was identified to not contain precompiled files (views/templates/controls): \"%s\".", foundModules[0])
 
 	if len(foundModules) > 1 {
 		message = fmt.Sprintf("%d .NET components were identified to not contain precompiled files (views/templates/controls): %s.", len(foundModules), utils.Top5StringList(foundModules))
