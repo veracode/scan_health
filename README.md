@@ -13,7 +13,7 @@ scan performance and flaw quality. The scans must have completed for the tool to
 
 * Identification of configuration issues and recommendations for improvements
 * Outputs to the console and also JSON
-* Returns exit code 1 if there are any high severity issues found
+* Returns exit code 1 if there are any high severity issues found when using `-error-on-high-severity` flag
 
 ## Usage
 
@@ -24,13 +24,15 @@ with the Veracode APIs.
 
 ```sh
 ./scan_health -h
-Scan Health v2.00
+Scan Health v2.27
 Copyright © Veracode, Inc. 2023. All Rights Reserved.
 This is an unofficial Veracode product. It does not come with any support or warranty.
 
 Usage:
   -cache
         Enable caching of API responses (useful for development)
+  -error-on-high-severity
+    	Return a non-zero exit code if any high severity issues are found
   -format string
         Output format [console, json] (default "console")
   -json-file string
