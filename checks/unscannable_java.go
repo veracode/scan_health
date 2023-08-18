@@ -27,7 +27,7 @@ func unscannableJava(r *report.Report) {
 	message := fmt.Sprintf("A Java module \"%s\" was not scannable as it contained no Java binaries.", foundModules[0])
 
 	if len(foundModules) > 1 {
-		message = fmt.Sprintf("%d Java modules files were found that contained no Java binaries: %s.", len(foundModules), utils.Top5StringList(foundModules))
+		message = fmt.Sprintf("%d Java modules were found that contained no Java binaries: %s.", len(foundModules), utils.Top5StringList(foundModules))
 	}
 
 	r.ReportModuleIssue(message, report.IssueSeverityHigh, foundModules)
