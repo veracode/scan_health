@@ -12,6 +12,8 @@ import (
 func thirdParty(r *report.Report) {
 	var thirdPartyFilePatterns = []string{
 		"7z.dll",
+		"7-zip.dll",
+		"Google.*.dll",
 		"7za.exe",
 		"AutoMapper.dll",
 		"AutoMapper.*.dll",
