@@ -63,7 +63,22 @@ func (api API) getPrescanModuleList(r *report.Report) {
 		var issues []string
 
 		for _, issue := range module.Issues {
-			issues = append(issues, issue.Details)
+			if !utils.IsStringInStringArray(issue.Details, issues) {
+				issues = append(issues, issue.Details)
+			}
+
+		}
+
+		if module.Status != "OK" {
+			statusParts := strings.Split(module.Status, ",")
+
+			for _, statusPart := range statusParts {
+				formattedStatusPart := strings.TrimSpace(statusPart)
+
+				if !utils.IsStringInStringArray(formattedStatusPart, issues) {
+					issues = append(issues, formattedStatusPart)
+				}
+			}
 		}
 
 		r.AddModuleInstance(
@@ -105,14 +120,4 @@ func convertSize(size, measurement string, multiplier int) int {
 
 	return sizeInt * multiplier
 
-}
-
-func (module prescanModule) getFatalReason() string {
-	for _, issue := range strings.Split(module.Status, ",") {
-		if strings.HasPrefix(issue, "(Fatal)") {
-			return strings.Replace(strings.Replace(issue, "(Fatal)", "", 1), " - 1 File", "", 1)
-		}
-	}
-
-	return ""
 }
