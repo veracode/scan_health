@@ -57,6 +57,7 @@ type detailedReportFlaw struct {
 	RemediationStatus       string   `xml:"remediation_status,attr"`     // Fixed, New, Reopened, Mitigated, Potential False Positive
 	MitigationStatus        string   `xml:"mitigation_status,attr"`      // none, accepted, rejected
 	Mitigation              string   `xml:"mitigation_status_desc,attr"` // Mitigation Accepted, Not Mitigated, Mitigation Proposed
+	ModulePath              string
 }
 
 func (api API) populateDetailedReport(r *report.Report) {
@@ -126,6 +127,10 @@ func populateDetailedReportModules(r *report.Report, staticAnalysis detailedRepo
 
 func populateModulesFromFlaws(r *report.Report, detailedReport detailedReport) {
 	for index, flaw := range detailedReport.Flaws {
+
+		// Set the module path e.g. /a.war/b.jar/c
+		detailedReport.Flaws[index].ModulePath = flaw.Module
+
 		isDependentModule := false
 
 		if strings.Contains(flaw.Module, "/") {
@@ -168,30 +173,49 @@ func (report detailedReport) getTriageFlawsUrl(region string) string {
 
 func populateFlawSummaries(r *report.Report, detailedReport detailedReport) {
 	for _, flaw := range detailedReport.Flaws {
+		// Update report totals
+		r.Flaws.Total++
+
+		if flaw.AffectsPolicyCompliance {
+			r.Flaws.TotalAffectingPolicy++
+		}
+
+		if flaw.isOpen() {
+			if flaw.AffectsPolicyCompliance {
+				r.Flaws.OpenAffectingPolicy++
+			} else {
+				r.Flaws.OpenButNotAffectingPolicy++
+			}
+		} else if flaw.isMitigated() {
+			r.Flaws.Mitigated++
+		} else if flaw.isFixed() {
+			r.Flaws.Fixed++
+		}
+
+		// Update totals per-module affected
 		for moduleIndex, module := range r.Modules {
-			if strings.EqualFold(flaw.Module, module.Name) {
-				r.Modules[moduleIndex].Flaws.Total++
-				r.Flaws.Total++
+			// For each module in the module path
+			modulePathParts := strings.Split(flaw.ModulePath, "/")
+			for _, modulePath := range modulePathParts {
+				if strings.EqualFold(modulePath, module.Name) {
+					flawSummary := &r.Modules[moduleIndex].Flaws
+					flawSummary.Total++
 
-				if flaw.AffectsPolicyCompliance {
-					r.Modules[moduleIndex].Flaws.TotalAffectingPolicy++
-					r.Flaws.TotalAffectingPolicy++
-				}
-
-				if flaw.isOpen() {
 					if flaw.AffectsPolicyCompliance {
-						r.Modules[moduleIndex].Flaws.OpenAffectingPolicy++
-						r.Flaws.OpenAffectingPolicy++
-					} else {
-						r.Modules[moduleIndex].Flaws.OpenButNotAffectingPolicy++
-						r.Flaws.OpenButNotAffectingPolicy++
+						flawSummary.TotalAffectingPolicy++
 					}
-				} else if flaw.isMitigated() {
-					r.Modules[moduleIndex].Flaws.Mitigated++
-					r.Flaws.Mitigated++
-				} else if flaw.isFixed() {
-					r.Modules[moduleIndex].Flaws.Fixed++
-					r.Flaws.Fixed++
+
+					if flaw.isOpen() {
+						if flaw.AffectsPolicyCompliance {
+							flawSummary.OpenAffectingPolicy++
+						} else {
+							flawSummary.OpenButNotAffectingPolicy++
+						}
+					} else if flaw.isMitigated() {
+						flawSummary.Mitigated++
+					} else if flaw.isFixed() {
+						flawSummary.Fixed++
+					}
 				}
 			}
 		}
