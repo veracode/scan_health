@@ -52,13 +52,52 @@ func PrintTitle(title string) {
 }
 
 func Top5StringList(items []string) string {
+	var processedValues []string
+	var itemStrings []string
+	countOfTop5Processed := 0
+
 	sort.Strings(items)
 
-	if len(items) > 5 {
-		return fmt.Sprintf("\"%s\" and %d others", strings.Join(items[0:5], "\", \""), len(items)-5)
+	for _, item := range items {
+		if !IsStringInStringArray(item, processedValues) {
+			count := 0
+
+			for _, found := range items {
+				if found == item {
+					count++
+				}
+			}
+
+			processedValues = append(processedValues, item)
+
+			if count == 1 {
+				itemStrings = append(itemStrings, fmt.Sprintf("%q", item))
+			} else {
+				itemStrings = append(itemStrings, fmt.Sprintf("%q (x%d instances)", item, count))
+			}
+
+			if len(itemStrings) < 6 {
+				countOfTop5Processed += count
+			}
+		}
 	}
 
-	return fmt.Sprintf("\"%s\"", strings.Join(items, "\", \""))
+	if len(itemStrings) == 1 {
+		return itemStrings[0]
+	}
+
+	if len(itemStrings) < 6 {
+		return strings.Join(itemStrings, ", ")
+	}
+
+	remaining := len(items) - countOfTop5Processed
+
+	otherPluralString := ""
+	if remaining > 1 {
+		otherPluralString = "s"
+	}
+
+	return fmt.Sprintf("%s and %d other%s", strings.Join(itemStrings[0:5], ", "), remaining, otherPluralString)
 }
 
 func ErrorAndExit(message string, err error) {

@@ -49,10 +49,4 @@ func TestFancyList(t *testing.T) {
 	if !IsFileNameInFancyList("AUTHORS", testFancyList) {
 		nope(t, "exact AA and contains match not working")
 	}
-
-}
-
-func nope(t *testing.T, message string) {
-	t.Log(message)
-	t.Fail()
 }

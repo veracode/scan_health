@@ -13,7 +13,9 @@ func duplicateModules(r *report.Report) {
 		var duplicates []string
 
 		for fileName, count := range differentDuplicates {
-			duplicates = append(duplicates, fmt.Sprintf("%s (x%d instances)", fileName, count))
+			for i := 1; i <= count; i++ {
+				duplicates = append(duplicates, fileName)
+			}
 		}
 
 		message := fmt.Sprintf("A duplicate file name was uploaded but the file hashes were different: %s. This can affect the quality of the scan, result in scans taking longer than expected and lead to indeterministic flaws being raised. This can also cause confusion when interpreting the results. Furthermore, if the scanner found no risk in the first file, risk could be missed in the second file because the scanner only analyses the first filename it comes across when we encounter duplicate files.", utils.Top5StringList(duplicates))

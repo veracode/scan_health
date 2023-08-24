@@ -1,6 +1,14 @@
-#!/usr/bin/env sh
+#!/usr/bin/env bash
 
-ESCAPE=$'\e'
+# Exit if any command fails
+set -e
+
+RED='\033[0;31m'
+GREEN='\033[0;32m'
+CYAN='\033[1;36m'
+NC='\033[0m' # No Color
+
+./scripts/test.sh
 
 if [[ -z "${VERSION}" ]]; then
     VERSION="0.0"
@@ -8,11 +16,10 @@ fi
 
 FLAGS="-X main.AppVersion=$VERSION -s -w"
 
-echo "${ESCAPE}[0;36mBuilding v${VERSION}...${ESCAPE}[0m"
+echo -e "${CYAN}Building v${VERSION}...${NC}"
+GOOS=darwin GOARCH=arm64 go build -ldflags="$FLAGS" -trimpath -o "dist/scan_health-mac-arm64" .
+GOOS=darwin GOARCH=amd64 go build -ldflags="$FLAGS" -trimpath -o "dist/scan_health-mac-amd64" .
+GOOS=linux GOARCH=amd64 go build -ldflags="$FLAGS" -trimpath -o "dist/scan_health-linux-amd64" .
+GOOS=windows GOARCH=amd64 go build -ldflags="$FLAGS" -trimpath -o "dist/scan_health-win.exe" .
 
-GOOS=darwin GOARCH=arm64 go build -ldflags="$FLAGS" -trimpath -o "dist/scan_health-mac-arm64" . && \
-GOOS=darwin GOARCH=amd64 go build -ldflags="$FLAGS" -trimpath -o "dist/scan_health-mac-amd64" . && \
-GOOS=linux GOARCH=amd64 go build -ldflags="$FLAGS" -trimpath -o "dist/scan_health-linux-amd64" . && \
-GOOS=windows GOARCH=amd64 go build -ldflags="$FLAGS" -trimpath -o "dist/scan_health-win.exe" . && \
-
-echo "${ESCAPE}[0;32mBuild Success${ESCAPE}[0m"
+echo -e "${CYAN}Build Success${NC}"
