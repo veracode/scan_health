@@ -10,7 +10,7 @@ NC='\033[0m' # No Color
 
 if [ $# -eq 0 ]
   then
-    echo -e "${RED}Error: No version number specified. Try something like \"release.sh 1.0\".${NC}"
+    echo -e "${RED}Error: No version number specified. Try something like \"release.sh x.y\".${NC}"
     exit
 fi
 
