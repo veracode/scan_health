@@ -15,6 +15,8 @@ func testingArtefacts(r *report.Report) {
 		"nunit.framework.dll",
 		"Moq.dll",
 		"*.test.dll",
+		"!*Test.dll",
+		"!*Tests.dll",
 		"*.unittests.dll",
 		"*.unittest.dll",
 		"^mock",
