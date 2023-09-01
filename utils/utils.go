@@ -45,6 +45,20 @@ func FormatDuration(duration time.Duration) string {
 	return str
 }
 
+func FormatHumanDurationDays(duration time.Duration) string {
+	if duration.Hours() > 24 {
+		days := int(duration.Hours() / 24)
+		suffix := "day"
+		if days > 1 {
+			suffix = "days"
+		}
+
+		return fmt.Sprintf("over %d %s", days, suffix)
+	}
+
+	return "less than a day"
+}
+
 func PrintTitle(title string) {
 	println()
 	color.HiCyan(title)
