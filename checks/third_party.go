@@ -6,9 +6,6 @@ import (
 	"github.com/antfie/scan_health/v2/utils"
 )
 
-// Test cases
-// https://analysiscenter.veracode.com/auth/index.jsp#AnalyzeAppModuleList:90561:1490961:27041493:27012395:27028045::::4709647
-
 func thirdParty(r *report.Report) {
 	var thirdPartyFilePatterns = []string{
 		"7z.dll",
