@@ -38,9 +38,6 @@ func testingArtefacts(r *report.Report) {
 	}
 
 	for index, module := range r.Modules {
-		if module.Name == "TestIQLP.exe" {
-			print("D")
-		}
 		if utils.IsFileNameInFancyList(module.Name, testFilePatterns) {
 			r.Modules[index].IsIgnored = true
 		}

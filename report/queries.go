@@ -9,10 +9,6 @@ func (r *Report) GetSelectedModules() []Module {
 	var selectedModules []Module
 
 	for _, module := range r.Modules {
-		if module.IsIgnored {
-			continue
-		}
-
 		for _, instance := range module.Instances {
 			found := false
 

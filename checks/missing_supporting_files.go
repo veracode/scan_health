@@ -17,6 +17,10 @@ func missingSupportingFiles(r *report.Report) {
 	var count = 0
 
 	for _, selectedModule := range r.GetSelectedModules() {
+		if selectedModule.IsIgnored {
+			continue
+		}
+
 		for _, instance := range selectedModule.Instances {
 			for _, issue := range instance.Issues {
 				if strings.HasPrefix(issue, "Missing Supporting Files") {
