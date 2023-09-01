@@ -11,20 +11,21 @@ import (
 )
 
 type detailedReport struct {
-	XMLName              xml.Name                     `xml:"detailedreport"`
-	AccountId            int                          `xml:"account_id,attr"`
-	AppId                int                          `xml:"app_id,attr"`
-	AppName              string                       `xml:"app_name,attr"`
-	SandboxId            int                          `xml:"sandbox_id,attr"`
-	BuildId              int                          `xml:"build_id,attr"`
-	AnalysisId           int                          `xml:"analysis_id,attr"`
-	StaticAnalysisUnitId int                          `xml:"static_analysis_unit_id,attr"`
-	TotalFlaws           int                          `xml:"total_flaws,attr"`
-	UnmitigatedFlaws     int                          `xml:"flaws_not_mitigated,attr"`
-	StaticAnalysis       detailedReportStaticAnalysis `xml:"static-analysis"`
-	Flaws                []detailedReportFlaw         `xml:"severity>category>cwe>staticflaws>flaw"`
-	IsLatestScan         bool                         `xml:"is_latest_build,attr"`
-	BusinessUnit         string                       `xml:"business_unit,attr"`
+	XMLName                 xml.Name                     `xml:"detailedreport"`
+	AccountId               int                          `xml:"account_id,attr"`
+	AppId                   int                          `xml:"app_id,attr"`
+	AppName                 string                       `xml:"app_name,attr"`
+	SandboxId               int                          `xml:"sandbox_id,attr"`
+	BuildId                 int                          `xml:"build_id,attr"`
+	AnalysisId              int                          `xml:"analysis_id,attr"`
+	StaticAnalysisUnitId    int                          `xml:"static_analysis_unit_id,attr"`
+	TotalFlaws              int                          `xml:"total_flaws,attr"`
+	UnmitigatedFlaws        int                          `xml:"flaws_not_mitigated,attr"`
+	StaticAnalysis          detailedReportStaticAnalysis `xml:"static-analysis"`
+	Flaws                   []detailedReportFlaw         `xml:"severity>category>cwe>staticflaws>flaw"`
+	IsLatestScan            bool                         `xml:"is_latest_build,attr"`
+	BusinessUnit            string                       `xml:"business_unit,attr"`
+	VulnerableSCAComponents []detailedReportSCAComponent `xml:"software_composition_analysis>vulnerable_components>component"`
 }
 
 type detailedReportStaticAnalysis struct {
@@ -58,6 +59,11 @@ type detailedReportFlaw struct {
 	MitigationStatus        string   `xml:"mitigation_status,attr"`      // none, accepted, rejected
 	Mitigation              string   `xml:"mitigation_status_desc,attr"` // Mitigation Accepted, Not Mitigated, Mitigation Proposed
 	ModulePath              string
+}
+
+type detailedReportSCAComponent struct {
+	XMLName  xml.Name `xml:"component"`
+	FileName string   `xml:"file_name,attr"`
 }
 
 func (api API) populateDetailedReport(r *report.Report) {
@@ -111,6 +117,7 @@ func (api API) populateDetailedReport(r *report.Report) {
 	populateDetailedReportModules(r, detailedReport.StaticAnalysis)
 	populateModulesFromFlaws(r, detailedReport)
 	populateFlawSummaries(r, detailedReport)
+	populateThirdPartyFiles(r, detailedReport)
 }
 
 func populateDetailedReportModules(r *report.Report, staticAnalysis detailedReportStaticAnalysis) {
@@ -121,6 +128,7 @@ func populateDetailedReportModules(r *report.Report, staticAnalysis detailedRepo
 			Architecture:    module.Architecture,
 			IsSelected:      true,
 			WasScanned:      true,
+			Source:          "detailed_report_module_selected",
 		})
 	}
 }
@@ -131,8 +139,6 @@ func populateModulesFromFlaws(r *report.Report, detailedReport detailedReport) {
 		// Set the module path e.g. /a.war/b.jar/c
 		detailedReport.Flaws[index].ModulePath = flaw.Module
 
-		isDependentModule := false
-
 		if strings.Contains(flaw.Module, "/") {
 			modulePathParts := strings.Split(flaw.Module, "/")
 			detailedReport.Flaws[index].Module = modulePathParts[len(modulePathParts)-1]
@@ -140,12 +146,14 @@ func populateModulesFromFlaws(r *report.Report, detailedReport detailedReport) {
 			// Also update the local copy of this flaw
 			flaw.Module = detailedReport.Flaws[index].Module
 
-			isDependentModule = true
+			for modulePartIndex, modulePart := range modulePathParts {
+				r.AddModuleInstance(modulePart, report.ModuleInstance{
+					WasScanned:   true,
+					IsDependency: modulePartIndex > 0,
+					Source:       "detailed_report_module_derived_from_flaw_module_path",
+				})
+			}
 		}
-
-		r.AddModuleInstance(flaw.Module, report.ModuleInstance{
-			IsDependency: isDependentModule,
-		})
 	}
 }
 
@@ -244,4 +252,17 @@ func (flaw detailedReportFlaw) isFixed() bool {
 
 func (flaw detailedReportFlaw) isMitigated() bool {
 	return !(flaw.MitigationStatus == "none" || flaw.MitigationStatus == "rejected")
+}
+
+func populateThirdPartyFiles(r *report.Report, detailedReport detailedReport) {
+	for _, component := range detailedReport.VulnerableSCAComponents {
+		r.UploadedFiles = append(
+			r.UploadedFiles,
+			report.UploadedFile{
+				Name:         component.FileName,
+				IsThirdParty: true,
+				Source:       "detailed_report_sca_component",
+			},
+		)
+	}
 }

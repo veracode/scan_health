@@ -49,6 +49,7 @@ type UploadedFile struct {
 	MD5          string `json:"md5,omitempty"`
 	IsIgnored    bool   `json:"is_ignored"`
 	IsThirdParty bool   `json:"is_third_party"`
+	Source       string `json:"source,omitempty"`
 }
 
 type Module struct {
@@ -74,6 +75,7 @@ type ModuleInstance struct {
 	MD5             string   `json:"md5,omitempty"`
 	Issues          []string `json:"issues,omitempty"`
 	SizeBytes       int      `json:"size_bytes,omitempty"`
+	Source          string   `json:"source,omitempty"`
 }
 
 type IssueSeverity string

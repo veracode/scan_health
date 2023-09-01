@@ -92,6 +92,7 @@ func (api API) getPrescanModuleList(r *report.Report) {
 				HasFatalErrors: module.HasFatalErrors,
 				IsDependency:   module.IsDependency,
 				Issues:         issues,
+				Source:         "prescan_module_list",
 				//SizeBytes:      calculateModuleSize(module.Size),
 			},
 		)
