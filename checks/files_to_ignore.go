@@ -57,6 +57,11 @@ func ignoreJunkFiles(r *report.Report) {
 			r.UploadedFiles[index].IsIgnored = true
 			ignoredFiles = append(ignoredFiles, uploadedFile.Name)
 		}
+
+		// Ignore .PDB files
+		if strings.HasSuffix(strings.ToLower(uploadedFile.Name), ".pdb") {
+			r.UploadedFiles[index].IsIgnored = true
+		}
 	}
 
 	for index, module := range r.Modules {
@@ -65,7 +70,7 @@ func ignoreJunkFiles(r *report.Report) {
 			if strings.HasSuffix(strings.ToLower(module.Name), ".cs") {
 				continue
 			}
-			
+
 			r.Modules[index].IsIgnored = true
 		}
 	}

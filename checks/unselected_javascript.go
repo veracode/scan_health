@@ -34,7 +34,7 @@ func unselectedJavaScriptModules(r *report.Report) {
 			continue
 		}
 
-		if !module.HasFatalErrors() && !module.IsIgnored && !module.IsSelected() {
+		if !module.HasFatalErrors() && !module.IsIgnored && !module.IsSelected() && !module.IsThirdParty {
 			if !utils.IsStringInStringArray(module.Name, foundModules) {
 				foundModules = append(foundModules, module.Name)
 			}

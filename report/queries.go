@@ -9,6 +9,10 @@ func (r *Report) GetSelectedModules() []Module {
 	var selectedModules []Module
 
 	for _, module := range r.Modules {
+		if module.IsIgnored {
+			continue
+		}
+
 		for _, instance := range module.Instances {
 			found := false
 
@@ -34,7 +38,7 @@ func (r *Report) FancyListMatchUploadedFiles(fancyList []string) []string {
 	for _, uploadedFile := range r.UploadedFiles {
 
 		if utils.IsFileNameInFancyList(uploadedFile.Name, fancyList) {
-			if !utils.IsStringInStringArray(uploadedFile.Name, foundFiles) {
+			if !utils.IsStringInStringArray(uploadedFile.Name, foundFiles) && !uploadedFile.IsIgnored {
 				foundFiles = append(foundFiles, uploadedFile.Name)
 			}
 		}

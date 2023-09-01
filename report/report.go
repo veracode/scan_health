@@ -47,8 +47,8 @@ type UploadedFile struct {
 	Name         string `json:"name,omitempty"`
 	Status       string `json:"status,omitempty"`
 	MD5          string `json:"md5,omitempty"`
-	IsIgnored    bool   `json:"is_ignored"`
 	IsThirdParty bool   `json:"is_third_party"`
+	IsIgnored    bool   `json:"is_ignored"`
 	Source       string `json:"source,omitempty"`
 }
 
