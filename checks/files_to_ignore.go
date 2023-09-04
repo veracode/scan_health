@@ -54,6 +54,11 @@ func ignoreJunkFiles(r *report.Report) {
 				continue
 			}
 
+			// Suppress reporting on .gitignore files
+			if strings.EqualFold(uploadedFile.Name, ".gitignore") {
+				continue
+			}
+
 			r.UploadedFiles[index].IsIgnored = true
 			ignoredFiles = append(ignoredFiles, uploadedFile.Name)
 		}
