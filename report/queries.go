@@ -126,10 +126,8 @@ func (module *Module) GetAllIssues() []string {
 
 	for _, instance := range module.Instances {
 		for _, issue := range instance.Issues {
-			for _, existingIssue := range issues {
-				if strings.EqualFold(issue, existingIssue) {
-					issues = append(issues, issue)
-				}
+			if !utils.IsStringInStringArray(issue, issues) {
+				issues = append(issues, issue)
 			}
 		}
 	}
