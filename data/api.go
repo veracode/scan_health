@@ -62,6 +62,12 @@ func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
 		utils.ErrorAndExit("There was a problem communicating with the API. Please check your connectivity and the service status page at https://status.veracode.com", err)
 	}
 
+	body, err := io.ReadAll(resp.Body)
+
+	if err != nil {
+		utils.ErrorAndExit("There was a problem processing the API response. Please check your connectivity and the service status page at https://status.veracode.com", err)
+	}
+
 	if resp.StatusCode == 401 {
 		if strings.HasSuffix(parsedUrl.Path, "getmaintenancescheduleinfo.do") {
 			utils.ErrorAndExit("There was a problem with your credentials. Please check your credentials are valid for this Veracode region. For help contact your Veracode administrator.", nil)
@@ -76,12 +82,6 @@ func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
 
 	if resp.StatusCode != http.StatusOK {
 		utils.ErrorAndExit(fmt.Sprintf("API responded with status of %s", resp.Status), nil)
-	}
-
-	body, err := io.ReadAll(resp.Body)
-
-	if err != nil {
-		utils.ErrorAndExit("There was a problem processing the API response. Please check your connectivity and the service status page at https://status.veracode.com", err)
 	}
 
 	// Replace any null-encoded characters with a blank string

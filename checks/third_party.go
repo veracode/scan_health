@@ -6,9 +6,6 @@ import (
 	"github.com/antfie/scan_health/v2/utils"
 )
 
-// Test cases
-// https://analysiscenter.veracode.com/auth/index.jsp#AnalyzeAppModuleList:90561:1490961:27041493:27012395:27028045::::4709647
-
 func thirdParty(r *report.Report) {
 	var thirdPartyFilePatterns = []string{
 		"7z.dll",
@@ -33,6 +30,9 @@ func thirdParty(r *report.Report) {
 		"log4net.dll",
 		"microsoft.*.dll",
 		"microsoft.*.pdb",
+		"!^_Microsoft.",
+		"!^_System.",
+		"!^_Azure.",
 		"newrelic.*.dll",
 		"newtonsoft.json.*",
 		"ninject.*.dll",
@@ -45,7 +45,7 @@ func thirdParty(r *report.Report) {
 		"phantomjs.exe",
 		"Moq.dll",
 		"ComponentSpace.SAML2.dll",
-		"*aspnet-codegenerator*",
+		"^aspnet-codegenerator",
 		"sni.dll",
 		"AntiXssLibrary.dll",
 		"Antlr3.Runtime.dll",

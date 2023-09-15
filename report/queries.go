@@ -34,7 +34,7 @@ func (r *Report) FancyListMatchUploadedFiles(fancyList []string) []string {
 	for _, uploadedFile := range r.UploadedFiles {
 
 		if utils.IsFileNameInFancyList(uploadedFile.Name, fancyList) {
-			if !utils.IsStringInStringArray(uploadedFile.Name, foundFiles) {
+			if !utils.IsStringInStringArray(uploadedFile.Name, foundFiles) && !uploadedFile.IsIgnored {
 				foundFiles = append(foundFiles, uploadedFile.Name)
 			}
 		}
@@ -126,10 +126,8 @@ func (module *Module) GetAllIssues() []string {
 
 	for _, instance := range module.Instances {
 		for _, issue := range instance.Issues {
-			for _, existingIssue := range issues {
-				if strings.EqualFold(issue, existingIssue) {
-					issues = append(issues, issue)
-				}
+			if !utils.IsStringInStringArray(issue, issues) {
+				issues = append(issues, issue)
 			}
 		}
 	}

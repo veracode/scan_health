@@ -13,7 +13,8 @@ var supportedPages = []string{
 	"StaticOverview",
 	"AnalyzeAppSourceFiles",
 	"ViewReportsResultSummary",
-	"ViewReportsDetailedReport"}
+	"ViewReportsDetailedReport",
+	"ReviewResultsSCA"}
 
 func PlatformUrlInvalid(url string) {
 	ErrorAndExit(fmt.Sprintf("%s is not a valid or supported Veracode Platform URL.\nThis tool requires a URL to one of the following Veracode Platform pages: %s",

@@ -3,8 +3,8 @@ package utils
 import "strings"
 
 // IsFileNameInFancyList tests a wildcard string
-// Use a single * for wildcard search, e.g. "*.exe"
-// Use ! for case-sensitive comparison e.g. "!*.EXE"
+// Use a single * for case-insensitive wildcard search, e.g. "*.exe"
+// Use ! for case-sensitive wildcard search, e.g. "!*.EXE"
 // Use ^ for contains e.g. "^test"
 // Otherwise will check for equality (case-insensitive)
 func IsFileNameInFancyList(fileName string, fancyList []string) bool {
@@ -13,7 +13,7 @@ func IsFileNameInFancyList(fileName string, fancyList []string) bool {
 	for _, moduleFromFancyList := range fancyList {
 		formattedFileName := preFormattedFileName
 
-		// Are we doing a case-insensitive search
+		// Are we doing a case-sensitive search
 		if strings.Count(moduleFromFancyList, "!") == 1 {
 			moduleFromFancyList = strings.ReplaceAll(moduleFromFancyList, "!", "")
 		} else {
@@ -33,7 +33,7 @@ func IsFileNameInFancyList(fileName string, fancyList []string) bool {
 
 		// There can only be one * wildcard present
 		if strings.Count(moduleFromFancyList, "*") == 1 {
-			// At the start (*.abc)
+			// At the start (*.xyz)
 			if strings.HasPrefix(moduleFromFancyList, "*") {
 				if strings.HasSuffix(formattedFileName, strings.ReplaceAll(moduleFromFancyList, "*", "")) {
 					return true
@@ -45,7 +45,7 @@ func IsFileNameInFancyList(fileName string, fancyList []string) bool {
 					return true
 				}
 
-				// Or somewhere in the middle (abc.*.def)
+				// Or somewhere in the middle (abc.*.xyz)
 			} else {
 				parts := strings.Split(moduleFromFancyList, "*")
 

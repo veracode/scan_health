@@ -17,9 +17,8 @@ func PerformChecks(r *report.Report) {
 	unscannableJava(r)
 	detectUnwantedFiles(r)
 	nestedArchives(r)
-	unselectedFirstParty(r)
-	unselectedJavaScriptModules(r)
 	missingPrecompiledFiles(r)
+	unselectedJavaScriptModules(r)
 	unexpectedSourceCode(r)
 	missingSupportingFiles(r)
 	missingDebugSymbols(r)
@@ -36,6 +35,7 @@ func PerformChecks(r *report.Report) {
 	looseClassFiles(r)
 
 	// Module selection issues
+	unselectedFirstParty(r)
 	dependenciesSelected(r)
 	duplicateModules(r)
 	moduleWarnings(r)

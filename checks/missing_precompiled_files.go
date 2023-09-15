@@ -43,7 +43,8 @@ func detectMissingPrecompiledFilesFromUploadedFiles(r *report.Report) {
 func detectMissingPrecompiledFilesFromModules(r *report.Report) {
 	var foundModules []string
 
-	for _, module := range r.Modules {
+	// Only for selected modules
+	for _, module := range r.GetSelectedModules() {
 		// Only applicable for .net modules
 		if !module.IsDotNetOrCPPModule() {
 			continue

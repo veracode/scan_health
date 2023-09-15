@@ -30,6 +30,8 @@ func detectSecretFiles(r *report.Report) {
 		"*.pfx",
 		"*.pgp",
 		"*.p12",
+		"*.tfvars",
+		"variable.tf",
 	}
 
 	var foundFiles = r.FancyListMatchUploadedFiles(sensitiveFilePatterns)

@@ -46,6 +46,7 @@ func (api API) getPrescanFileList(r *report.Report) {
 				Name:   file.Name,
 				Status: file.Status,
 				MD5:    file.MD5,
+				Source: "prescan_file_list",
 			},
 		)
 	}
