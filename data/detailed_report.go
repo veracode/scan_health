@@ -7,6 +7,7 @@ import (
 	"github.com/antfie/scan_health/v2/utils"
 	"github.com/fatih/color"
 	"net/http"
+	"regexp"
 	"strings"
 )
 
@@ -115,7 +116,7 @@ func (api API) populateDetailedReport(r *report.Report) {
 
 func populateDetailedReportModules(r *report.Report, staticAnalysis detailedReportStaticAnalysis) {
 	for _, module := range staticAnalysis.Modules {
-		r.AddModuleInstance(module.Name, report.ModuleInstance{
+		r.AddModuleInstance(normalizeModuleName(module.Name), report.ModuleInstance{
 			Compiler:        module.Compiler,
 			OperatingSystem: module.Os,
 			Architecture:    module.Architecture,
@@ -123,6 +124,19 @@ func populateDetailedReportModules(r *report.Report, staticAnalysis detailedRepo
 			WasScanned:      true,
 		})
 	}
+}
+
+func normalizeModuleName(moduleName string) string {
+	// Sometimes the detailed report will return [modulename]_htmljscode.veracodegen.htmla.jsa
+	// rather than JS files within [modulename]. We should use the latter, to align with the
+	// prescan data.
+	pattern := `(.+)_htmljscode\.veracodegen\.htmla\.jsa`
+	re := regexp.MustCompile(pattern)
+	if matches := re.FindStringSubmatch(moduleName); matches != nil {
+		return fmt.Sprintf("JS files within %s", matches[1])
+	}
+
+	return moduleName
 }
 
 func populateModulesFromFlaws(r *report.Report, detailedReport detailedReport) {
