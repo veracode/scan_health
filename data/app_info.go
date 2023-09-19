@@ -17,7 +17,7 @@ type appInfoApplication struct {
 	XMLName xml.Name `xml:"application"`
 	AppId   int      `xml:"app_id,attr"`
 	AppName string   `xml:"app_name,attr"`
-	Updated string   `xml:"policy_updated_date,attr"`
+	Updated string   `xml:"modified_date,attr"`
 }
 
 func (api API) populateAppInfo(report *report.Report) {
