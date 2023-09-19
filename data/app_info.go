@@ -14,10 +14,10 @@ type appInfo struct {
 }
 
 type appInfoApplication struct {
-	XMLName xml.Name `xml:"application"`
-	AppId   int      `xml:"app_id,attr"`
-	AppName string   `xml:"app_name,attr"`
-	Updated string   `xml:"modified_date,attr"`
+	XMLName      xml.Name `xml:"application"`
+	AppId        int      `xml:"app_id,attr"`
+	AppName      string   `xml:"app_name,attr"`
+	ModifiedDate string   `xml:"modified_date,attr"`
 }
 
 func (api API) populateAppInfo(report *report.Report) {
@@ -34,7 +34,7 @@ func (api API) populateAppInfo(report *report.Report) {
 	report.Scan.ApplicationId = data.Application.AppId
 	report.Scan.ApplicationName = data.Application.AppName
 
-	if len(data.Application.Updated) > 0 {
-		report.LastAppActivity = utils.ParseVeracodeDate(data.Application.Updated).Local()
+	if len(data.Application.ModifiedDate) > 0 {
+		report.LastAppActivity = utils.ParseVeracodeDate(data.Application.ModifiedDate).Local()
 	}
 }

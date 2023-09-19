@@ -21,29 +21,32 @@ func renderScanSummaryToConsole(report *Report) {
 	utils.PrintTitle("Scan Summary")
 
 	if report.Scan.BusinessUnit != "Not Specified" {
-		fmt.Printf("Business unit:      %s\n", report.Scan.BusinessUnit)
+		fmt.Printf("Business unit:           %s\n", report.Scan.BusinessUnit)
 	}
 
-	fmt.Printf("Application:        %s\n", report.Scan.ApplicationName)
+	fmt.Printf("Application:             %s\n", report.Scan.ApplicationName)
+
+	if report.LastAppActivity.Year() > 2000 {
+		fmt.Printf("Latest app activity:     %s (%s ago)\n", report.LastAppActivity, utils.FormatDuration(time.Since(report.LastAppActivity)))
+	}
 
 	if len(report.Scan.SandboxName) > 0 {
-		fmt.Printf("Sandbox:            %s\n", report.Scan.SandboxName)
+		fmt.Printf("Sandbox:                 %s\n", report.Scan.SandboxName)
+		if report.LastSandboxActivity.Year() > 2000 {
+			fmt.Printf("Latest sandbox activity: %s (%s ago)\n", report.LastSandboxActivity, utils.FormatDuration(time.Since(report.LastSandboxActivity)))
+		}
 	}
 
-	fmt.Printf("Scan name:          %s\n", report.Scan.ScanName)
-	fmt.Printf("Review modules URL: %s\n", report.Scan.ReviewModulesUrl)
-	fmt.Printf("Triage flaws URL:   %s\n", report.Scan.TriageFlawsUrl)
-	fmt.Printf("Files uploaded:     %d\n", len(report.UploadedFiles))
-	fmt.Printf("Total modules:      %d\n", len(report.Modules))
-	fmt.Printf("Modules selected:   %d\n", len(report.GetSelectedModules()))
-	fmt.Printf("Engine version:     %s (Release notes: https://docs.veracode.com/updates/r/c_all_static)\n", report.Scan.EngineVersion)
-	fmt.Printf("Submitted:          %s (%s ago)\n", report.Scan.SubmittedDate, utils.FormatDuration(time.Since(report.Scan.SubmittedDate)))
-	fmt.Printf("Published:          %s (%s ago)\n", report.Scan.PublishedDate, utils.FormatDuration(time.Since(report.Scan.PublishedDate)))
-	fmt.Printf("Duration:           %s\n", utils.FormatDuration(report.Scan.ScanDuration))
-
-	if !report.Scan.IsLatestScan && report.LastAppActivity.Year() > 2000 {
-		fmt.Printf("Latest app scan:    %s (%s ago)\n", report.LastAppActivity, utils.FormatDuration(time.Since(report.LastAppActivity)))
-	}
+	fmt.Printf("Scan name:               %s\n", report.Scan.ScanName)
+	fmt.Printf("Review modules URL:      %s\n", report.Scan.ReviewModulesUrl)
+	fmt.Printf("Triage flaws URL:        %s\n", report.Scan.TriageFlawsUrl)
+	fmt.Printf("Files uploaded:          %d\n", len(report.UploadedFiles))
+	fmt.Printf("Total modules:           %d\n", len(report.Modules))
+	fmt.Printf("Modules selected:        %d\n", len(report.GetSelectedModules()))
+	fmt.Printf("Engine version:          %s (Release notes: https://docs.veracode.com/updates/r/c_all_static)\n", report.Scan.EngineVersion)
+	fmt.Printf("Submitted:               %s (%s ago)\n", report.Scan.SubmittedDate, utils.FormatDuration(time.Since(report.Scan.SubmittedDate)))
+	fmt.Printf("Published:               %s (%s ago)\n", report.Scan.PublishedDate, utils.FormatDuration(time.Since(report.Scan.PublishedDate)))
+	fmt.Printf("Duration:                %s\n", utils.FormatDuration(report.Scan.ScanDuration))
 }
 
 func renderFlawSummaryToConsole(flaws FlawSummary) {

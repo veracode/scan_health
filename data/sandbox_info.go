@@ -14,9 +14,10 @@ type sandboxList struct {
 }
 
 type sandboxInfo struct {
-	XMLName xml.Name `xml:"sandbox"`
-	Id      int      `xml:"sandbox_id,attr"`
-	Name    string   `xml:"sandbox_name,attr"`
+	XMLName      xml.Name `xml:"sandbox"`
+	Id           int      `xml:"sandbox_id,attr"`
+	Name         string   `xml:"sandbox_name,attr"`
+	ModifiedDate string   `xml:"last_modified,attr"`
 }
 
 func (api API) populateSandboxInfo(report *report.Report) {
@@ -33,6 +34,10 @@ func (api API) populateSandboxInfo(report *report.Report) {
 	for _, sandbox := range data.Sandboxes {
 		if sandbox.Id == report.Scan.SandboxId {
 			report.Scan.SandboxName = sandbox.Name
+
+			if len(sandbox.ModifiedDate) > 0 {
+				report.LastSandboxActivity = utils.ParseVeracodeDate(sandbox.ModifiedDate).Local()
+			}
 		}
 	}
 }

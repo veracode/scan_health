@@ -115,9 +115,7 @@ func (api API) populateDetailedReport(r *report.Report) {
 
 	r.Scan.IsLatestScan = detailedReport.IsLatestScan
 
-	if r.Scan.IsLatestScan {
-		r.LastAppActivity = r.Scan.PublishedDate
-	} else {
+	if !r.Scan.IsLatestScan {
 		color.HiYellow("Warning: This is not the latest SAST scan in this application profile")
 	}
 
