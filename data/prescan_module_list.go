@@ -92,13 +92,13 @@ func (api API) getPrescanModuleList(r *report.Report) {
 				Id:             module.Id,
 				Status:         html.UnescapeString(module.Status),
 				Platform:       html.UnescapeString(module.Platform),
-				Size:           module.Size,
+				Size:           html.UnescapeString(module.Size),
 				MD5:            module.MD5,
 				HasFatalErrors: module.HasFatalErrors,
 				IsDependency:   module.IsDependency,
 				Issues:         issues,
 				Source:         "prescan_module_list",
-				//SizeBytes:      calculateModuleSize(module.Size),
+				SizeBytes:      calculateModuleSize(module.Size),
 			},
 		)
 	}
@@ -125,5 +125,4 @@ func convertSize(size, measurement string, multiplier int) int {
 	}
 
 	return sizeInt * multiplier
-
 }

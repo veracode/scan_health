@@ -3,6 +3,7 @@ package utils
 import (
 	"flag"
 	"fmt"
+	"github.com/dustin/go-humanize"
 	"os"
 	"sort"
 	"strconv"
@@ -137,4 +138,8 @@ func ErrorAndExitWithUsage(message string) {
 	print("\nUsage:\n")
 	flag.PrintDefaults()
 	os.Exit(1)
+}
+
+func FormatBytes(size uint64) string {
+	return strings.Replace(humanize.Bytes(size), " ", "", 1)
 }

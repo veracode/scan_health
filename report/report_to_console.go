@@ -42,6 +42,7 @@ func renderScanSummaryToConsole(report *Report) {
 	fmt.Printf("Triage flaws URL:        %s\n", report.Scan.TriageFlawsUrl)
 	fmt.Printf("Files uploaded:          %d\n", len(report.UploadedFiles))
 	fmt.Printf("Total modules:           %d\n", len(report.Modules))
+	fmt.Printf("Analysis size:           %s\n", utils.FormatBytes(report.Scan.AnalysisSize))
 	fmt.Printf("Modules selected:        %d\n", len(report.GetSelectedModules()))
 	fmt.Printf("Engine version:          %s (Release notes: https://docs.veracode.com/updates/r/c_all_static)\n", report.Scan.EngineVersion)
 	fmt.Printf("Submitted:               %s (%s ago)\n", report.Scan.SubmittedDate, utils.FormatDuration(time.Since(report.Scan.SubmittedDate)))

@@ -45,7 +45,7 @@ func PerformChecks(r *report.Report) {
 	previousScan(r)
 	minifiedJavaScript(r)
 	releaseBuild(r)
-	analysisSize(r)
+	sizes(r)
 	moduleCount(r)
 	regularScans(r)
 
