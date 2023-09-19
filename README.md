@@ -203,6 +203,7 @@ The tool also outputs JSON if the `-format json` flag is set. An example can be 
 Using Docker 🐳:
 
 ```sh
+docker pull antfie/scan_health
 docker run -t -v "$HOME/.veracode:/.veracode" antfie/scan_health -sast https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002
 ```
 
