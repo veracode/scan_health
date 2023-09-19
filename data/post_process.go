@@ -5,11 +5,11 @@ import (
 	"github.com/antfie/scan_health/v2/utils"
 )
 
-func cleanData(r *report.Report) {
-	cleanThirdParty(r)
+func postProcessData(r *report.Report) {
+	postProcessThirdParty(r)
 }
 
-func cleanThirdParty(r *report.Report) {
+func postProcessThirdParty(r *report.Report) {
 	var thirdPartyFiles []string
 
 	for _, uploadedFile := range r.UploadedFiles {

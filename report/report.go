@@ -32,6 +32,7 @@ type Scan struct {
 	ScanDuration         time.Duration `json:"scan_duration,omitempty"`
 	AnalysisSize         uint64        `json:"analysis_size,omitempty"`
 	IsLatestScan         bool          `json:"is_latest_scan"`
+	IsSCADataAvailable   bool          `json:"is_sca_data_available"`
 }
 
 type FlawSummary struct {

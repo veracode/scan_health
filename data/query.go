@@ -36,7 +36,7 @@ func (api API) PopulateReportWithDataFromAPI(report *report.Report) {
 	// Wait for all the data to load
 	wg.Wait()
 
-	cleanData(report)
+	postProcessData(report)
 
 	// Finally do some sorting
 	sortData(report)

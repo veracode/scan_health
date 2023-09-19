@@ -12,21 +12,21 @@ import (
 )
 
 type detailedReport struct {
-	XMLName                 xml.Name                     `xml:"detailedreport"`
-	AccountId               int                          `xml:"account_id,attr"`
-	AppId                   int                          `xml:"app_id,attr"`
-	AppName                 string                       `xml:"app_name,attr"`
-	SandboxId               int                          `xml:"sandbox_id,attr"`
-	BuildId                 int                          `xml:"build_id,attr"`
-	AnalysisId              int                          `xml:"analysis_id,attr"`
-	StaticAnalysisUnitId    int                          `xml:"static_analysis_unit_id,attr"`
-	TotalFlaws              int                          `xml:"total_flaws,attr"`
-	UnmitigatedFlaws        int                          `xml:"flaws_not_mitigated,attr"`
-	StaticAnalysis          detailedReportStaticAnalysis `xml:"static-analysis"`
-	Flaws                   []detailedReportFlaw         `xml:"severity>category>cwe>staticflaws>flaw"`
-	IsLatestScan            bool                         `xml:"is_latest_build,attr"`
-	BusinessUnit            string                       `xml:"business_unit,attr"`
-	VulnerableSCAComponents []detailedReportSCAComponent `xml:"software_composition_analysis>vulnerable_components>component"`
+	XMLName              xml.Name                     `xml:"detailedreport"`
+	AccountId            int                          `xml:"account_id,attr"`
+	AppId                int                          `xml:"app_id,attr"`
+	AppName              string                       `xml:"app_name,attr"`
+	SandboxId            int                          `xml:"sandbox_id,attr"`
+	BuildId              int                          `xml:"build_id,attr"`
+	AnalysisId           int                          `xml:"analysis_id,attr"`
+	StaticAnalysisUnitId int                          `xml:"static_analysis_unit_id,attr"`
+	TotalFlaws           int                          `xml:"total_flaws,attr"`
+	UnmitigatedFlaws     int                          `xml:"flaws_not_mitigated,attr"`
+	StaticAnalysis       detailedReportStaticAnalysis `xml:"static-analysis"`
+	Flaws                []detailedReportFlaw         `xml:"severity>category>cwe>staticflaws>flaw"`
+	IsLatestScan         bool                         `xml:"is_latest_build,attr"`
+	BusinessUnit         string                       `xml:"business_unit,attr"`
+	SCAResults           scaResults                   `xml:"software_composition_analysis"`
 }
 
 type detailedReportStaticAnalysis struct {
@@ -60,6 +60,12 @@ type detailedReportFlaw struct {
 	MitigationStatus        string   `xml:"mitigation_status,attr"`      // none, accepted, rejected
 	Mitigation              string   `xml:"mitigation_status_desc,attr"` // Mitigation Accepted, Not Mitigated, Mitigation Proposed
 	ModulePath              string
+}
+
+type scaResults struct {
+	XMLName              xml.Name                     `xml:"software_composition_analysis"`
+	ServiceAvailable     string                       `xml:"sca_service_available,attr"` // sca_service_available = "false" when SCA is not enabled
+	VulnerableComponents []detailedReportSCAComponent `xml:"vulnerable_components>component"`
 }
 
 type detailedReportSCAComponent struct {
@@ -269,7 +275,8 @@ func (flaw detailedReportFlaw) isMitigated() bool {
 }
 
 func populateThirdPartyFiles(r *report.Report, detailedReport detailedReport) {
-	for _, component := range detailedReport.VulnerableSCAComponents {
+	r.Scan.IsSCADataAvailable = strings.ToLower(detailedReport.SCAResults.ServiceAvailable) != "false"
+	for _, component := range detailedReport.SCAResults.VulnerableComponents {
 		r.UploadedFiles = append(
 			r.UploadedFiles,
 			report.UploadedFile{
