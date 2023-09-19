@@ -70,7 +70,7 @@ func renderUploadedFilesToConsole(report *Report) {
 		return
 	}
 
-	utils.PrintTitle("Uploaded files")
+	utils.PrintTitle("Uploaded Files")
 
 	for _, uploadedFile := range report.UploadedFiles {
 		fmt.Printf("* %s (MD5: %s)\n", uploadedFile.Name, uploadedFile.MD5)
@@ -121,11 +121,11 @@ func renderSelectedModulesToConsole(report *Report) {
 }
 
 func (issue Issue) getIcon() string {
-	if issue.Severity == IssueSeverityMedium {
-		return iconWarning
+	if issue.Severity == IssueSeverityHigh {
+		return color.HiRedString("!")
 	}
 
-	return iconError
+	return "*"
 }
 
 func renderIssues(issues []Issue) {
@@ -133,7 +133,7 @@ func renderIssues(issues []Issue) {
 		return
 	}
 
-	utils.PrintTitle("Issues")
+	utils.PrintTitle("Issues (Ordered by Severity)")
 
 	// Render the high severity issues first
 	for _, issue := range issues {
@@ -154,9 +154,9 @@ func renderRecommendations(recommendations []string) {
 		return
 	}
 
-	utils.PrintTitle("Recommendations")
+	utils.PrintTitle("Recommendations (Ordered by Importance)")
 
 	for _, recommendation := range recommendations {
-		utils.ColorPrintf(fmt.Sprintf("%s %s\n", iconRecommendation, recommendation))
+		print(fmt.Sprintf("* %s\n", recommendation))
 	}
 }
