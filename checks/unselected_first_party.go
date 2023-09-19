@@ -34,10 +34,10 @@ func unselectedFirstParty(r *report.Report) {
 		return
 	}
 
-	message := fmt.Sprintf("A potential first-party module was not selected for analysis: \"%s\".", foundModules[0])
+	message := fmt.Sprintf("A potential first-party module was not selected for analysis: \"%s\". Consider selecting this module for analysis if it is a first-party component and not a depdency/library.", foundModules[0])
 
 	if len(foundModules) > 1 {
-		message = fmt.Sprintf("%d potential first-party modules were not selected for analysis: %s.", len(foundModules), utils.Top5StringList(foundModules))
+		message = fmt.Sprintf("%d potential first-party modules were not selected for analysis: %s. Consider selecting these modules for analysis if they are first-party components and not depdencies/libraries.", len(foundModules), utils.Top5StringList(foundModules))
 	}
 
 	r.ReportModuleIssue(message, report.IssueSeverityMedium, foundModules)
