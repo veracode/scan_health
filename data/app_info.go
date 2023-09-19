@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/antfie/scan_health/v2/report"
 	"github.com/antfie/scan_health/v2/utils"
+	"html"
 	"net/http"
 )
 
@@ -32,7 +33,7 @@ func (api API) populateAppInfo(report *report.Report) {
 	}
 
 	report.Scan.ApplicationId = data.Application.AppId
-	report.Scan.ApplicationName = data.Application.AppName
+	report.Scan.ApplicationName = html.UnescapeString(data.Application.AppName)
 
 	if len(data.Application.ModifiedDate) > 0 {
 		report.LastAppActivity = utils.ParseVeracodeDate(data.Application.ModifiedDate).Local()

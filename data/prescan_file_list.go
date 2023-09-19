@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/antfie/scan_health/v2/report"
 	"github.com/antfie/scan_health/v2/utils"
+	"html"
 	"net/http"
 	"sort"
 )
@@ -43,8 +44,8 @@ func (api API) getPrescanFileList(r *report.Report) {
 			r.UploadedFiles,
 			report.UploadedFile{
 				Id:     file.Id,
-				Name:   file.Name,
-				Status: file.Status,
+				Name:   html.UnescapeString(file.Name),
+				Status: html.UnescapeString(file.Status),
 				MD5:    file.MD5,
 				Source: "prescan_file_list",
 			},

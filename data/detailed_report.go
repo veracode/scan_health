@@ -6,6 +6,7 @@ import (
 	"github.com/antfie/scan_health/v2/report"
 	"github.com/antfie/scan_health/v2/utils"
 	"github.com/fatih/color"
+	"html"
 	"net/http"
 	"regexp"
 	"strings"
@@ -91,11 +92,11 @@ func (api API) populateDetailedReport(r *report.Report) {
 	}
 
 	r.Scan.AccountId = detailedReport.AccountId
-	r.Scan.BusinessUnit = detailedReport.BusinessUnit
+	r.Scan.BusinessUnit = html.UnescapeString(detailedReport.BusinessUnit)
 	r.Scan.ApplicationId = detailedReport.AppId
-	r.Scan.ApplicationName = detailedReport.AppName
+	r.Scan.ApplicationName = html.UnescapeString(detailedReport.AppName)
 	r.Scan.SandboxId = detailedReport.SandboxId
-	r.Scan.ScanName = detailedReport.StaticAnalysis.ScanName
+	r.Scan.ScanName = html.UnescapeString(detailedReport.StaticAnalysis.ScanName)
 	r.Scan.ReviewModulesUrl = detailedReport.getReviewModulesUrl(r.HealthTool.Region)
 	r.Scan.TriageFlawsUrl = detailedReport.getTriageFlawsUrl(r.HealthTool.Region)
 	r.Scan.EngineVersion = detailedReport.StaticAnalysis.EngineVersion
@@ -127,10 +128,10 @@ func (api API) populateDetailedReport(r *report.Report) {
 
 func populateDetailedReportModules(r *report.Report, staticAnalysis detailedReportStaticAnalysis) {
 	for _, module := range staticAnalysis.Modules {
-		r.AddModuleInstance(normalizeModuleName(module.Name), report.ModuleInstance{
-			Compiler:        module.Compiler,
-			OperatingSystem: module.Os,
-			Architecture:    module.Architecture,
+		r.AddModuleInstance(normalizeModuleName(html.UnescapeString(module.Name)), report.ModuleInstance{
+			Compiler:        html.UnescapeString(module.Compiler),
+			OperatingSystem: html.UnescapeString(module.Os),
+			Architecture:    html.UnescapeString(module.Architecture),
 			IsSelected:      true,
 			WasScanned:      true,
 			Source:          "detailed_report_module_selected",
@@ -153,6 +154,7 @@ func normalizeModuleName(moduleName string) string {
 
 func populateModulesFromFlaws(r *report.Report, detailedReport detailedReport) {
 	for index, flaw := range detailedReport.Flaws {
+		detailedReport.Flaws[index].Module = html.UnescapeString(flaw.Module)
 
 		// Set the module path e.g. /a.war/b.jar/c
 		detailedReport.Flaws[index].ModulePath = flaw.Module
@@ -276,8 +278,10 @@ func populateThirdPartyFiles(r *report.Report, detailedReport detailedReport) {
 	r.Scan.IsSCADataAvailable = strings.ToLower(detailedReport.SCAResults.ServiceAvailable) != "false"
 
 	for _, component := range detailedReport.SCAResults.VulnerableComponents {
-		if !utils.IsStringInStringArray(component.FileName, r.SCAComponents) {
-			r.SCAComponents = append(r.SCAComponents, component.FileName)
+		formattedComponentName := html.UnescapeString(component.FileName)
+
+		if !utils.IsStringInStringArray(formattedComponentName, r.SCAComponents) {
+			r.SCAComponents = append(r.SCAComponents, formattedComponentName)
 		}
 	}
 }

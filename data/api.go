@@ -84,9 +84,6 @@ func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
 		utils.ErrorAndExit(fmt.Sprintf("API responded with status of %s", resp.Status), nil)
 	}
 
-	// Replace any null-encoded characters with a blank string
-	body = []byte(strings.ReplaceAll(string(body), "&#x0;", ""))
-
 	if api.EnableCaching {
 		cacheResponse(apiUrl, body)
 	}

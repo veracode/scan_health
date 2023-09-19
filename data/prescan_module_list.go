@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/antfie/scan_health/v2/report"
 	"github.com/antfie/scan_health/v2/utils"
+	"html"
 	"net/http"
 	"strconv"
 	"strings"
@@ -63,14 +64,18 @@ func (api API) getPrescanModuleList(r *report.Report) {
 		var issues []string
 
 		for _, issue := range module.Issues {
-			if !utils.IsStringInStringArray(issue.Details, issues) {
-				issues = append(issues, issue.Details)
+			formattedIssueDetails := html.UnescapeString(issue.Details)
+
+			if !utils.IsStringInStringArray(formattedIssueDetails, issues) {
+				issues = append(issues, formattedIssueDetails)
 			}
 
 		}
 
-		if module.Status != "OK" {
-			statusParts := strings.Split(module.Status, ",")
+		formattedStatus := html.UnescapeString(module.Status)
+
+		if formattedStatus != "OK" {
+			statusParts := strings.Split(formattedStatus, ",")
 
 			for _, statusPart := range statusParts {
 				formattedStatusPart := strings.TrimSpace(statusPart)
@@ -82,11 +87,11 @@ func (api API) getPrescanModuleList(r *report.Report) {
 		}
 
 		r.AddModuleInstance(
-			module.Name,
+			html.UnescapeString(module.Name),
 			report.ModuleInstance{
 				Id:             module.Id,
-				Status:         module.Status,
-				Platform:       module.Platform,
+				Status:         html.UnescapeString(module.Status),
+				Platform:       html.UnescapeString(module.Platform),
 				Size:           module.Size,
 				MD5:            module.MD5,
 				HasFatalErrors: module.HasFatalErrors,
