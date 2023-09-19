@@ -7,7 +7,6 @@ import (
 )
 
 // Test cases
-// ==========
 // https://analysiscenter.veracode.com/auth/index.jsp#AnalyzeAppModuleList:71832:671347:27229752:27200622:27216272::::1670856
 
 func unselectedFirstParty(r *report.Report) {

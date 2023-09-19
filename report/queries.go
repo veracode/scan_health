@@ -71,23 +71,23 @@ func (r *Report) FancyListMatchSelectedModules(fancyList []string) []string {
 	return selectedModules
 }
 
-func (module Module) IsDotNetOrCPPModule() bool {
+func (module *Module) IsDotNetOrCPPModule() bool {
 	lowerCaseModuleName := strings.ToLower(module.Name)
 
 	return strings.HasSuffix(lowerCaseModuleName, ".dll") || strings.HasSuffix(lowerCaseModuleName, ".exe")
 }
 
-func (module Module) IsJavaModule() bool {
+func (module *Module) IsJavaModule() bool {
 	lowerCaseModuleName := strings.ToLower(module.Name)
 
 	return strings.HasSuffix(lowerCaseModuleName, ".war") || strings.HasSuffix(lowerCaseModuleName, ".ear") || strings.HasSuffix(lowerCaseModuleName, ".jar")
 }
 
-func (module Module) IsJavaScriptModule() bool {
+func (module *Module) IsJavaScriptModule() bool {
 	return strings.HasPrefix(strings.ToLower(module.Name), "js files within") || strings.HasPrefix(strings.ToLower(module.Name), "js files extracted from")
 }
 
-func (module Module) IsNodeModule() bool {
+func (module *Module) IsNodeModule() bool {
 	return strings.Contains(strings.ToLower(module.Name), "_nodemodule_")
 }
 

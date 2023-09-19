@@ -8,7 +8,6 @@ import (
 )
 
 // Test cases
-// ==========
 // Negative:
 // https://analysiscenter.veracode.com/auth/index.jsp#ReviewResultsStaticFlaws:29692:1206933:27113269:27084165:27099815:::3763747 - has JS files module and is selected
 //

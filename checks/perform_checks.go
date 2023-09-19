@@ -18,6 +18,7 @@ func PerformChecks(r *report.Report) {
 	detectUnwantedFiles(r)
 	nestedArchives(r)
 	missingPrecompiledFiles(r)
+	missingSCAComponents(r)
 	unselectedJavaScriptModules(r)
 	unexpectedSourceCode(r)
 	missingSupportingFiles(r)
