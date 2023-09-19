@@ -1,8 +1,9 @@
 package report
 
 import (
-	"github.com/antfie/scan_health/v2/utils"
 	"time"
+
+	"github.com/antfie/scan_health/v2/utils"
 )
 
 type HealthTool struct {
@@ -31,6 +32,7 @@ type Scan struct {
 	ScanDuration         time.Duration `json:"scan_duration,omitempty"`
 	AnalysisSize         uint64        `json:"analysis_size,omitempty"`
 	IsLatestScan         bool          `json:"is_latest_scan"`
+	IsSCADataAvailable   bool          `json:"is_sca_data_available"`
 }
 
 type FlawSummary struct {
@@ -75,6 +77,7 @@ type ModuleInstance struct {
 	MD5             string   `json:"md5,omitempty"`
 	Issues          []string `json:"issues,omitempty"`
 	SizeBytes       int      `json:"size_bytes,omitempty"`
+	Source          string   `json:"source,omitempty"`
 }
 
 type IssueSeverity string
