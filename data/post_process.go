@@ -13,8 +13,8 @@ func postProcessThirdParty(r *report.Report) {
 	var thirdPartyFiles []string
 
 	for _, component := range r.SCAComponents {
-		if !utils.IsStringInStringArray(component.Name, thirdPartyFiles) {
-			thirdPartyFiles = append(thirdPartyFiles, component.Name)
+		if !utils.IsStringInStringArray(component, thirdPartyFiles) {
+			thirdPartyFiles = append(thirdPartyFiles, component)
 		}
 	}
 
