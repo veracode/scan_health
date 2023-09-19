@@ -277,12 +277,10 @@ func (flaw detailedReportFlaw) isMitigated() bool {
 func populateThirdPartyFiles(r *report.Report, detailedReport detailedReport) {
 	r.Scan.IsSCADataAvailable = strings.ToLower(detailedReport.SCAResults.ServiceAvailable) != "false"
 	for _, component := range detailedReport.SCAResults.VulnerableComponents {
-		r.UploadedFiles = append(
-			r.UploadedFiles,
-			report.UploadedFile{
-				Name:         component.FileName,
-				IsThirdParty: true,
-				Source:       "detailed_report_sca_component",
+		r.SCAComponents = append(
+			r.SCAComponents,
+			report.SCAComponent{
+				Name: component.FileName,
 			},
 		)
 	}

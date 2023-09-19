@@ -12,9 +12,9 @@ func postProcessData(r *report.Report) {
 func postProcessThirdParty(r *report.Report) {
 	var thirdPartyFiles []string
 
-	for _, uploadedFile := range r.UploadedFiles {
-		if uploadedFile.Source == "detailed_report_sca_component" && !utils.IsStringInStringArray(uploadedFile.Name, thirdPartyFiles) {
-			thirdPartyFiles = append(thirdPartyFiles, uploadedFile.Name)
+	for _, component := range r.SCAComponents {
+		if !utils.IsStringInStringArray(component.Name, thirdPartyFiles) {
+			thirdPartyFiles = append(thirdPartyFiles, component.Name)
 		}
 	}
 

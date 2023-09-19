@@ -80,6 +80,10 @@ type ModuleInstance struct {
 	Source          string   `json:"source,omitempty"`
 }
 
+type SCAComponent struct {
+	Name string `json:"name,omitempty"`
+}
+
 type IssueSeverity string
 
 const (
@@ -101,6 +105,7 @@ type Report struct {
 	Flaws           FlawSummary    `json:"flaws,omitempty"`
 	UploadedFiles   []UploadedFile `json:"uploaded_files,omitempty"`
 	Modules         []Module       `json:"modules,omitempty"`
+	SCAComponents   []SCAComponent `json:"sca_components,omitempty"`
 	Issues          []Issue        `json:"issues,omitempty"`
 	Recommendations []string       `json:"recommendations,omitempty"`
 }
