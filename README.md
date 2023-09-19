@@ -12,13 +12,12 @@ scan performance and flaw quality. The scans must have completed for the tool to
 ## Key Features ✅
 
 * Identification of configuration issues and recommendations for improvements
-* Outputs to the console and also JSON
+* Outputs to the console and also optionally JSON
 * Returns exit code 1 if there are any high severity issues found when using `-error-on-high-severity` flag
 
 ## Usage
 
-To use the tool you will need Veracode API credentials. We recommend you configure a Veracode API credentials file as
-documented here: <https://docs.veracode.com/r/c_configure_api_cred_file>. Alternatively you can use environment
+This tool makes use of the Veracode APIs ([listed below](#outbound-api-calls)). You will need Veracode API credentials and the [Reviewer or Security Lead role](https://docs.veracode.com/r/c_API_roles_details#results-api) for this tool to work. We recommend you configure a [Veracode API credentials file](https://docs.veracode.com/r/c_configure_api_cred_file). Alternatively you can use environment
 variables (`VERACODE_API_KEY_ID` and `VERACODE_API_KEY_SECRET`) or the CLI flags (`-vid` and `-vkey`) to authenticate
 with the Veracode APIs.
 
