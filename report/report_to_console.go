@@ -86,9 +86,9 @@ func renderSelectedModulesToConsole(report *Report) {
 	utils.PrintTitle("Modules Selected for Analysis")
 
 	for _, selectedModule := range report.GetSelectedModules() {
-		for _, moduleInstance := range selectedModule.Instances {
-			var notes []string
+		var notes []string
 
+		for _, moduleInstance := range selectedModule.Instances {
 			if len(moduleInstance.MD5) > 0 {
 				notes = append(notes, fmt.Sprintf("MD5: %s", moduleInstance.MD5))
 			}
@@ -108,15 +108,15 @@ func renderSelectedModulesToConsole(report *Report) {
 			if len(moduleInstance.Platform) > 0 {
 				notes = append(notes, fmt.Sprintf("Platform: %s", moduleInstance.Platform))
 			}
-
-			additionalNotes := ""
-
-			if len(notes) > 0 {
-				additionalNotes = " (" + strings.Join(notes, ", ") + ")"
-			}
-
-			fmt.Printf("* %s%s\n", selectedModule.Name, additionalNotes)
 		}
+
+		additionalNotes := ""
+
+		if len(notes) > 0 {
+			additionalNotes = " (" + strings.Join(notes, ", ") + ")"
+		}
+
+		fmt.Printf("* %s%s\n", selectedModule.Name, additionalNotes)
 	}
 }
 

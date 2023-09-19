@@ -13,7 +13,7 @@ func IsFileNameInFancyList(fileName string, fancyList []string) bool {
 	for _, moduleFromFancyList := range fancyList {
 		formattedFileName := preFormattedFileName
 
-		// Are we doing a case-insensitive search
+		// Are we doing a case-sensitive search
 		if strings.Count(moduleFromFancyList, "!") == 1 {
 			moduleFromFancyList = strings.ReplaceAll(moduleFromFancyList, "!", "")
 		} else {

@@ -10,7 +10,7 @@ func dependenciesSelected(r *report.Report) {
 	var foundModules []string
 
 	for _, selectedModule := range r.GetSelectedModules() {
-		if selectedModule.IsDependency() {
+		if !selectedModule.IsIgnored && selectedModule.IsDependency() {
 			foundModules = append(foundModules, selectedModule.Name)
 		}
 	}

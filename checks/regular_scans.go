@@ -20,6 +20,6 @@ func regularScans(r *report.Report) {
 		return
 	}
 
-	r.ReportIssue(fmt.Sprintf("There have not been recent scans of this application The application was last scanned on %s which was %s ago. It is not uncommon for new flaws to be reported over time because Veracode is continuously improving their products, and because new SCA vulnerabilities are reported every day, and this could impact the application.", r.LastAppActivity, utils.FormatDuration(time.Since(r.LastAppActivity))), report.IssueSeverityMedium)
+	r.ReportIssue(fmt.Sprintf("There have not been recent scans of this application. The application was last scanned %s ago. It is not uncommon for new flaws to be reported over time because Veracode is continuously improving their products, and because new SCA vulnerabilities are reported every day, and this could impact the application.", utils.FormatHumanDurationDays(time.Since(r.LastAppActivity))), report.IssueSeverityMedium)
 	r.MakeRecommendation("Regular scanning, preferably via automation will allow the application team to respond faster to any new issues reported.")
 }

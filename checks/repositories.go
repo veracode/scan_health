@@ -28,6 +28,6 @@ func repositories(r *report.Report) {
 		issueText = "Git repositories were uploaded."
 	}
 
-	r.ReportFileIssue(fmt.Sprintf("%s We do not recommend uploading unnecessary files as this can increase the time it takes to upload and scan the application for scanning. This can also result in many modules and long scan times.", issueText), report.IssueSeverityMedium, foundFiles)
+	r.ReportFileIssue(fmt.Sprintf("%s Git repositories can contain sensitive information or secrets. We do not recommend uploading source code repositories as this can increase the time it takes to upload and scan. It can also result in undesirable modules being presented for analysis.", issueText), report.IssueSeverityMedium, foundFiles)
 	r.MakeRecommendation("Do not upload source code repositories.")
 }

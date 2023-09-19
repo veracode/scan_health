@@ -17,6 +17,10 @@ func missingSupportingFiles(r *report.Report) {
 	var count = 0
 
 	for _, selectedModule := range r.GetSelectedModules() {
+		if selectedModule.IsIgnored {
+			continue
+		}
+
 		for _, instance := range selectedModule.Instances {
 			for _, issue := range instance.Issues {
 				if strings.HasPrefix(issue, "Missing Supporting Files") {
@@ -46,14 +50,15 @@ func missingSupportingFiles(r *report.Report) {
 		filePlural = "s"
 	}
 
-	var message = fmt.Sprintf("A module \"%s\" was found to be missing %d file%s.", foundModules[0], count, filePlural)
+	var message = fmt.Sprintf("A selected module \"%s\" was found to be missing %d file%s.", foundModules[0], count, filePlural)
 
 	if len(foundModules) > 1 {
-		message = fmt.Sprintf("%d modules were selected as entry points that were found to be missing a total of %d file%s: %s.", len(foundModules), count, filePlural, utils.Top5StringList(foundModules))
+		message = fmt.Sprintf("%d selected modules were selected as entry points that were found to be missing a total of %d file%s: %s.", len(foundModules), count, filePlural, utils.Top5StringList(foundModules))
 	}
 
 	issueDescription := "Veracode can only scan what has been uploaded. Missing files leads to reduced scan coverage."
 
 	r.ReportModuleIssue(fmt.Sprintf("%s %s", message, issueDescription), report.IssueSeverityMedium, foundModules)
 	r.MakeRecommendation("For optimal scan quality review and resolve the missing supporting files identified on the Review Modules page. To the left of the module name there is an expander button [+] that when pressed will itemize any missing files.")
+	r.MakeRecommendation("Ensure all the components that make up this application including all first, second and third party are present for analysis.")
 }

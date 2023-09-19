@@ -14,9 +14,11 @@ func testingArtefacts(r *report.Report) {
 	var testFilePatterns = []string{
 		"nunit.framework.dll",
 		"Moq.dll",
-		"*.test.dll",
-		"!*Test.dll",
-		"!*Tests.dll",
+		"^.test.",
+		"!Test*",
+		"!*Test",
+		"!^Test.",
+		"!^Tests.",
 		"*.unittests.dll",
 		"*.unittest.dll",
 		"^mock",
@@ -29,6 +31,18 @@ func testingArtefacts(r *report.Report) {
 	detectSelectedTestingModules(r, testFilePatterns)
 	detectTestArtefactsInFileUploads(r, testFilePatterns)
 	detectTestArtefactsInModuleIssues(r)
+
+	for index, uploadedFile := range r.UploadedFiles {
+		if utils.IsFileNameInFancyList(uploadedFile.Name, testFilePatterns) {
+			r.UploadedFiles[index].IsIgnored = true
+		}
+	}
+
+	for index, module := range r.Modules {
+		if utils.IsFileNameInFancyList(module.Name, testFilePatterns) {
+			r.Modules[index].IsIgnored = true
+		}
+	}
 }
 
 func detectSelectedTestingModules(r *report.Report, testFilePatterns []string) {
