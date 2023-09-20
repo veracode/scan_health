@@ -37,7 +37,7 @@ func TestDependenciesSelected(t *testing.T) {
 		dependenciesSelected(mockReport)
 
 		if len(mockReport.Issues) != 1 {
-			t.Errorf("Issues were not which should have been")
+			t.Errorf("Issues were not reported which should have been")
 		}
 	})
 }
