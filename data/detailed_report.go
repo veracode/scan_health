@@ -117,7 +117,11 @@ func (api API) populateDetailedReport(r *report.Report) {
 	r.Scan.IsLatestScan = detailedReport.IsLatestScan
 
 	if !r.Scan.IsLatestScan {
-		color.HiYellow("Warning: This is not the latest SAST scan in this application profile")
+		if len(r.Scan.SandboxName) > 0 {
+			color.HiYellow("Warning: This is not the latest SAST scan in this sandbox")
+		} else {
+			color.HiYellow("Warning: This is not the latest SAST policy scan")
+		}
 	}
 
 	populateDetailedReportModules(r, detailedReport.StaticAnalysis)
