@@ -9,167 +9,62 @@ import (
 )
 
 // Test Cases
-func TestModulesAreFine(t *testing.T) {
+func TestFilesToIgnore(t *testing.T) {
 
 	// Test Case 1: No duplicates
-	t.Run("No Module Errors", func(t *testing.T) {
+	t.Run("No Files to Ignore", func(t *testing.T) {
 		t.Parallel()
 		testReport := report.Report{
-			Modules: []report.Module{
-				{Name: "module1",
-					IsThirdParty: false,
-					IsIgnored:    false,
-					Instances: []report.ModuleInstance{{
-						IsSelected:     true,
-						HasFatalErrors: false,
-					}},
-				},
-				{Name: "module2",
-					IsThirdParty: false,
-					IsIgnored:    false,
-					Instances: []report.ModuleInstance{{
-						IsSelected:     true,
-						HasFatalErrors: false,
-					}},
-				},
+			UploadedFiles: []report.UploadedFile{
+				{Id: 111111, Name: "this is a valid file.jar", MD5: "hash1", IsIgnored: false, IsThirdParty: false},
+				{Id: 222222, Name: "this is a valid file.exe", MD5: "hash2", IsIgnored: false, IsThirdParty: false},
 			},
 			Issues: []report.Issue{},
 		}
 
-		fatalErrors(&testReport)
+		ignoreJunkFiles(&testReport)
 		assert.Empty(t, testReport.Issues)
 	})
 
-	t.Run("Two Windows Modules With Missing Primary Debug Symbols", func(t *testing.T) {
+	t.Run("1 file to Ignore", func(t *testing.T) {
 		t.Parallel()
 		testReport := report.Report{
-			Modules: []report.Module{
-				{Name: "module1.exe",
-					IsThirdParty: false,
-					IsIgnored:    false,
-					Instances: []report.ModuleInstance{{
-						IsSelected:     true,
-						HasFatalErrors: true,
-						Status:         "Primary Files Compiled without Debug Symbols",
-					}},
-				},
-				{Name: "module2.dll",
-					IsThirdParty: false,
-					IsIgnored:    false,
-					Instances: []report.ModuleInstance{{
-						IsSelected:     true,
-						HasFatalErrors: true,
-						Status:         "Primary Files Compiled without Debug Symbols",
-					}},
-				},
-				{Name: "module3",
-					IsThirdParty: false,
-					IsIgnored:    false,
-					Instances: []report.ModuleInstance{{
-						IsSelected:     true,
-						HasFatalErrors: false,
-					}},
-				},
+			UploadedFiles: []report.UploadedFile{
+				{Id: 111111, Name: "web.config", MD5: "hash1", IsIgnored: false, IsThirdParty: false},
+				{Id: 222222, Name: "this is a valid file.exe", MD5: "hash2", IsIgnored: false, IsThirdParty: false},
 			},
 			Issues: []report.Issue{},
 		}
 
-		fatalErrors(&testReport)
+		ignoreJunkFiles(&testReport)
 		if !assert.Equal(t, 1, len(testReport.Issues)) {
 			t.FailNow()
 		}
 
-		if !assert.True(t, strings.Contains(testReport.Issues[0].Description, "2 modules")) {
-			t.FailNow()
-		}
-
-		assert.Equal(t, report.IssueSeverityHigh, testReport.Issues[0].Severity)
-
-		if !assert.Equal(t, 1, len(testReport.Recommendations)) {
-			t.FailNow()
-		}
-
-		assert.True(t, strings.Contains(testReport.Recommendations[0], "PDB"))
-	})
-
-	t.Run("Two Java Modules With No Scannable Binaries", func(t *testing.T) {
-		t.Parallel()
-		testReport := report.Report{
-			Modules: []report.Module{
-				{Name: "module1.war",
-					IsThirdParty: false,
-					IsIgnored:    false,
-					Instances: []report.ModuleInstance{{
-						IsSelected:     false,
-						HasFatalErrors: true,
-						Status:         "No Scannable Binaries",
-					}},
-				},
-				{Name: "module2.ear",
-					IsThirdParty: false,
-					IsIgnored:    false,
-					Instances: []report.ModuleInstance{{
-						IsSelected:     false,
-						HasFatalErrors: true,
-						Status:         "No Scannable Binaries",
-					}},
-				},
-				{Name: "module3.jar",
-					IsThirdParty: false,
-					IsIgnored:    false,
-					Instances: []report.ModuleInstance{{
-						IsSelected:     true,
-						HasFatalErrors: true,
-						Status:         "No Scannable Binaries",
-					}},
-				},
-			},
-			Issues: []report.Issue{},
-		}
-
-		fatalErrors(&testReport)
-		if !assert.Equal(t, 1, len(testReport.Issues)) {
-			t.FailNow()
-		}
-
-		if !assert.True(t, strings.Contains(testReport.Issues[0].Description, "3 Java modules")) {
-			t.FailNow()
-		}
-
-		assert.Equal(t, report.IssueSeverityHigh, testReport.Issues[0].Severity)
+		assert.True(t, strings.Contains(testReport.Issues[0].Description, "unnecessary"))
 
 		if !assert.Equal(t, 1, len(testReport.Recommendations)) {
 			t.FailNow()
 		}
 	})
 
-	t.Run("Two Java Modules With No Scannable Binaries", func(t *testing.T) {
+	t.Run("2 files to Ignore", func(t *testing.T) {
 		t.Parallel()
 		testReport := report.Report{
-			Modules: []report.Module{
-				{Name: "module1.war",
-					IsThirdParty: false,
-					IsIgnored:    false,
-					Instances: []report.ModuleInstance{{
-						IsSelected:     false,
-						HasFatalErrors: true,
-						Status:         "does not support jar files nested inside",
-					}},
-				},
+			UploadedFiles: []report.UploadedFile{
+				{Id: 111111, Name: "web.config", MD5: "hash1", IsIgnored: false, IsThirdParty: false},
+				{Id: 222222, Name: "Makefile", MD5: "hash2", IsIgnored: false, IsThirdParty: false},
+				{Id: 333333, Name: "Test.exe", MD5: "hash2", IsIgnored: false, IsThirdParty: false},
 			},
 			Issues: []report.Issue{},
 		}
 
-		fatalErrors(&testReport)
+		ignoreJunkFiles(&testReport)
 		if !assert.Equal(t, 1, len(testReport.Issues)) {
 			t.FailNow()
 		}
 
-		if !assert.True(t, strings.Contains(testReport.Issues[0].Description, "nested/shaded")) {
-			t.FailNow()
-		}
-
-		assert.Equal(t, report.IssueSeverityHigh, testReport.Issues[0].Severity)
+		assert.True(t, strings.Contains(testReport.Issues[0].Description, "2 unnecessary"))
 
 		if !assert.Equal(t, 1, len(testReport.Recommendations)) {
 			t.FailNow()
