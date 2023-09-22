@@ -2,11 +2,13 @@ package checks
 
 import (
 	"github.com/antfie/scan_health/v2/report"
+	"github.com/stretchr/testify/assert"
 	"testing"
 )
 
 func TestDependenciesSelected(t *testing.T) {
 	t.Run("Unselected dependencies should not be reported", func(t *testing.T) {
+		t.Parallel()
 		mockReport := &report.Report{
 			Modules: []report.Module{
 				{Name: "Test",
@@ -18,12 +20,11 @@ func TestDependenciesSelected(t *testing.T) {
 
 		dependenciesSelected(mockReport)
 
-		if len(mockReport.Issues) != 0 {
-			t.Errorf("Issues were reported which should not have been")
-		}
+		assert.Equal(t, len(mockReport.Issues), 0, "Issues were reported which should not have been")
 	})
 
 	t.Run("Selected dependencies should be reported", func(t *testing.T) {
+		t.Parallel()
 		mockReport := &report.Report{
 			Modules: []report.Module{
 				{Name: "Test",
@@ -36,8 +37,6 @@ func TestDependenciesSelected(t *testing.T) {
 
 		dependenciesSelected(mockReport)
 
-		if len(mockReport.Issues) != 1 {
-			t.Errorf("Issues were not reported which should have been")
-		}
+		assert.Equal(t, len(mockReport.Issues), 1, "Issues were not reported which should have been")
 	})
 }
