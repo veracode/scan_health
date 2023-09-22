@@ -18,7 +18,7 @@ func TestTooManyFlaws(t *testing.T) {
 
 		testReport := report.Report{
 			Flaws: report.FlawSummary{
-				Total: 0,
+				Total: 200,
 			},
 			Issues: []report.Issue{},
 		}
