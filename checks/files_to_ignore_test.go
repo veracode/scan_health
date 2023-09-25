@@ -70,4 +70,18 @@ func TestFilesToIgnore(t *testing.T) {
 			t.FailNow()
 		}
 	})
+
+	t.Run("Any modules derived from ignored files should also be ignored", func(t *testing.T) {
+		t.Parallel()
+
+		testReport := report.Report{
+			Modules: []report.Module{
+				{Name: "dist.js.map", Instances: []report.ModuleInstance{}},
+			},
+		}
+
+		ignoreJunkFiles(&testReport)
+
+		assert.True(t, testReport.Modules[0].IsIgnored)
+	})
 }
