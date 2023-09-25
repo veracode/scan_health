@@ -66,6 +66,12 @@ func ignoreJunkFiles(r *report.Report) {
 		}
 	}
 
+	for index, module := range r.Modules {
+		if utils.IsFileNameInFancyList(module.Name, filePatternsToIgnore) {
+			r.Modules[index].IsIgnored = true
+		}
+	}
+
 	if len(ignoredFiles) == 0 {
 		return
 	}
