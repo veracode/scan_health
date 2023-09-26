@@ -5,3 +5,5 @@ cache
 /scan/veracode.zip
 /scan/results.json
 /scan/filtered_results.json
+coverage.html
+coverage.out
