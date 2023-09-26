@@ -59,6 +59,6 @@ func missingSupportingFiles(r *report.Report) {
 	issueDescription := "Veracode can only scan what has been uploaded. Missing files leads to reduced scan coverage."
 
 	r.ReportModuleIssue(fmt.Sprintf("%s %s", message, issueDescription), report.IssueSeverityMedium, foundModules)
-	r.MakeRecommendation("For optimal scan quality review and resolve the missing supporting files identified on the Review Modules page. To the left of the module name there is an expander button [+] that when pressed will itemize any missing files.")
+	r.MakeRecommendation("For optimal scan quality review and resolve the missing supporting files identified on the Review Modules page. To the left of the module name on the Review Modules page there is an expander button [+] that when pressed will itemize any missing files.")
 	r.MakeRecommendation("Ensure all the components that make up this application including all first, second and third party are present for analysis.")
 }

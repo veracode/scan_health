@@ -76,10 +76,10 @@ func thirdParty(r *report.Report) {
 		return
 	}
 
-	var message = fmt.Sprintf("A third-party component was selected as an entry point: \"%s\".", selectedThirdPartyModules[0])
+	var message = fmt.Sprintf("A third-party component was selected as an entry point for analysis: \"%s\".", selectedThirdPartyModules[0])
 
 	if len(selectedThirdPartyModules) > 1 {
-		message = fmt.Sprintf("%d third-party components were selected as an entry point: %s.", len(selectedThirdPartyModules), utils.Top5StringList(selectedThirdPartyModules))
+		message = fmt.Sprintf("%d third-party components were selected as entry points for analysis: %s.", len(selectedThirdPartyModules), utils.Top5StringList(selectedThirdPartyModules))
 	}
 
 	r.ReportModuleIssue(message, report.IssueSeverityMedium, selectedThirdPartyModules)
