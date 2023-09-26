@@ -1,6 +1,5 @@
 dist
 vendor
-.idea
 cache
 /scan/pipeline-scan.jar
 /scan/veracode.zip
