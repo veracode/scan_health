@@ -26,6 +26,21 @@ func TestFilesToIgnore(t *testing.T) {
 		assert.Empty(t, testReport.Issues)
 	})
 
+	t.Run("Ignore PDB and .gitignore as Special Cases", func(t *testing.T) {
+		t.Parallel()
+		testReport := report.Report{
+			UploadedFiles: []report.UploadedFile{
+				{Id: 111111, Name: ".gitignore", MD5: "hash1", IsIgnored: false, IsThirdParty: false},
+				{Id: 222222, Name: "test.pdb", MD5: "hash2", IsIgnored: false, IsThirdParty: false},
+			},
+			Issues: []report.Issue{},
+		}
+
+		ignoreJunkFiles(&testReport)
+		assert.Empty(t, testReport.Issues)
+		assert.True(t, testReport.UploadedFiles[1].IsIgnored)
+	})
+
 	t.Run("1 file to Ignore", func(t *testing.T) {
 		t.Parallel()
 		testReport := report.Report{
