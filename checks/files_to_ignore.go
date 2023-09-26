@@ -49,20 +49,21 @@ func ignoreJunkFiles(r *report.Report) {
 	var ignoredFiles []string
 
 	for index, uploadedFile := range r.UploadedFiles {
-		if utils.IsFileNameInFancyList(uploadedFile.Name, filePatternsToIgnore) {
-
-			// Suppress reporting on .gitignore files
-			if strings.EqualFold(uploadedFile.Name, ".gitignore") {
-				continue
-			}
-
-			r.UploadedFiles[index].IsIgnored = true
-			ignoredFiles = append(ignoredFiles, uploadedFile.Name)
-		}
-
-		// Ignore .PDB files
+		// Suppress reporting on .PDB files
 		if strings.HasSuffix(strings.ToLower(uploadedFile.Name), ".pdb") {
 			r.UploadedFiles[index].IsIgnored = true
+			continue
+		}
+
+		// Suppress reporting on .gitignore and HEAD repository files
+		if strings.EqualFold(uploadedFile.Name, ".gitignore") || strings.EqualFold(uploadedFile.Name, "HEAD") {
+			r.UploadedFiles[index].IsIgnored = true
+			continue
+		}
+
+		if utils.IsFileNameInFancyList(uploadedFile.Name, filePatternsToIgnore) {
+			r.UploadedFiles[index].IsIgnored = true
+			ignoredFiles = append(ignoredFiles, uploadedFile.Name)
 		}
 	}
 
