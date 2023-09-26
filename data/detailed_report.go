@@ -176,6 +176,10 @@ func populateModulesFromFlaws(r *report.Report, detailedReport detailedReport) {
 					IsDependency: modulePartIndex > 0,
 					Source:       "detailed_report_module_derived_from_flaw_module_path",
 				})
+
+				if modulePartIndex > 0 {
+					r.AddModuleDependency(modulePart, modulePathParts[modulePartIndex-1])
+				}
 			}
 		}
 	}

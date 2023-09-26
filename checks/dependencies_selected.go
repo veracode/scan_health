@@ -19,10 +19,10 @@ func dependenciesSelected(r *report.Report) {
 		return
 	}
 
-	var message = fmt.Sprintf("A dependency \"%s\" was selected as an entry point. This could lead to flaws being raised relating to functionality that may be considered un-reachable or not actionable.", foundModules[0])
+	var message = fmt.Sprintf("A dependency \"%s\" was selected as an entry point for analysis. This could lead to flaws being raised relating to functionality that may be considered un-reachable or not actionable.", foundModules[0])
 
 	if len(foundModules) > 1 {
-		message = fmt.Sprintf("%d dependencies were selected as entry points: %s. This could lead to flaws being raised relating to functionality that may be considered un-reachable or not actionable.", len(foundModules), utils.Top5StringList(foundModules))
+		message = fmt.Sprintf("%d dependencies were selected as entry points for analysis: %s. This could lead to flaws being raised relating to functionality that may be considered un-reachable or not actionable.", len(foundModules), utils.Top5StringList(foundModules))
 	}
 
 	r.ReportModuleIssue(message, report.IssueSeverityMedium, foundModules)

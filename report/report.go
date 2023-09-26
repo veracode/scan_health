@@ -60,6 +60,7 @@ type Module struct {
 	IsIgnored    bool             `json:"is_ignored"`
 	Instances    []ModuleInstance `json:"instances,omitempty"`
 	Flaws        FlawSummary      `json:"flaws,omitempty"`
+	DependencyOf []string         `json:"dependency_of,omitempty"`
 }
 
 type ModuleInstance struct {

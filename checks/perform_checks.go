@@ -37,6 +37,7 @@ func PerformChecks(r *report.Report) {
 
 	// Module selection issues
 	unselectedFirstParty(r)
+	overScanning(r)
 	dependenciesSelected(r)
 	duplicateModules(r)
 	moduleWarnings(r)
