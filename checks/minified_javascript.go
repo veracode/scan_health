@@ -2,9 +2,10 @@ package checks
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/antfie/scan_health/v2/report"
 	"github.com/antfie/scan_health/v2/utils"
-	"strings"
 )
 
 // Test cases
