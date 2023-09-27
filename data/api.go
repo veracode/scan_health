@@ -22,7 +22,7 @@ type API struct {
 func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
 	if api.Region == "us" {
 		apiUrl = strings.Replace(apiUrl, ".com", ".us", 1)
-	} else if api.Region == "eu" {
+	} else if api.Region == "european" {
 		apiUrl = strings.Replace(apiUrl, ".com", ".eu", 1)
 	}
 
