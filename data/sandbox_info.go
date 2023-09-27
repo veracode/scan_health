@@ -21,7 +21,7 @@ type sandboxInfo struct {
 }
 
 func (api API) populateSandboxInfo(report *report.Report) {
-	var url = fmt.Sprintf("https://analysiscenter.veracode.com/api/5.0/getsandboxlist.do?app_id=%d", report.Scan.ApplicationId)
+	var url = fmt.Sprintf("/api/5.0/getsandboxlist.do?app_id=%d", report.Scan.ApplicationId)
 	response := api.makeApiRequest(url, http.MethodGet)
 
 	data := sandboxList{}

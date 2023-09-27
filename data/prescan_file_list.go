@@ -24,7 +24,7 @@ type fileListFile struct {
 }
 
 func (api API) getPrescanFileList(r *report.Report) {
-	var url = fmt.Sprintf("https://analysiscenter.veracode.com/api/5.0/getfilelist.do?app_id=%d&build_id=%d", r.Scan.ApplicationId, r.Scan.BuildId)
+	var url = fmt.Sprintf("/api/5.0/getfilelist.do?app_id=%d&build_id=%d", r.Scan.ApplicationId, r.Scan.BuildId)
 	response := api.makeApiRequest(url, http.MethodGet)
 
 	fileList := prescanFileList{}
