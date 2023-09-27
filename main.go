@@ -55,7 +55,11 @@ func main() {
 
 	apiId, apiKey := getCredentials(*vid, *vkey, *profile)
 	api := data.API{Id: apiId, Key: apiKey, Region: regionToUse, AppVersion: AppVersion, EnableCaching: *enableCaching}
-	buildId := utils.ParseBuildIdFromPlatformUrl(*scan)
+
+	buildId, err := utils.ParseBuildIdFromScanInformation(*scan)
+	if err != nil {
+		utils.ErrorAndExit("", err)
+	}
 
 	api.AssertCredentialsWork()
 

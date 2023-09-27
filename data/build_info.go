@@ -20,7 +20,7 @@ type buildInfoBuild struct {
 }
 
 func (api API) populateBuildInfo(report *report.Report) {
-	var url = fmt.Sprintf("https://analysiscenter.veracode.com/api/5.0/getbuildinfo.do?app_id=%d&build_id=%d", report.Scan.ApplicationId, report.Scan.BuildId)
+	var url = fmt.Sprintf("/api/5.0/getbuildinfo.do?app_id=%d&build_id=%d", report.Scan.ApplicationId, report.Scan.BuildId)
 	response := api.makeApiRequest(url, http.MethodGet)
 
 	data := buildInfo{}

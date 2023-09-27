@@ -22,7 +22,7 @@ type appInfoApplication struct {
 }
 
 func (api API) populateAppInfo(report *report.Report) {
-	url := fmt.Sprintf("https://analysiscenter.veracode.com/api/5.0/getappinfo.do?app_id=%d", report.Scan.ApplicationId)
+	url := fmt.Sprintf("/api/5.0/getappinfo.do?app_id=%d", report.Scan.ApplicationId)
 	response := api.makeApiRequest(url, http.MethodGet)
 
 	data := appInfo{}
