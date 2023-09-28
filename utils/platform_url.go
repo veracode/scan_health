@@ -83,6 +83,15 @@ func ParseBaseUrlFromRegion(region string) string {
 	return defaultRegion.URL
 }
 
+func IsValidRegion(region string) bool {
+	for _, regionData := range regions {
+		if regionData.ID == region {
+			return true
+		}
+	}
+	return false
+}
+
 func isParseableURL(urlFragment string) bool {
 	for _, page := range supportedPages {
 		if strings.HasPrefix(urlFragment, page) {

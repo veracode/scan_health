@@ -1,8 +1,9 @@
 package utils
 
 import (
-	"github.com/stretchr/testify/assert"
 	"testing"
+
+	"github.com/stretchr/testify/assert"
 )
 
 func TestPlatformUrl(t *testing.T) {
@@ -83,5 +84,17 @@ func TestPlatformUrl(t *testing.T) {
 		buildId, err := ParseBuildIdFromScanInformation("https://analysisceasdasdnter.veracode.com/auth/index.jsp#AnalyzeAppModuleList:41807:380748:12345678:5206587:24100796::::469963")
 		assert.Equal(t, buildId, -1)
 		assert.Contains(t, err.Error(), "not a valid or supported Veracode Platform URL")
+	})
+
+	t.Run("Checking A Valid Region", func(t *testing.T) {
+		t.Parallel()
+		validRegion := IsValidRegion("european")
+		assert.True(t, validRegion)
+	})
+
+	t.Run("Checking An Invalid Region", func(t *testing.T) {
+		t.Parallel()
+		validRegion := IsValidRegion("apac")
+		assert.False(t, validRegion)
 	})
 }
