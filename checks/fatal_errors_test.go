@@ -1,7 +1,6 @@
 package checks
 
 import (
-	"strings"
 	"testing"
 
 	"github.com/antfie/scan_health/v2/report"
@@ -79,7 +78,7 @@ func TestModulesAreFine(t *testing.T) {
 			t.FailNow()
 		}
 
-		if !assert.True(t, strings.Contains(testReport.Issues[0].Description, "2 modules")) {
+		if !assert.Contains(t, testReport.Issues[0].Description, "2 modules") {
 			t.FailNow()
 		}
 
@@ -89,7 +88,7 @@ func TestModulesAreFine(t *testing.T) {
 			t.FailNow()
 		}
 
-		assert.True(t, strings.Contains(testReport.Recommendations[0], "PDB"))
+		assert.Contains(t, testReport.Recommendations[0], "PDB")
 	})
 
 	t.Run("Two Java Modules With No Scannable Binaries", func(t *testing.T) {
@@ -132,7 +131,7 @@ func TestModulesAreFine(t *testing.T) {
 			t.FailNow()
 		}
 
-		if !assert.True(t, strings.Contains(testReport.Issues[0].Description, "3 Java modules")) {
+		if !assert.Contains(t, testReport.Issues[0].Description, "3 Java modules") {
 			t.FailNow()
 		}
 
@@ -165,7 +164,7 @@ func TestModulesAreFine(t *testing.T) {
 			t.FailNow()
 		}
 
-		if !assert.True(t, strings.Contains(testReport.Issues[0].Description, "nested/shaded")) {
+		if !assert.Contains(t, testReport.Issues[0].Description, "nested/shaded") {
 			t.FailNow()
 		}
 

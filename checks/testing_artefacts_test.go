@@ -7,7 +7,7 @@ import (
 	"github.com/stretchr/testify/assert"
 )
 
-func TestTestingArtefacst(t *testing.T) {
+func TestTestingArtefacts(t *testing.T) {
 
 	t.Run("No Testing Artefacts", func(t *testing.T) {
 		t.Parallel()
@@ -25,7 +25,7 @@ func TestTestingArtefacst(t *testing.T) {
 
 		testingArtefacts(&mockReport)
 
-		assert.Equal(t, len(mockReport.Issues), 0)
+		assert.Empty(t, mockReport.Issues)
 	})
 
 	t.Run("Testing File uploaded", func(t *testing.T) {
@@ -51,7 +51,7 @@ func TestTestingArtefacst(t *testing.T) {
 		}
 
 		assert.Contains(t, mockReport.Issues[0].Description, "2 testing artefacts")
-		assert.Equal(t, len(mockReport.Recommendations), 1)
+		assert.Equal(t, 1, len(mockReport.Recommendations))
 
 	})
 
@@ -75,7 +75,7 @@ func TestTestingArtefacst(t *testing.T) {
 
 		testingArtefacts(&mockReport)
 
-		assert.Equal(t, len(mockReport.Issues), 0)
+		assert.Empty(t, mockReport.Issues)
 	})
 
 	t.Run("Testing Module found, selected", func(t *testing.T) {
@@ -100,12 +100,12 @@ func TestTestingArtefacst(t *testing.T) {
 
 		testingArtefacts(&mockReport)
 
-		if !assert.Equal(t, len(mockReport.Issues), 1) {
+		if !assert.Equal(t, 1, len(mockReport.Issues)) {
 			t.FailNow()
 		}
 
 		assert.Contains(t, mockReport.Issues[0].Description, "2 testing artefacts")
-		assert.Equal(t, len(mockReport.Recommendations), 2)
+		assert.Equal(t, 2, len(mockReport.Recommendations))
 	})
 
 	t.Run("Module dependant on testing artefacts", func(t *testing.T) {
@@ -132,11 +132,11 @@ func TestTestingArtefacst(t *testing.T) {
 
 		testingArtefacts(&mockReport)
 
-		if !assert.Equal(t, len(mockReport.Issues), 1) {
+		if !assert.Equal(t, 1, len(mockReport.Issues)) {
 			t.FailNow()
 		}
 
 		assert.Contains(t, mockReport.Issues[0].Description, "2 modules")
-		assert.Equal(t, len(mockReport.Recommendations), 1)
+		assert.Equal(t, 1, len(mockReport.Recommendations))
 	})
 }

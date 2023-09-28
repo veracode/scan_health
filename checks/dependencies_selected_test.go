@@ -20,7 +20,7 @@ func TestDependenciesSelected(t *testing.T) {
 
 		dependenciesSelected(mockReport)
 
-		assert.Equal(t, len(mockReport.Issues), 0, "Issues were reported which should not have been")
+		assert.Empty(t, mockReport.Issues, "Issues were reported which should not have been")
 	})
 
 	t.Run("Selected dependencies should be reported", func(t *testing.T) {
@@ -37,6 +37,6 @@ func TestDependenciesSelected(t *testing.T) {
 
 		dependenciesSelected(mockReport)
 
-		assert.Equal(t, len(mockReport.Issues), 1, "Issues were not reported which should have been")
+		assert.Equal(t, 1, len(mockReport.Issues), "Issues were not reported which should have been")
 	})
 }
