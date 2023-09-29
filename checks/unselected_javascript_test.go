@@ -142,13 +142,7 @@ func TestUnselectedJavaScript(t *testing.T) {
 		}
 
 		unselectedJavaScriptModules(&mockReport)
-		if !assert.Equal(t, 0, len(mockReport.Issues)) {
-			t.FailNow()
-		}
-
-		assert.Contains(t, mockReport.Issues[0].Description, "2 JavaScript module")
-		assert.Equal(t, report.IssueSeverityMedium, mockReport.Issues[0].Severity)
-		assert.Equal(t, 2, len(mockReport.Recommendations))
+		assert.Empty(t, mockReport.Issues)
 	})
 
 }
