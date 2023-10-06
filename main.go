@@ -7,6 +7,7 @@ import (
 	"github.com/antfie/scan_health/v2/data"
 	"github.com/antfie/scan_health/v2/report"
 	"github.com/antfie/scan_health/v2/utils"
+	"github.com/fatih/color"
 	"os"
 	"strings"
 )
@@ -20,6 +21,7 @@ func main() {
 	scan := flag.String("sast", "", "Veracode Platform URL or build ID for a SAST application health review")
 	outputFormat := flag.String("format", "console", "Output format [console, json]")
 	jsonFilePath := flag.String("json-file", "", "Optional file for writing JSON output to")
+	includePreviousScan := flag.Bool("previousScan", true, "Enable comparison with previous scan")
 	enableCaching := flag.Bool("cache", false, "Enable caching of API responses (useful for development)")
 	errorOnHighSeverity := flag.Bool("error-on-high-severity", false, "Return a non-zero exit code if any high severity issues are found")
 
@@ -64,10 +66,29 @@ func main() {
 		regionToUse))
 
 	healthReport := report.NewReport(buildId, regionToUse, AppVersion)
-
 	api.PopulateReportWithDataFromAPI(healthReport)
 
-	checks.PerformChecks(healthReport)
+	if !healthReport.Scan.IsLatestScan {
+		if len(healthReport.Scan.SandboxName) > 0 {
+			color.HiYellow("Warning: This is not the latest SAST scan in this sandbox")
+		} else {
+			color.HiYellow("Warning: This is not the latest SAST policy scan")
+		}
+	}
+
+	var previousHealthReport = &report.Report{}
+
+	if *includePreviousScan == true {
+		previousBuildId, err := api.GetPreviousBuildId(healthReport)
+		if err == nil {
+			previousHealthReport = report.NewReport(previousBuildId, regionToUse, AppVersion)
+			api.PopulateReportWithDataFromAPI(previousHealthReport)
+		} else {
+			color.HiYellow(fmt.Sprintf("Warning: %s", err.Error()))
+		}
+	}
+
+	checks.PerformChecks(healthReport, previousHealthReport)
 
 	healthReport.PrioritizeIssues()
 

@@ -1,8 +1,20 @@
 package checks
 
-import "github.com/antfie/scan_health/v2/report"
+import (
+	"fmt"
+	"github.com/antfie/scan_health/v2/report"
+	"github.com/fatih/color"
+)
 
-func previousScan(r *report.Report) {
+func previousScan(r *report.Report, pr *report.Report) {
+
+	if pr.Scan.BuildId == 0 {
+		return
+	}
+
+	color.White(fmt.Sprintf("Current  Scan Build ID: %d, date: %s", r.Scan.BuildId, r.Scan.PublishedDate))
+	color.White(fmt.Sprintf("Previous Scan Build ID: %d, date: %s", pr.Scan.BuildId, pr.Scan.PublishedDate))
+
 	return
 
 	// TODO

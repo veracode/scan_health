@@ -95,18 +95,11 @@ type Issue struct {
 	AffectedModules []string      `json:"affected_modules,omitempty"`
 }
 
-type PreviousScan struct {
-	Scan          Scan
-	Modules       []Module
-	UploadedFiles []UploadedFile
-}
-
 type Report struct {
-	HealthTool          HealthTool `json:"health_tool,omitempty"`
-	LastAppActivity     time.Time  `json:"last_app_activity,omitempty"`
-	LastSandboxActivity time.Time  `json:"last_sandbox_activity,omitempty"`
-	Scan                Scan       `json:"scan,omitempty"`
-	PreviousScan        PreviousScan
+	HealthTool          HealthTool     `json:"health_tool,omitempty"`
+	LastAppActivity     time.Time      `json:"last_app_activity,omitempty"`
+	LastSandboxActivity time.Time      `json:"last_sandbox_activity,omitempty"`
+	Scan                Scan           `json:"scan,omitempty"`
 	Flaws               FlawSummary    `json:"flaws,omitempty"`
 	UploadedFiles       []UploadedFile `json:"uploaded_files,omitempty"`
 	Modules             []Module       `json:"modules,omitempty"`
