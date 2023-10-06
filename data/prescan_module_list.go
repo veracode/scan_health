@@ -42,24 +42,7 @@ type prescanModuleIssue struct {
 	Details string   `xml:"details,attr"`
 }
 
-func (api API) getPrescanModuleList(r *report.Report) {
-	var url = fmt.Sprintf("https://analysiscenter.veracode.com/api/5.0/getprescanresults.do?app_id=%d&build_id=%d", r.Scan.ApplicationId, r.Scan.BuildId)
-	response := api.makeApiRequest(url, http.MethodGet)
-
-	moduleList := prescanModuleList{}
-
-	err := xml.Unmarshal(response, &moduleList)
-
-	if err != nil {
-		utils.ErrorAndExit("Could not get prescan results", err)
-	}
-
-	// Sort modules by name for consistency
-	// We will sort later actually
-	//sort.Slice(moduleList.Modules, func(i, j int) bool {
-	//	return moduleList.Modules[i].Name < moduleList.Modules[j].Name
-	//})
-
+func populateModuleInstances(r *report.Report, moduleList prescanModuleList) {
 	for _, module := range moduleList.Modules {
 		var issues []string
 
@@ -102,6 +85,34 @@ func (api API) getPrescanModuleList(r *report.Report) {
 			},
 		)
 	}
+}
+
+func (api API) retrievePrescanModuleListViaAPI(appId int, buildId int) prescanModuleList {
+	var url = fmt.Sprintf("https://analysiscenter.veracode.com/api/5.0/getprescanresults.do?app_id=%d&build_id=%d", r.Scan.ApplicationId, r.Scan.BuildId)
+	response := api.makeApiRequest(url, http.MethodGet)
+
+	moduleList := prescanModuleList{}
+
+	err := xml.Unmarshal(response, &moduleList)
+
+	if err != nil {
+		utils.ErrorAndExit("Could not get prescan results", err)
+	}
+
+	return moduleList
+}
+
+func (api API) getPrescanModuleList(r *report.Report) {
+
+	moduleList := api.retrievePrescanModuleListViaAPI(r.Scan.ApplicationId, r.Scan.BuildId)
+	populateModuleInstances(r, moduleList)
+
+	// Sort modules by name for consistency
+	// We will sort later actually
+	//sort.Slice(moduleList.Modules, func(i, j int) bool {
+	//	return moduleList.Modules[i].Name < moduleList.Modules[j].Name
+	//})
+
 }
 
 func calculateModuleSize(size string) int {

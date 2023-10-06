@@ -30,6 +30,7 @@ func (api API) PopulateReportWithDataFromAPI(report *report.Report) {
 	executeApiCall(report, &wg, api.populateSandboxInfo)
 	executeApiCall(report, &wg, api.getPrescanFileList)
 	executeApiCall(report, &wg, api.getPrescanModuleList)
+	executeApiCall(report, &wg, api.populatePreviousBuildInfo)
 
 	// Wait for all the data to load
 	wg.Wait()
