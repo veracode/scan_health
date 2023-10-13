@@ -160,4 +160,52 @@ func TestPreviousScan(t *testing.T) {
 		assert.Empty(t, mockReport.Issues)
 		assert.Empty(t, mockReport.Recommendations)
 	})
+
+	t.Run("Filename normalization on multiple versions", func(t *testing.T) {
+		t.Parallel()
+
+		filenames := []string{
+			"file-1.0.0.jar",
+			"file-1.0.1-SNAPSHOT.jar",
+			"file-2.0.jar",
+			"file.jar",
+		}
+
+		normalizedFiles := make(map[string]int)
+
+		for _, filename := range filenames {
+			normalized, err := normalizeFilename(filename)
+			if err != nil {
+				t.FailNow()
+			}
+
+			normalizedFiles[normalized]++
+		}
+
+		assert.Equal(t, len(normalizedFiles), 1)
+		assert.Equal(t, normalizedFiles["file.jar"], 4)
+	})
+
+	t.Run("Filename normalization on files that include a number", func(t *testing.T) {
+		t.Parallel()
+
+		filenames := []string{
+			"file2test-1.0.0.dll",
+			"file2test-2.0.0.dll",
+		}
+
+		normalizedFiles := make(map[string]int)
+
+		for _, filename := range filenames {
+			normalized, err := normalizeFilename(filename)
+			if err != nil {
+				t.FailNow()
+			}
+
+			normalizedFiles[normalized]++
+		}
+
+		assert.Equal(t, len(normalizedFiles), 1)
+		assert.Equal(t, normalizedFiles["file2test.dll"], 2)
+	})
 }

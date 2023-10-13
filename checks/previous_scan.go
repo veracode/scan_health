@@ -3,6 +3,7 @@ package checks
 import (
 	"fmt"
 	"github.com/antfie/scan_health/v2/report"
+	"regexp"
 )
 
 func UNUSED(x ...interface{}) {}
@@ -28,9 +29,43 @@ func compareModuleSelection(r *report.Report, pr *report.Report) {
 	currentSelectedModules := r.GetSelectedModules()
 	previousSelectedModules := pr.GetSelectedModules()
 
+	currentModuleNameCountMap := generateMappedArray(currentSelectedModules)
+	previousModuleNameCountMap := generateMappedArray(previousSelectedModules)
+
 	// Now, how do we distinguish between selections?
 	// What if one scan had 3 files called 'bob.jar' selected and another had 1?
-	UNUSED(currentSelectedModules, previousSelectedModules)
+	UNUSED(currentModuleNameCountMap, previousModuleNameCountMap)
+}
+
+func normalizeFilename(filename string) (string, error) {
+
+	// Define a regular expression to match version numbers and "SNAPSHOT"
+	// It ensures that the version number is at the end of the filename, preceded by a hyphen,
+	// and followed by a file extension.
+	re, err := regexp.Compile(`(-\d+(\.\d+)*(-SNAPSHOT)?)((\.[a-zA-Z0-9]+)+)$`)
+	if err != nil {
+		return "", err
+	}
+
+	// Replace version numbers and "SNAPSHOT" with an empty string
+	normalized := re.ReplaceAllString(filename, "$4")
+
+	return normalized, nil
+}
+
+func generateMappedArray(modules []report.Module) map[string]int {
+	moduleNameCountMap := make(map[string]int)
+	for _, module := range modules {
+		normalizedName, err := normalizeFilename(module.Name)
+
+		if err == nil {
+			moduleNameCountMap[normalizedName]++
+		} else {
+			moduleNameCountMap[module.Name]++
+		}
+	}
+
+	return moduleNameCountMap
 }
 
 func previousScan(r *report.Report, pr *report.Report) {
