@@ -3,8 +3,35 @@ package checks
 import (
 	"fmt"
 	"github.com/antfie/scan_health/v2/report"
-	"github.com/fatih/color"
 )
+
+func UNUSED(x ...interface{}) {}
+
+func compareModuleCount(r *report.Report, pr *report.Report) {
+
+	previousModuleCount := len(pr.Modules)
+	currentModuleCount := len(r.Modules)
+
+	if previousModuleCount != currentModuleCount {
+
+		previousModuleWord := "module"
+		if previousModuleCount != 1 {
+			previousModuleWord = "modules"
+		}
+
+		r.ReportIssue(fmt.Sprintf("The module count changed from the previous scan. It went from %d %s to %d.", previousModuleCount, previousModuleWord, currentModuleCount), report.IssueSeverityMedium)
+		r.MakeRecommendation("Changes in the number of uploaded modules may be part of natural application lifecycle, but it is worth verifying.")
+	}
+}
+
+func compareModuleSelection(r *report.Report, pr *report.Report) {
+	currentSelectedModules := r.GetSelectedModules()
+	previousSelectedModules := pr.GetSelectedModules()
+
+	// Now, how do we distinguish between selections?
+	// What if one scan had 3 files called 'bob.jar' selected and another had 1?
+	UNUSED(currentSelectedModules, previousSelectedModules)
+}
 
 func previousScan(r *report.Report, pr *report.Report) {
 
@@ -12,8 +39,17 @@ func previousScan(r *report.Report, pr *report.Report) {
 		return
 	}
 
-	color.White(fmt.Sprintf("Current  Scan Build ID: %d, date: %s", r.Scan.BuildId, r.Scan.PublishedDate))
-	color.White(fmt.Sprintf("Previous Scan Build ID: %d, date: %s", pr.Scan.BuildId, pr.Scan.PublishedDate))
+	// SubScan types
+	// Modules:
+	// Compare module number - different number of modules > DONE.
+	// Compare module selection - different modules selected (needs to account for version numbers)
+	// Compare scan size (if calculable) - warning not error if scan size has changed by, say, 20%
+	// Compare technologies? Or is compare module selection enough for customers who change what they're scanning?
+	// Files:
+	// Compare number of files uploaded?
+
+	compareModuleCount(r, pr)
+	compareModuleSelection(r, pr)
 
 	return
 
