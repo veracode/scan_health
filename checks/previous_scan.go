@@ -30,40 +30,51 @@ func compareModuleSelection(r *report.Report, pr *report.Report) {
 	currentSelectedModules := r.GetSelectedModules()
 	previousSelectedModules := pr.GetSelectedModules()
 
-	// We'll normalize the files so we have the number of
 	currentModuleNameCountMap := generateNameMappedArray(currentSelectedModules)
 	previousModuleNameCountMap := generateNameMappedArray(previousSelectedModules)
 
 	UNUSED(currentModuleNameCountMap, previousModuleNameCountMap)
 }
 
-func normalizeFilename(filename string) (string, error) {
+func normalizeFilename(filename string) string {
 
 	// Define a regular expression to match version numbers and "SNAPSHOT"
 	// It ensures that the version number is at the end of the filename, preceded by a hyphen,
 	// and followed by a file extension.
-	re, err := regexp.Compile(`(-\d+(\.\d+)*(-SNAPSHOT)?)((\.[a-zA-Z0-9]+)+)$`)
-	if err != nil {
-		return "", err
-	}
+	re, _ := regexp.Compile(`(-\d+(\.\d+)*(-SNAPSHOT)?)((\.[a-zA-Z0-9]+)+)$`)
 
 	// Replace version numbers and "SNAPSHOT" with an empty string
 	normalized := re.ReplaceAllString(filename, "$4")
 
-	return normalized, nil
+	return normalized
+}
+
+type ModuleNameCount struct {
+	Counter int
+	Strings []string
 }
 
 // generateNameMappedArray takes a slice of modules, normalizes the name
-// and returns a map of module names to the number of times they appear in the slice.
-func generateNameMappedArray(modules []report.Module) map[string]int {
-	moduleNameCountMap := make(map[string]int)
-	for _, module := range modules {
-		normalizedName, err := normalizeFilename(module.Name)
+// and returns a map of module names to the number of times they appear in the slice
+// and a slice of the original module names.
+func generateNameMappedArray(modules []report.Module) map[string]ModuleNameCount {
+	moduleNameCountMap := make(map[string]ModuleNameCount)
 
-		if err == nil {
-			moduleNameCountMap[normalizedName]++
+	for _, module := range modules {
+		normalizedName := normalizeFilename(module.Name)
+
+		if _, exists := moduleNameCountMap[normalizedName]; exists {
+			moduleNameCount := moduleNameCountMap[normalizedName]
+			moduleNameCount.Counter++
+			moduleNameCount.Strings = append(moduleNameCount.Strings, normalizedName)
+			moduleNameCountMap[normalizedName] = moduleNameCount
 		} else {
-			moduleNameCountMap[module.Name]++
+			// If it doesn't exist, create a new entry
+			moduleNameCount := ModuleNameCount{
+				Counter: 1, // Start with 1 because it's the first occurrence
+				Strings: []string{module.Name},
+			}
+			moduleNameCountMap[normalizedName] = moduleNameCount
 		}
 	}
 
