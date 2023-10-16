@@ -2,8 +2,9 @@ package checks
 
 import (
 	"fmt"
-	"github.com/antfie/scan_health/v2/report"
 	"regexp"
+
+	"github.com/antfie/scan_health/v2/report"
 )
 
 func UNUSED(x ...interface{}) {}
@@ -29,11 +30,10 @@ func compareModuleSelection(r *report.Report, pr *report.Report) {
 	currentSelectedModules := r.GetSelectedModules()
 	previousSelectedModules := pr.GetSelectedModules()
 
-	currentModuleNameCountMap := generateMappedArray(currentSelectedModules)
-	previousModuleNameCountMap := generateMappedArray(previousSelectedModules)
+	// We'll normalize the files so we have the number of
+	currentModuleNameCountMap := generateNameMappedArray(currentSelectedModules)
+	previousModuleNameCountMap := generateNameMappedArray(previousSelectedModules)
 
-	// Now, how do we distinguish between selections?
-	// What if one scan had 3 files called 'bob.jar' selected and another had 1?
 	UNUSED(currentModuleNameCountMap, previousModuleNameCountMap)
 }
 
@@ -53,7 +53,9 @@ func normalizeFilename(filename string) (string, error) {
 	return normalized, nil
 }
 
-func generateMappedArray(modules []report.Module) map[string]int {
+// generateNameMappedArray takes a slice of modules, normalizes the name
+// and returns a map of module names to the number of times they appear in the slice.
+func generateNameMappedArray(modules []report.Module) map[string]int {
 	moduleNameCountMap := make(map[string]int)
 	for _, module := range modules {
 		normalizedName, err := normalizeFilename(module.Name)
@@ -77,6 +79,8 @@ func previousScan(r *report.Report, pr *report.Report) {
 	// SubScan types
 	// Modules:
 	// Compare module number - different number of modules > DONE.
+	// Compare modules themselves - how do we distinguish versions?
+	//   - if we have test-1.1.jar and test-2.0.jar in one scan, does that count as 2 instances of test.jar?
 	// Compare module selection - different modules selected (needs to account for version numbers)
 	// Compare scan size (if calculable) - warning not error if scan size has changed by, say, 20%
 	// Compare technologies? Or is compare module selection enough for customers who change what they're scanning?
