@@ -26,7 +26,7 @@ func main() {
 
 	flag.Parse()
 
-	if *region != "" && utils.IsValidRegion(*region) == false {
+	if !utils.IsValidRegion(*region) {
 		utils.ErrorAndExitWithUsage(fmt.Sprintf("Invalid region \"%s\". Must be either \"commercial\", \"us\" or \"european\"", *region))
 	}
 
