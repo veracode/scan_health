@@ -84,11 +84,9 @@ func ParseBaseUrlFromRegion(region string) string {
 }
 
 func IsValidRegion(region string) bool {
-	if len(region) > 0 {
-		for _, regionData := range regions {
-			if regionData.ID == region {
-				return true
-			}
+	for _, regionData := range regions {
+		if regionData.ID == region {
+			return true
 		}
 	}
 	return false
