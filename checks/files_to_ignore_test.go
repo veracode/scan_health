@@ -1,7 +1,6 @@
 package checks
 
 import (
-	"strings"
 	"testing"
 
 	"github.com/antfie/scan_health/v2/report"
@@ -56,7 +55,7 @@ func TestFilesToIgnore(t *testing.T) {
 			t.FailNow()
 		}
 
-		assert.True(t, strings.Contains(testReport.Issues[0].Description, "unnecessary"))
+		assert.Contains(t, testReport.Issues[0].Description, "unnecessary")
 
 		if !assert.Equal(t, 1, len(testReport.Recommendations)) {
 			t.FailNow()
@@ -79,7 +78,7 @@ func TestFilesToIgnore(t *testing.T) {
 			t.FailNow()
 		}
 
-		assert.True(t, strings.Contains(testReport.Issues[0].Description, "2 unnecessary"))
+		assert.Contains(t, testReport.Issues[0].Description, "2 unnecessary")
 
 		if !assert.Equal(t, 1, len(testReport.Recommendations)) {
 			t.FailNow()

@@ -50,7 +50,31 @@ func TestIdenticalModulesParallel(t *testing.T) {
 		}
 
 		duplicateModules(&testReport)
-		assert.Equal(t, 1, len(testReport.Issues))
+		if !assert.Equal(t, 1, len(testReport.Issues)) {
+			t.FailNow()
+		}
+
+		assert.Contains(t, testReport.Issues[0].Description, "A duplicate file name")
+		assert.Equal(t, report.IssueSeverityHigh, testReport.Issues[0].Severity)
+	})
+
+	t.Run("Different Files with same name different hashes", func(t *testing.T) {
+		t.Parallel()
+		testReport := report.Report{
+			UploadedFiles: []report.UploadedFile{
+				{Id: 111111, Name: "file1", MD5: "hash1", IsIgnored: false, IsThirdParty: false},
+				{Id: 222222, Name: "file1", MD5: "hash2", IsIgnored: false, IsThirdParty: false},
+				{Id: 333333, Name: "file2", MD5: "hash1", IsIgnored: false, IsThirdParty: false},
+				{Id: 444444, Name: "file2", MD5: "hash2", IsIgnored: false, IsThirdParty: false},
+			},
+		}
+
+		duplicateModules(&testReport)
+		if !assert.Equal(t, 1, len(testReport.Issues)) {
+			t.FailNow()
+		}
+
+		assert.Contains(t, testReport.Issues[0].Description, "2 duplicate file names")
 		assert.Equal(t, report.IssueSeverityHigh, testReport.Issues[0].Severity)
 	})
 }

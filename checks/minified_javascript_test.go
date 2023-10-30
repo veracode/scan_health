@@ -26,7 +26,7 @@ func TestMinifiedJavaScript(t *testing.T) {
 
 		minifiedJavaScript(&mockReport)
 
-		assert.Equal(t, len(mockReport.Issues), 0)
+		assert.Empty(t, mockReport.Issues)
 	})
 
 	t.Run("No JS Minified Issues", func(t *testing.T) {
@@ -43,7 +43,7 @@ func TestMinifiedJavaScript(t *testing.T) {
 
 		minifiedJavaScript(&mockReport)
 
-		assert.Equal(t, len(mockReport.Issues), 0)
+		assert.Empty(t, mockReport.Issues)
 	})
 
 	t.Run("Testing for JS Minified Warning", func(t *testing.T) {
@@ -65,13 +65,13 @@ func TestMinifiedJavaScript(t *testing.T) {
 
 		minifiedJavaScript(&mockReport)
 
-		if !assert.Equal(t, len(mockReport.Issues), 1) {
+		if !assert.Equal(t, 1, len(mockReport.Issues)) {
 			t.FailNow()
 		}
 
 		assert.Contains(t, mockReport.Issues[0].Description, "2 minified")
-		assert.Equal(t, mockReport.Issues[0].Severity, report.IssueSeverityMedium)
-		assert.Equal(t, len(mockReport.Recommendations), 2)
+		assert.Equal(t, report.IssueSeverityMedium, mockReport.Issues[0].Severity)
+		assert.Equal(t, 2, len(mockReport.Recommendations))
 	})
 
 	t.Run("Testing for /dist/ JS Files", func(t *testing.T) {
@@ -88,9 +88,9 @@ func TestMinifiedJavaScript(t *testing.T) {
 
 		minifiedJavaScript(&mockReport)
 
-		assert.Equal(t, len(mockReport.Issues), 1)
-		assert.Equal(t, mockReport.Issues[0].Severity, report.IssueSeverityMedium)
-		assert.Equal(t, len(mockReport.Recommendations), 2)
+		assert.Equal(t, 1, len(mockReport.Issues))
+		assert.Equal(t, report.IssueSeverityMedium, mockReport.Issues[0].Severity)
+		assert.Equal(t, 2, len(mockReport.Recommendations))
 	})
 
 	t.Run("Testing for minification by name", func(t *testing.T) {
@@ -104,14 +104,13 @@ func TestMinifiedJavaScript(t *testing.T) {
 		}
 
 		minifiedJavaScript(&mockReport)
-		if !assert.Equal(t, len(mockReport.Issues), 1) {
+		if !assert.Equal(t, 1, len(mockReport.Issues)) {
 			t.FailNow()
 		}
 
 		assert.Contains(t, mockReport.Issues[0].Description, "2 minified")
-		assert.Equal(t, mockReport.Issues[0].Severity, report.IssueSeverityMedium)
+		assert.Equal(t, report.IssueSeverityMedium, mockReport.Issues[0].Severity)
 
-		assert.Equal(t, len(mockReport.Recommendations), 2)
+		assert.Equal(t, 2, len(mockReport.Recommendations))
 	})
-
 }

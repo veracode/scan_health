@@ -77,7 +77,7 @@ type detailedReportSCAComponent struct {
 func (api API) populateDetailedReport(r *report.Report) {
 	detailedReport := detailedReport{}
 
-	var url = fmt.Sprintf("https://analysiscenter.veracode.com/api/5.0/detailedreport.do?build_id=%d", r.Scan.BuildId)
+	var url = fmt.Sprintf("/api/5.0/detailedreport.do?build_id=%d", r.Scan.BuildId)
 	response := api.makeApiRequest(url, http.MethodGet)
 
 	if strings.Contains(string(response[:]), "<error>No report available.</error>") {

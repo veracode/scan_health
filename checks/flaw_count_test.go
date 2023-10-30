@@ -2,7 +2,6 @@ package checks
 
 import (
 	"github.com/antfie/scan_health/v2/utils"
-	"strings"
 	"testing"
 
 	"github.com/antfie/scan_health/v2/report"
@@ -42,13 +41,13 @@ func TestTooManyFlaws(t *testing.T) {
 			t.FailNow()
 		}
 
-		assert.True(t, strings.Contains(testReport.Issues[0].Description, "No flaws"))
+		assert.Contains(t, testReport.Issues[0].Description, "No flaws")
 
 		if !assert.Equal(t, 1, len(testReport.Recommendations)) {
 			t.FailNow()
 		}
 
-		assert.True(t, strings.Contains(testReport.Recommendations[0], "When no flaws have been found"))
+		assert.Contains(t, testReport.Recommendations[0], "When no flaws have been found")
 	})
 
 	t.Run("Too Many Flaws", func(t *testing.T) {
@@ -66,12 +65,12 @@ func TestTooManyFlaws(t *testing.T) {
 			t.FailNow()
 		}
 
-		assert.True(t, strings.Contains(testReport.Issues[0].Description, "A large number"))
+		assert.Contains(t, testReport.Issues[0].Description, "A large number")
 
 		if !assert.Equal(t, 1, len(testReport.Recommendations)) {
 			t.FailNow()
 		}
 
-		assert.True(t, strings.Contains(testReport.Recommendations[0], "scan could be misconfigured"))
+		assert.Contains(t, testReport.Recommendations[0], "scan could be misconfigured")
 	})
 }
