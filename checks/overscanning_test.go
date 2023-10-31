@@ -1,7 +1,6 @@
 package checks
 
 import (
-	"strings"
 	"testing"
 
 	"github.com/antfie/scan_health/v2/report"
@@ -34,7 +33,7 @@ func TestOverScanning(t *testing.T) {
 			t.FailNow()
 		}
 
-		assert.True(t, strings.Contains(testReport.Issues[0].Description, "This is because it was already included in the analysis"))
+		assert.Contains(t, testReport.Issues[0].Description, "This is because it was already included in the analysis")
 
 		if !assert.Equal(t, 2, len(testReport.Recommendations)) {
 			t.FailNow()
@@ -72,7 +71,7 @@ func TestOverScanning(t *testing.T) {
 			t.FailNow()
 		}
 
-		assert.True(t, strings.Contains(testReport.Issues[0].Description, "This is because they were already included in the analysis"))
+		assert.Contains(t, testReport.Issues[0].Description, "This is because they were already included in the analysis")
 
 		if !assert.Equal(t, 2, len(testReport.Recommendations)) {
 			t.FailNow()
@@ -98,13 +97,11 @@ func TestOverScanning(t *testing.T) {
 
 		overScanning(&testReport)
 
-		if !assert.Equal(t, 0, len(testReport.Issues)) {
+		if !assert.Empty(t, testReport.Issues) {
 			t.FailNow()
 		}
 
-		if !assert.Equal(t, 0, len(testReport.Recommendations)) {
-			t.FailNow()
-		}
+		assert.Empty(t, testReport.Recommendations)
 	})
 
 }

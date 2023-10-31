@@ -25,7 +25,7 @@ func TestThirdParty(t *testing.T) {
 
 		thirdParty(&mockReport)
 
-		assert.Equal(t, len(mockReport.Issues), 0)
+		assert.Empty(t, mockReport.Issues)
 	})
 
 	t.Run("Third Party uploaded, not selected", func(t *testing.T) {
@@ -50,7 +50,7 @@ func TestThirdParty(t *testing.T) {
 
 		thirdParty(&mockReport)
 
-		assert.Equal(t, len(mockReport.Issues), 0)
+		assert.Empty(t, mockReport.Issues)
 	})
 
 	t.Run("Third Party uploaded, selected", func(t *testing.T) {
@@ -81,14 +81,14 @@ func TestThirdParty(t *testing.T) {
 
 		thirdParty(&mockReport)
 
-		if !assert.Equal(t, len(mockReport.Issues), 1) {
+		if !assert.Equal(t, 1, len(mockReport.Issues)) {
 			t.FailNow()
 		}
 
 		assert.Contains(t, mockReport.Issues[0].Description, "2 third-party components")
 
 		assert.Equal(t, report.IssueSeverityMedium, mockReport.Issues[0].Severity)
-		assert.Equal(t, len(mockReport.Recommendations), 1)
+		assert.Equal(t, 1, len(mockReport.Recommendations))
 		assert.True(t, mockReport.UploadedFiles[0].IsThirdParty)
 		assert.True(t, mockReport.UploadedFiles[2].IsThirdParty)
 	})

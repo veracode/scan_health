@@ -25,7 +25,7 @@ func TestMissingDebugSymbols(t *testing.T) {
 
 		missingDebugSymbols(&mockReport)
 
-		assert.Equal(t, len(mockReport.Issues), 0)
+		assert.Empty(t, mockReport.Issues)
 	})
 
 	t.Run("Executables/DLLs but no issues", func(t *testing.T) {
@@ -49,7 +49,7 @@ func TestMissingDebugSymbols(t *testing.T) {
 
 		missingDebugSymbols(&mockReport)
 
-		assert.Equal(t, len(mockReport.Issues), 0)
+		assert.Empty(t, mockReport.Issues)
 	})
 
 	t.Run("Java with missing debug", func(t *testing.T) {
@@ -78,8 +78,8 @@ func TestMissingDebugSymbols(t *testing.T) {
 
 		missingDebugSymbols(&mockReport)
 
-		assert.Equal(t, len(mockReport.Issues), 0)
-		assert.Equal(t, len(mockReport.Recommendations), 0)
+		assert.Empty(t, mockReport.Issues)
+		assert.Empty(t, mockReport.Recommendations)
 	})
 
 	t.Run("Executables + DLLs with missing debug", func(t *testing.T) {
@@ -105,10 +105,10 @@ func TestMissingDebugSymbols(t *testing.T) {
 
 		missingDebugSymbols(&mockReport)
 
-		if !assert.Equal(t, len(mockReport.Issues), 1) {
+		if !assert.Equal(t, 1, len(mockReport.Issues)) {
 			assert.Contains(t, mockReport.Issues[0].Description, "2 modules")
 		}
 
-		assert.Equal(t, len(mockReport.Recommendations), 1)
+		assert.Equal(t, 1, len(mockReport.Recommendations))
 	})
 }

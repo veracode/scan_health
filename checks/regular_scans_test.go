@@ -2,7 +2,6 @@ package checks
 
 import (
 	"github.com/antfie/scan_health/v2/utils"
-	"strings"
 	"testing"
 	"time"
 
@@ -51,7 +50,7 @@ func TestScanFrequency(t *testing.T) {
 			t.FailNow()
 		}
 
-		assert.True(t, strings.Contains(testReport.Issues[0].Description, "last scanned over"))
+		assert.Contains(t, testReport.Issues[0].Description, "last scanned over")
 
 		assert.Equal(t, 1, len(testReport.Recommendations))
 	})

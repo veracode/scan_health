@@ -20,21 +20,19 @@ type API struct {
 }
 
 func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
-	if api.Region == "us" {
-		apiUrl = strings.Replace(apiUrl, ".com", ".us", 1)
-	} else if api.Region == "european" {
-		apiUrl = strings.Replace(apiUrl, ".com", ".eu", 1)
-	}
+
+	baseUrl := utils.ParseBaseUrlFromRegion(api.Region)
+	fullUrl := baseUrl + apiUrl
 
 	if api.EnableCaching {
-		cachedResponse := getCachedResponse(apiUrl)
+		cachedResponse := getCachedResponse(fullUrl)
 
 		if cachedResponse != nil {
 			return cachedResponse
 		}
 	}
 
-	parsedUrl, err := url.Parse(apiUrl)
+	parsedUrl, err := url.Parse(fullUrl)
 
 	if err != nil {
 		utils.ErrorAndExit("Invalid API URL", err)
@@ -85,12 +83,12 @@ func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
 	}
 
 	if api.EnableCaching {
-		cacheResponse(apiUrl, body)
+		cacheResponse(fullUrl, body)
 	}
 
 	return body
 }
 
 func (api API) AssertCredentialsWork() {
-	api.makeApiRequest("https://analysiscenter.veracode.com/api/3.0/getmaintenancescheduleinfo.do", http.MethodGet)
+	api.makeApiRequest("/api/3.0/getmaintenancescheduleinfo.do", http.MethodGet)
 }

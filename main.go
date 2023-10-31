@@ -3,13 +3,14 @@ package main
 import (
 	"flag"
 	"fmt"
+	"os"
+	"strings"
+
 	"github.com/antfie/scan_health/v2/checks"
 	"github.com/antfie/scan_health/v2/data"
 	"github.com/antfie/scan_health/v2/report"
 	"github.com/antfie/scan_health/v2/utils"
 	"github.com/fatih/color"
-	"os"
-	"strings"
 )
 
 func main() {
@@ -17,7 +18,7 @@ func main() {
 	vid := flag.String("vid", "", "Veracode API ID - See https://docs.veracode.com/r/t_create_api_creds")
 	vkey := flag.String("vkey", "", "Veracode API key - See https://docs.veracode.com/r/t_create_api_creds")
 	profile := flag.String("profile", "default", "Veracode credential profile - See https://docs.veracode.com/r/c_httpie_tool#using-multiple-profiles")
-	region := flag.String("region", "", "Veracode Region [commercial, us, european]")
+	region := flag.String("region", "", "Veracode Region [commercial, us, european]. Required if a Build ID is specified.")
 	scan := flag.String("sast", "", "Veracode Platform URL or build ID for a SAST application health review")
 	outputFormat := flag.String("format", "console", "Output format [console, json]")
 	jsonFilePath := flag.String("json-file", "", "Optional file for writing JSON output to")
@@ -27,8 +28,8 @@ func main() {
 
 	flag.Parse()
 
-	if !(*region == "" || *region == "commercial" || *region == "us" || *region == "european") {
-		utils.ErrorAndExitWithUsage("Invalid region. Must be either \"commercial\", \"us\" or \"european\"")
+	if *region != "" && utils.IsValidRegion(*region) == false {
+		utils.ErrorAndExitWithUsage(fmt.Sprintf("Invalid region \"%s\". Must be either \"commercial\", \"us\" or \"european\"", *region))
 	}
 
 	if *region != "" &&
@@ -57,7 +58,11 @@ func main() {
 
 	apiId, apiKey := getCredentials(*vid, *vkey, *profile)
 	api := data.API{Id: apiId, Key: apiKey, Region: regionToUse, AppVersion: AppVersion, EnableCaching: *enableCaching}
-	buildId := utils.ParseBuildIdFromPlatformUrl(*scan)
+
+	buildId, err := utils.ParseBuildIdFromScanInformation(*scan)
+	if err != nil {
+		utils.ErrorAndExit("", err)
+	}
 
 	api.AssertCredentialsWork()
 

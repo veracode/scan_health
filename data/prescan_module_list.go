@@ -3,12 +3,13 @@ package data
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/antfie/scan_health/v2/report"
-	"github.com/antfie/scan_health/v2/utils"
 	"html"
 	"net/http"
 	"strconv"
 	"strings"
+
+	"github.com/antfie/scan_health/v2/report"
+	"github.com/antfie/scan_health/v2/utils"
 )
 
 type prescanModuleList struct {
@@ -124,11 +125,4 @@ func (api API) populatePrescanModuleList(r *report.Report) {
 	}
 
 	populateModuleInstances(r, moduleList)
-
-	// Sort modules by name for consistency
-	// We will sort later actually
-	//sort.Slice(moduleList.Modules, func(i, j int) bool {
-	//	return moduleList.Modules[i].Name < moduleList.Modules[j].Name
-	//})
-
 }
