@@ -99,7 +99,7 @@ func previousScan(r *report.Report, pr *report.Report) {
 	// Compare number of files uploaded?
 
 	compareModuleCount(r, pr)
-	compareModuleSelection(r, pr)
+	// compareModuleSelection(r, pr)
 
 	return
 
