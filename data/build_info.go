@@ -31,17 +31,4 @@ func (api API) populateBuildInfo(report *report.Report) {
 	}
 
 	report.Scan.ScanName = html.UnescapeString(data.Build.Version)
-
-	url = fmt.Sprintf("/api/5.0/getprescanresults.do?app_id=%d&build_id=%d", report.Scan.ApplicationId, report.Scan.BuildId)
-	response = api.makeApiRequest(url, http.MethodGet)
-
-	moduleList := prescanModuleList{}
-
-	err = xml.Unmarshal(response, &moduleList)
-
-	if err != nil {
-		utils.ErrorAndExit("Could not get prescan results", err)
-	}
-
-	populateModuleInstances(report, moduleList)
 }
