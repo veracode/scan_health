@@ -29,7 +29,7 @@ func (api API) populateBuildInfo(report *report.Report) {
 		utils.ErrorAndExit("Could not parse response from getbuildinfo.do API response", err)
 	}
 
-	url = fmt.Sprintf("https://analysiscenter.veracode.com/api/5.0/getprescanresults.do?app_id=%d&build_id=%d", report.Scan.ApplicationId, report.Scan.BuildId)
+	url = fmt.Sprintf("/api/5.0/getprescanresults.do?app_id=%d&build_id=%d", report.Scan.ApplicationId, report.Scan.BuildId)
 	response = api.makeApiRequest(url, http.MethodGet)
 
 	moduleList := prescanModuleList{}

@@ -70,7 +70,7 @@ func (api API) getBuildList(scan report.Scan) *buildList {
 
 	buildList := buildList{}
 
-	var url = fmt.Sprintf("https://analysiscenter.veracode.com/api/5.0/getbuildlist.do?app_id=%d&sandbox_id=%d", appId, sandboxId)
+	var url = fmt.Sprintf("/api/5.0/getbuildlist.do?app_id=%d&sandbox_id=%d", appId, sandboxId)
 	response := api.makeApiRequest(url, http.MethodGet)
 
 	err := xml.Unmarshal(response, &buildList)
