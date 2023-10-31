@@ -1,0 +1,13 @@
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="go test scan_health" type="GoTestRunConfiguration" factoryName="Go Test" nameIsGenerated="true">
+    <module name="scan_health" />
+    <working_directory value="$PROJECT_DIR$" />
+    <go_parameters value="-failfast -shuffle on" />
+    <kind value="DIRECTORY" />
+    <package value="./..." />
+    <directory value="$PROJECT_DIR$" />
+    <filePath value="$PROJECT_DIR$" />
+    <framework value="gotest" />
+    <method v="2" />
+  </configuration>
+</component>
