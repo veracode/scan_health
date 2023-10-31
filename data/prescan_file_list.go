@@ -3,11 +3,12 @@ package data
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/antfie/scan_health/v2/report"
-	"github.com/antfie/scan_health/v2/utils"
 	"html"
 	"net/http"
 	"sort"
+
+	"github.com/antfie/scan_health/v2/report"
+	"github.com/antfie/scan_health/v2/utils"
 )
 
 type prescanFileList struct {
@@ -23,7 +24,7 @@ type fileListFile struct {
 	MD5     string   `xml:"file_md5,attr"`
 }
 
-func (api API) getPrescanFileList(r *report.Report) {
+func (api API) populatePrescanFileList(r *report.Report) {
 	var url = fmt.Sprintf("/api/5.0/getfilelist.do?app_id=%d&build_id=%d", r.Scan.ApplicationId, r.Scan.BuildId)
 	response := api.makeApiRequest(url, http.MethodGet)
 

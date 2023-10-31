@@ -3,12 +3,13 @@ package data
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/antfie/scan_health/v2/report"
-	"github.com/antfie/scan_health/v2/utils"
 	"html"
 	"net/http"
 	"strconv"
 	"strings"
+
+	"github.com/antfie/scan_health/v2/report"
+	"github.com/antfie/scan_health/v2/utils"
 )
 
 type prescanModuleList struct {
@@ -42,24 +43,7 @@ type prescanModuleIssue struct {
 	Details string   `xml:"details,attr"`
 }
 
-func (api API) getPrescanModuleList(r *report.Report) {
-	var url = fmt.Sprintf("/api/5.0/getprescanresults.do?app_id=%d&build_id=%d", r.Scan.ApplicationId, r.Scan.BuildId)
-	response := api.makeApiRequest(url, http.MethodGet)
-
-	moduleList := prescanModuleList{}
-
-	err := xml.Unmarshal(response, &moduleList)
-
-	if err != nil {
-		utils.ErrorAndExit("Could not get prescan results", err)
-	}
-
-	// Sort modules by name for consistency
-	// We will sort later actually
-	//sort.Slice(moduleList.Modules, func(i, j int) bool {
-	//	return moduleList.Modules[i].Name < moduleList.Modules[j].Name
-	//})
-
+func populateModuleInstances(r *report.Report, moduleList prescanModuleList) {
 	for _, module := range moduleList.Modules {
 		var issues []string
 
@@ -125,4 +109,20 @@ func convertSize(size, measurement string, multiplier int) int {
 	}
 
 	return sizeInt * multiplier
+}
+
+func (api API) populatePrescanModuleList(r *report.Report) {
+
+	var url = fmt.Sprintf("/api/5.0/getprescanresults.do?app_id=%d&build_id=%d", r.Scan.ApplicationId, r.Scan.BuildId)
+	response := api.makeApiRequest(url, http.MethodGet)
+
+	moduleList := prescanModuleList{}
+
+	err := xml.Unmarshal(response, &moduleList)
+
+	if err != nil {
+		utils.ErrorAndExit("Could not get prescan results", err)
+	}
+
+	populateModuleInstances(r, moduleList)
 }
