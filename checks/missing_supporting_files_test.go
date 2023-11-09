@@ -114,7 +114,7 @@ func TestMissingSupportingFiles(t *testing.T) {
 			t.FailNow()
 		}
 
-		assert.Contains(t, testReport.Issues[0].Description, "2 selected modules were selected as entry points that were found to be missing a total of 2 files")
+		assert.Contains(t, testReport.Issues[0].Description, "2 modules were selected as entry points that were found to be missing a total of 2 files")
 		assert.Equal(t, 2, len(testReport.Recommendations))
 	})
 }

@@ -53,7 +53,7 @@ func missingSupportingFiles(r *report.Report) {
 	var message = fmt.Sprintf("A selected module \"%s\" was found to be missing %d file%s.", foundModules[0], count, filePlural)
 
 	if len(foundModules) > 1 {
-		message = fmt.Sprintf("%d selected modules were selected as entry points that were found to be missing a total of %d file%s: %s.", len(foundModules), count, filePlural, utils.Top5StringList(foundModules))
+		message = fmt.Sprintf("%d modules were selected as entry points that were found to be missing a total of %d file%s: %s.", len(foundModules), count, filePlural, utils.Top5StringList(foundModules))
 	}
 
 	issueDescription := "Veracode can only scan what has been uploaded. Missing files leads to reduced scan coverage."
