@@ -28,7 +28,7 @@ func (api API) populateSandboxInfo(report *report.Report) {
 	err := xml.Unmarshal(response, &data)
 
 	if err != nil {
-		utils.ErrorAndExit("Could not parse response from getbuildinfo.do API response", err)
+		utils.ErrorAndExit("Could not parse response from getsandboxlist.do API response", err)
 	}
 
 	for _, sandbox := range data.Sandboxes {
