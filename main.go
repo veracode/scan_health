@@ -70,8 +70,8 @@ func main() {
 		buildId,
 		regionToUse))
 
-	healthReport := report.NewReport(buildId, regionToUse, AppVersion)
-	api.PopulateReportWithDataFromAPI(healthReport)
+	healthReport := report.NewReport(buildId, regionToUse, AppVersion, false)
+	api.PopulateReportWithDataFromAPI(healthReport, *includePreviousScan)
 
 	if !healthReport.Scan.IsLatestScan {
 		if len(healthReport.Scan.SandboxName) > 0 {
@@ -84,12 +84,11 @@ func main() {
 	var previousHealthReport = &report.Report{}
 
 	if *includePreviousScan == true {
-		previousBuildId, err := api.GetPreviousBuildId(healthReport)
-		if err == nil {
-			previousHealthReport = report.NewReport(previousBuildId, regionToUse, AppVersion)
-			api.PopulateReportWithDataFromAPI(previousHealthReport)
-		} else {
-			color.HiYellow(fmt.Sprintf("Warning: %s", err.Error()))
+		previousBuildId := api.GetPreviousBuildId(healthReport)
+
+		if previousBuildId > 0 {
+			previousHealthReport = report.NewReport(previousBuildId, regionToUse, AppVersion, true)
+			api.PopulateReportWithDataFromAPI(previousHealthReport, *includePreviousScan)
 		}
 	}
 
