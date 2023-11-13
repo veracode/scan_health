@@ -29,7 +29,7 @@ func (api API) populateBuildList(r *report.Report) {
 
 	// We may not have a sandbox id if no detailed report
 	if r.Scan.SandboxId > 0 {
-		fmt.Sprintf("&sandbox_id=%d", r.Scan.ApplicationId, r.Scan.SandboxId)
+		fmt.Sprintf("&sandbox_id=%d", r.Scan.SandboxId)
 	}
 
 	var url = fmt.Sprintf("/api/5.0/getbuildlist.do?app_id=%d%s", r.Scan.ApplicationId, sandboxFilter)
