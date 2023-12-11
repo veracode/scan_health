@@ -21,8 +21,8 @@ func compareModuleCount(r *report.Report, pr *report.Report) {
 			previousModuleWord = "modules"
 		}
 
-		r.ReportIssue(fmt.Sprintf("The module count changed from the previous scan. It went from %d %s to %d.", previousModuleCount, previousModuleWord, currentModuleCount), report.IssueSeverityMedium)
-		r.MakeRecommendation("Changes in the number of uploaded modules may be part of natural application lifecycle, but it is worth verifying.")
+		r.ReportIssue(fmt.Sprintf("The module count changed from the previous scan. It went from %d %s in the previous scan to %d.", previousModuleCount, previousModuleWord, currentModuleCount), report.IssueSeverityMedium)
+		r.MakeRecommendation("Changes in the number of uploaded modules may be part of natural application lifecycle, but it is worth verifying. Ensure scans are configured consistently, preferably using automation.")
 	}
 }
 

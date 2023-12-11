@@ -96,27 +96,30 @@ type Issue struct {
 }
 
 type Report struct {
-	HealthTool          HealthTool     `json:"health_tool,omitempty"`
-	LastAppActivity     time.Time      `json:"last_app_activity,omitempty"`
-	LastSandboxActivity time.Time      `json:"last_sandbox_activity,omitempty"`
-	Scan                Scan           `json:"scan,omitempty"`
-	Flaws               FlawSummary    `json:"flaws,omitempty"`
-	UploadedFiles       []UploadedFile `json:"uploaded_files,omitempty"`
-	Modules             []Module       `json:"modules,omitempty"`
-	SCAComponents       []string       `json:"sca_components,omitempty"`
-	Issues              []Issue        `json:"issues,omitempty"`
-	Recommendations     []string       `json:"recommendations,omitempty"`
+	HealthTool           HealthTool     `json:"health_tool,omitempty"`
+	LastAppActivity      time.Time      `json:"last_app_activity,omitempty"`
+	LastSandboxActivity  time.Time      `json:"last_sandbox_activity,omitempty"`
+	Scan                 Scan           `json:"scan,omitempty"`
+	OtherScans           []Scan         `json:"other_scans,omitempty"`
+	Flaws                FlawSummary    `json:"flaws,omitempty"`
+	UploadedFiles        []UploadedFile `json:"uploaded_files,omitempty"`
+	Modules              []Module       `json:"modules,omitempty"`
+	SCAComponents        []string       `json:"sca_components,omitempty"`
+	Issues               []Issue        `json:"issues,omitempty"`
+	Recommendations      []string       `json:"recommendations,omitempty"`
+	IsReportForOtherScan bool
 }
 
-func NewReport(buildId int, region, version string) *Report {
+func NewReport(buildId int, region, version string, isReportForOtherScan bool) *Report {
 	return &Report{
-		HealthTool:      HealthTool{ReportDate: time.Now(), Version: version, Region: region},
-		Scan:            Scan{BuildId: buildId},
-		Flaws:           FlawSummary{},
-		UploadedFiles:   []UploadedFile{},
-		Modules:         []Module{},
-		Issues:          []Issue{},
-		Recommendations: []string{},
+		HealthTool:           HealthTool{ReportDate: time.Now(), Version: version, Region: region},
+		Scan:                 Scan{BuildId: buildId},
+		Flaws:                FlawSummary{},
+		UploadedFiles:        []UploadedFile{},
+		Modules:              []Module{},
+		Issues:               []Issue{},
+		Recommendations:      []string{},
+		IsReportForOtherScan: isReportForOtherScan,
 	}
 }
 

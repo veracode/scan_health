@@ -121,7 +121,12 @@ func (api API) populatePrescanModuleList(r *report.Report) {
 	err := xml.Unmarshal(response, &moduleList)
 
 	if err != nil {
-		utils.ErrorAndExit("Could not get prescan results", err)
+		// We may not have this data for older scans, but it is no reason to panic
+		if r.IsReportForOtherScan {
+			return
+		}
+
+		utils.ErrorAndExit("Could not parse getprescanresults.do API response", err)
 	}
 
 	populateModuleInstances(r, moduleList)
