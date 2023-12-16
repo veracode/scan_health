@@ -82,7 +82,8 @@ func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
 		utils.ErrorAndExit(fmt.Sprintf("API responded with status of %s", resp.Status), nil)
 	}
 
-	if api.EnableCaching {
+	// Cache if enabled and unless there is some indicator of an error
+	if !strings.Contains(string(body), "</error>") && api.EnableCaching {
 		cacheResponse(fullUrl, body)
 	}
 
