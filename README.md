@@ -14,38 +14,45 @@ scan performance and flaw quality. The scans must have completed for the tool to
 * Identification of configuration issues and recommendations for improvements
 * Outputs to the console and also optionally JSON
 * Returns exit code 1 if there are any high severity issues found when using `-error-on-high-severity` flag
+* Set `-previous-scan=true` to run checks against the previous scan. We may make this the default at some point in the
+  future
 
 ## Usage
 
-This tool makes use of the Veracode APIs ([listed below](#outbound-api-calls)). You will need Veracode API credentials and the [Reviewer or Security Lead role](https://docs.veracode.com/r/c_API_roles_details#results-api) for this tool to work. We recommend you configure a [Veracode API credentials file](https://docs.veracode.com/r/c_configure_api_cred_file). Alternatively you can use environment
+This tool makes use of the Veracode APIs ([listed below](#outbound-api-calls)). You will need Veracode API credentials
+and the [Reviewer or Security Lead role](https://docs.veracode.com/r/c_API_roles_details#results-api) for this tool to
+work. We recommend you configure
+a [Veracode API credentials file](https://docs.veracode.com/r/c_configure_api_cred_file). Alternatively you can use
+environment
 variables (`VERACODE_API_KEY_ID` and `VERACODE_API_KEY_SECRET`) or the CLI flags (`-vid` and `-vkey`) to authenticate
 with the Veracode APIs.
 
 ```sh
 ./scan_health -h
-Scan Health v2.27
+Scan Health v2.32
 Copyright © Veracode, Inc. 2023. All Rights Reserved.
 This is an unofficial Veracode product. It does not come with any support or warranty.
 
-Usage:
-  -cache
-        Enable caching of API responses (useful for development)
+-cache
+    	Enable caching of API responses (useful for development)
   -error-on-high-severity
     	Return a non-zero exit code if any high severity issues are found
   -format string
-        Output format [console, json] (default "console")
+    	Output format [console, json] (default "console")
   -json-file string
-        Optional file for writing JSON output to
+    	Optional file for writing JSON output to
+  -previous-scan
+    	Enable comparison with the previous scan (this will result in many requests being made)
   -profile string
-        Veracode credential profile - See https://docs.veracode.com/r/c_httpie_tool#using-multiple-profiles (default "default")
+    	Veracode credential profile - See https://docs.veracode.com/r/c_httpie_tool#using-multiple-profiles (default "default")
   -region string
-        Veracode Region [commercial, us, european]
+    	Veracode Region [commercial, us, european]. Required if a Build ID is specified.
   -sast string
-        Veracode Platform URL or build ID for a SAST application health review
+    	Veracode Platform URL or build ID for a SAST application health review
   -vid string
-        Veracode API ID - See https://docs.veracode.com/r/t_create_api_creds
+    	Veracode API ID - See https://docs.veracode.com/r/t_create_api_creds
   -vkey string
-        Veracode API key - See https://docs.veracode.com/r/t_create_api_creds
+    	Veracode API key - See https://docs.veracode.com/r/t_create_api_creds
 ```
 
 ### Example
@@ -115,99 +122,99 @@ The tool also outputs JSON if the `-format json` flag is set. An example can be 
 
 ```json
 {
-    "health_tool": {
-        "report_date": "2023-06-29T12:20:49.769824+01:00",
-        "version": "2.1",
-        "region": "commercial"
+  "health_tool": {
+    "report_date": "2023-06-29T12:20:49.769824+01:00",
+    "version": "2.1",
+    "region": "commercial"
+  },
+  "scan": {
+    "account_id": 75603,
+    "business_unit": "Cyber Security",
+    "application_id": 793744,
+    "application_name": "Secure File Transfer",
+    "scan_name": "30 Jan 2023 Static",
+    "sandbox_id": 5139524,
+    "sandbox_name": "Dart and Flutter",
+    "build_id": 23664244,
+    "review_modules_url": "https://analysiscenter.veracode.com/auth/index.jsp#AnalyzeAppModuleList:75603:793744:23664244:23635472:23651122::::5139524",
+    "triage_flaws_url": "https://analysiscenter.veracode.com/auth/index.jsp#ReviewResultsStaticFlaws:75603:793744:23664244:23635472:23651122::::5139524",
+    "engine_version": "20230123231701",
+    "submitted_date": "2023-01-30T12:17:19Z",
+    "published_data": "2023-01-30T12:27:38Z",
+    "scan_duration": 619000000000,
+    "analysis_size": 157513561,
+    "is_latest_scan": false
+  },
+  "flaws": {
+    "total": 5,
+    "total_affecting_policy": 5,
+    "open_affecting_policy": 5
+  },
+  "uploaded_files": [
+    {
+      "id": 10552845755,
+      "name": "wonderous.ipa",
+      "status": "Uploaded",
+      "md5": "502f1a945eb85a0d09da917bba5d7de0",
+      "is_ignored": false,
+      "is_third_party": false
+    }
+  ],
+  "modules": [
+    {
+      "name": "wonderous.ipa",
+      "compiler": "DART",
+      "operating_system": "Dart",
+      "architecture": "DART",
+      "is_ignored": false,
+      "is_third_party": false,
+      "is_dependency": false,
+      "is_selected": true,
+      "has_fatal_errors": false,
+      "flaw_summary": {}
     },
-    "scan": {
-        "account_id": 75603,
-        "business_unit": "Cyber Security",
-        "application_id": 793744,
-        "application_name": "Secure File Transfer",
-        "scan_name": "30 Jan 2023 Static",
-        "sandbox_id": 5139524,
-        "sandbox_name": "Dart and Flutter",
-        "build_id": 23664244,
-        "review_modules_url": "https://analysiscenter.veracode.com/auth/index.jsp#AnalyzeAppModuleList:75603:793744:23664244:23635472:23651122::::5139524",
-        "triage_flaws_url": "https://analysiscenter.veracode.com/auth/index.jsp#ReviewResultsStaticFlaws:75603:793744:23664244:23635472:23651122::::5139524",
-        "engine_version": "20230123231701",
-        "submitted_date": "2023-01-30T12:17:19Z",
-        "published_data": "2023-01-30T12:27:38Z",
-        "scan_duration": 619000000000,
-        "analysis_size": 157513561,
-        "is_latest_scan": false
-    },
-    "flaws": {
-        "total": 5,
-        "total_affecting_policy": 5,
-        "open_affecting_policy": 5
-    },
-    "uploaded_files": [
-        {
-            "id": 10552845755,
-            "name": "wonderous.ipa",
-            "status": "Uploaded",
-            "md5": "502f1a945eb85a0d09da917bba5d7de0",
-            "is_ignored": false,
-            "is_third_party": false
-        }
-    ],
-    "modules": [
-        {
-            "name": "wonderous.ipa",
-            "compiler": "DART",
-            "operating_system": "Dart",
-            "architecture": "DART",
-            "is_ignored": false,
-            "is_third_party": false,
-            "is_dependency": false,
-            "is_selected": true,
-            "has_fatal_errors": false,
-            "flaw_summary": {}
-        },
-        {
-            "id": 1756110687,
-            "name": "wonderous.ipa",
-            "is_ignored": false,
-            "is_third_party": false,
-            "is_dependency": false,
-            "is_selected": false,
-            "has_fatal_errors": false,
-            "status": "OK",
-            "platform": "DART / Dart / DART",
-            "size": "150MB",
-            "md5": "502f1a945eb85a0d09da917bba5d7de0",
-            "issues": [
-                "No supporting files or PDB files"
-            ],
-            "flaw_summary": {}
-        }
-    ],
-    "issues": [
-        {
-            "description": "There have not been recent scans of this application The application was last scanned on 2023-01-31 08:52:10 +0000 GMT which was 149d 2h 28m 42.711006s ago. It is not uncommon for new flaws to be reported over time because Veracode is continuously improving their products, and because new SCA vulnerabilities are reported every day, and this could impact the application.",
-            "severity": "medium"
-        }
-    ],
-    "recommendations": [
-        "Regular scanning, preferably via automation will allow the application team to respond faster to any new issues reported.",
-        "Consider scheduling a consultation to review the packaging and module configuration: https://docs.veracode.com/r/t_schedule_consultation."
-    ],
-    "last_activity": "2023-01-31T08:52:10Z"
+    {
+      "id": 1756110687,
+      "name": "wonderous.ipa",
+      "is_ignored": false,
+      "is_third_party": false,
+      "is_dependency": false,
+      "is_selected": false,
+      "has_fatal_errors": false,
+      "status": "OK",
+      "platform": "DART / Dart / DART",
+      "size": "150MB",
+      "md5": "502f1a945eb85a0d09da917bba5d7de0",
+      "issues": [
+        "No supporting files or PDB files"
+      ],
+      "flaw_summary": {}
+    }
+  ],
+  "issues": [
+    {
+      "description": "There have not been recent scans of this application The application was last scanned on 2023-01-31 08:52:10 +0000 GMT which was 149d 2h 28m 42.711006s ago. It is not uncommon for new flaws to be reported over time because Veracode is continuously improving their products, and because new SCA vulnerabilities are reported every day, and this could impact the application.",
+      "severity": "medium"
+    }
+  ],
+  "recommendations": [
+    "Regular scanning, preferably via automation will allow the application team to respond faster to any new issues reported.",
+    "Consider scheduling a consultation to review the packaging and module configuration: https://docs.veracode.com/r/t_schedule_consultation."
+  ],
+  "last_activity": "2023-01-31T08:52:10Z"
 }
 ```
 
 ## Different ways to run
 
-Using Docker 🐳:
+### Using Docker 🐳
 
 ```sh
 docker pull antfie/scan_health
 docker run -t -v "$HOME/.veracode:/.veracode" antfie/scan_health -sast https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002
 ```
 
-With the zsh helper:
+### Using a zsh helper alias
 
 add this to your `~/.zshrc` file:
 
@@ -229,7 +236,7 @@ If you know the build IDs you can use them instead of URLs if preferred, like so
 
 ## Development 🛠️
 
-You may want to run using the `-cache=true` flag to speed up development.
+You may want to run using the `-cache=true` flag to speed up development by caching the API results.
 
 ### Compiling
 
@@ -250,7 +257,10 @@ This tool makes the following API requests:
 | <https://github.com/antfie/scan_health/releases/latest>                     | To determine if a new version of the tool is available.    |
 | <https://analysiscenter.veracode.com/api/3.0/getmaintenancescheduleinfo.do> | <https://docs.veracode.com/r/r_getmaintenancescheduleinfo> |
 | <https://analysiscenter.veracode.com/api/5.0/detailedreport.do>             | <https://docs.veracode.com/r/r_detailedreport>             |
-| <https://analysiscenter.veracode.com/api/5.0/getbuildinfo.do>               | <https://docs.veracode.com/r/r_getbuildinfo>               |
 | <https://analysiscenter.veracode.com/api/5.0/getappinfo.do>                 | <https://docs.veracode.com/r/r_getappinfo>                 |
+| <https://analysiscenter.veracode.com/api/5.0/getbuildinfo.do>               | <https://docs.veracode.com/r/r_getbuildinfo>               |
+| <https://analysiscenter.veracode.com/api/5.0/getbuildlist.do>               | https://docs.veracode.com/r/r_getbuildlist                 |
 | <https://analysiscenter.veracode.com/api/5.0/getfilelist.do>                | <https://docs.veracode.com/r/r_getfilelist>                |
 | <https://analysiscenter.veracode.com/api/5.0/getprescanresults.do>          | <https://docs.veracode.com/r/r_getprescanresults>          |
+| <https://analysiscenter.veracode.com/api/5.0/getsandboxlist.do>             | <https://docs.veracode.com/r/r_getsandboxlist>             |
+
