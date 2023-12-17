@@ -64,7 +64,7 @@ This is an unofficial Veracode product. It does not come with any support or war
 Here is an example output of the tool.
 
 ```
-Scan Health v2.2
+Scan Health v2.32
 Copyright © Veracode, Inc. 2023. All Rights Reserved.
 This is an unofficial Veracode product. It does not come with any support or warranty.
 
