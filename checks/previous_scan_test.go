@@ -86,7 +86,7 @@ func TestPreviousScan(t *testing.T) {
 		previousScan(&mockReport, &mockPreviousReport)
 
 		assert.Len(t, mockReport.Issues, 1)
-		assert.Len(t, mockReport.Recommendations, 1)
+		assert.Len(t, mockReport.Recommendations, 2)
 	})
 
 	/*
