@@ -88,7 +88,7 @@ func main() {
 
 		if previousBuildId > 0 {
 			previousHealthReport = report.NewReport(previousBuildId, regionToUse, AppVersion, true)
-			api.PopulateReportWithDataFromAPI(previousHealthReport, *includePreviousScan)
+			api.PopulateReportWithDataFromAPI(previousHealthReport, false)
 		}
 	}
 

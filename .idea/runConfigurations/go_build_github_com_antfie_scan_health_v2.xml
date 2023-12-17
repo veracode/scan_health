@@ -3,7 +3,7 @@
     <module name="scan_health" />
     <working_directory value="$PROJECT_DIR$" />
     <useCustomBuildTags value="true" />
-    <parameters value="-cache=true -json-file cache/output.json -sast https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview::380748:24113946:24085146:24100796::::" />
+    <parameters value="-cache=true -json-file cache/output.json -previous-scan=true -sast https://analysiscenter.veracode.com/auth/index.jsp#AnalyzeAppModuleList:75603:793744:31152520:31122654:31138304::::5829580" />
     <kind value="DIRECTORY" />
     <package value="github.com/antfie/scan_health/v2" />
     <directory value="$PROJECT_DIR$" />

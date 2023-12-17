@@ -9,10 +9,13 @@ import (
 
 func UNUSED(x ...interface{}) {}
 
+// Test data:
+//
+//	current = https://analysiscenter.veracode.com/auth/index.jsp#AnalyzeAppModuleList:75603:793744:31152520:31122654:31138304::::5829580
+//	previous = https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:31146310:31116451:31132101::::5829580
 func compareModuleCount(r *report.Report, pr *report.Report) {
-
-	previousModuleCount := len(pr.Modules)
-	currentModuleCount := len(r.Modules)
+	previousModuleCount := len(pr.GetSelectedModules())
+	currentModuleCount := len(r.GetSelectedModules())
 
 	if previousModuleCount != currentModuleCount {
 
@@ -21,8 +24,24 @@ func compareModuleCount(r *report.Report, pr *report.Report) {
 			previousModuleWord = "modules"
 		}
 
-		r.ReportIssue(fmt.Sprintf("The module count changed from the previous scan. It went from %d %s in the previous scan to %d.", previousModuleCount, previousModuleWord, currentModuleCount), report.IssueSeverityMedium)
-		r.MakeRecommendation("Changes in the number of uploaded modules may be part of natural application lifecycle, but it is worth verifying. Ensure scans are configured consistently, preferably using automation.")
+		r.ReportIssue(fmt.Sprintf("The number of selected modules was differnt from the previous scan. It went from %d %s in the previous scan to %d in this scan.", previousModuleCount, previousModuleWord, currentModuleCount), report.IssueSeverityMedium)
+		r.MakeRecommendation("Changes in the number of modules selected can lead to drastic differences in the results returned. Ensure the correct top-level modules have been selected for scanning.")
+		r.MakeRecommendation("Only select the main entry points of the application and not libraries, as documented here: https://community.veracode.com/s/article/What-are-Modules-and-how-do-my-results-change-based-on-what-I-select.")
+		return
+	}
+
+	previousModuleCount = len(pr.Modules)
+	currentModuleCount = len(r.Modules)
+
+	if previousModuleCount != currentModuleCount {
+		previousModuleWord := "module"
+		if previousModuleCount != 1 {
+			previousModuleWord = "modules"
+		}
+
+		r.ReportIssue(fmt.Sprintf("The module count changed from the previous scan. It went from %d %s in the previous scan to %d in this scan.", previousModuleCount, previousModuleWord, currentModuleCount), report.IssueSeverityMedium)
+		r.MakeRecommendation("Changes in the number of uploaded modules may be part of the natural application lifecycle, but it is worth verifying. Ensure scans are configured to be consistent, preferably using automation.")
+		r.MakeRecommendation("Only select the main entry points of the application and not libraries, as documented here: https://community.veracode.com/s/article/What-are-Modules-and-how-do-my-results-change-based-on-what-I-select.")
 	}
 }
 
