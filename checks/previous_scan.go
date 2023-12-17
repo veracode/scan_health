@@ -27,7 +27,6 @@ func compareModuleCount(r *report.Report, pr *report.Report) {
 		r.ReportIssue(fmt.Sprintf("The number of selected modules was differnt from the previous scan. It went from %d %s in the previous scan to %d in this scan.", previousModuleCount, previousModuleWord, currentModuleCount), report.IssueSeverityMedium)
 		r.MakeRecommendation("Changes in the number of modules selected can lead to drastic differences in the results returned. Ensure the correct top-level modules have been selected for scanning.")
 		r.MakeRecommendation("Only select the main entry points of the application and not libraries, as documented here: https://community.veracode.com/s/article/What-are-Modules-and-how-do-my-results-change-based-on-what-I-select.")
-		return
 	}
 
 	previousModuleCount = len(pr.Modules)
