@@ -24,8 +24,14 @@ type analysisUnit struct {
 	PublishedDate string   `xml:"published_date,attr"`
 }
 
-func (api API) GetBuildInfo(applicationId, buildId int) *buildInfo {
-	var url = fmt.Sprintf("/api/5.0/getbuildinfo.do?app_id=%d&build_id=%d", applicationId, buildId)
+func (api API) GetBuildInfo(applicationId, buildId, sandboxId int) *buildInfo {
+	sandboxFilter := ""
+
+	if sandboxId > 0 {
+		sandboxFilter = fmt.Sprintf("&sandbox_id=%d", sandboxId)
+	}
+
+	var url = fmt.Sprintf("/api/5.0/getbuildinfo.do?app_id=%d&build_id=%d%s", applicationId, buildId, sandboxFilter)
 	response := api.makeApiRequest(url, http.MethodGet)
 
 	buildInfo := &buildInfo{}
