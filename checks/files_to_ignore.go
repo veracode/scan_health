@@ -44,6 +44,7 @@ func ignoreJunkFiles(r *report.Report) {
 		"LICENSE",
 		"Makefile",
 		"README",
+		"Thumbs.db",
 	}
 
 	var ignoredFiles []string
