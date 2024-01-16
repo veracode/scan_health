@@ -59,6 +59,6 @@ func notifyOfUpdates() {
 	}
 
 	if latestReleasedVersion > appVersion {
-		color.HiYellow(fmt.Sprintf("Please upgrade to the latest version of this tool (v%s) by visiting https://github.com/antfie/scan_health/releases/latest\n", response["tag_name"]))
+		color.HiYellow(fmt.Sprintf("Please upgrade to the latest version of this tool (v%s) by visiting https://github.com/veracode/scan_health/releases/latest\n", response["tag_name"]))
 	}
 }
