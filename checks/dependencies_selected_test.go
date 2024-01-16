@@ -1,8 +1,8 @@
 package checks
 
 import (
-	"github.com/antfie/scan_health/v2/report"
 	"github.com/stretchr/testify/assert"
+	"github.com/veracode/scan_health/v2/report"
 	"testing"
 )
 

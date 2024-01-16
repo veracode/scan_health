@@ -2,7 +2,7 @@ package data
 
 import (
 	"fmt"
-	"github.com/antfie/scan_health/v2/utils"
+	"github.com/veracode/scan_health/v2/utils"
 	"io"
 	"net/http"
 	"net/url"

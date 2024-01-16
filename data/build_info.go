@@ -3,7 +3,7 @@ package data
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/antfie/scan_health/v2/utils"
+	"github.com/veracode/scan_health/v2/utils"
 	"net/http"
 )
 

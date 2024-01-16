@@ -4,9 +4,9 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/antfie/scan_health/v2/report"
-	"github.com/antfie/scan_health/v2/utils"
 	"github.com/stretchr/testify/assert"
+	"github.com/veracode/scan_health/v2/report"
+	"github.com/veracode/scan_health/v2/utils"
 )
 
 // Test Cases

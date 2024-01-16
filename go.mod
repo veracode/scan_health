@@ -1,4 +1,4 @@
-module github.com/antfie/scan_health/v2
+module github.com/veracode/scan_health/v2
 
 go 1.19
 

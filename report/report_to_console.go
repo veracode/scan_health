@@ -2,8 +2,8 @@ package report
 
 import (
 	"fmt"
-	"github.com/antfie/scan_health/v2/utils"
 	"github.com/fatih/color"
+	"github.com/veracode/scan_health/v2/utils"
 	"strings"
 	"time"
 )

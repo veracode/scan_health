@@ -3,9 +3,9 @@ package data
 import (
 	"encoding/xml"
 	"fmt"
-	"github.com/antfie/scan_health/v2/report"
-	"github.com/antfie/scan_health/v2/utils"
 	"github.com/fatih/color"
+	"github.com/veracode/scan_health/v2/report"
+	"github.com/veracode/scan_health/v2/utils"
 	"html"
 	"net/http"
 	"regexp"

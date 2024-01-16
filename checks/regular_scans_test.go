@@ -1,12 +1,12 @@
 package checks
 
 import (
-	"github.com/antfie/scan_health/v2/utils"
+	"github.com/veracode/scan_health/v2/utils"
 	"testing"
 	"time"
 
-	"github.com/antfie/scan_health/v2/report"
 	"github.com/stretchr/testify/assert"
+	"github.com/veracode/scan_health/v2/report"
 )
 
 // Test Cases

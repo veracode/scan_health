@@ -29,7 +29,7 @@
       "display_text": "\u003cspan\u003eThis function uses the crypto::sha1::New() function, which uses a hash algorithm that is considered weak. In recent years, researchers have demonstrated ways to breach many uses of previously-thought-safe hash functions such as MD5. \u003c/span\u003e \u003cspan\u003eConsider using a stronger algorithm in order to prevent attackers from being able to manipulate hash results. If this algorithm is being used to hash passwords, then consider using a strong computationally-hard algorithm such as PBKDF2 or bcrypt instead of a plain hashing algorithm.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href\u003d\"https://cwe.mitre.org/data/definitions/327.html\"\u003eCWE\u003c/a\u003e\u003c/span\u003e",
       "files": {
         "source_file": {
-          "file": "github.com/antfie/scan_health/v2/data/cache.go",
+          "file": "github.com/veracode/scan_health/v2/data/cache.go",
           "line": 64,
           "function_name": "getHash",
           "qualified_function_name": "github.com.antfie.scan_health.v2.data.getHash",

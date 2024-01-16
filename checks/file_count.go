@@ -2,8 +2,8 @@ package checks
 
 import (
 	"fmt"
-	"github.com/antfie/scan_health/v2/report"
-	"github.com/antfie/scan_health/v2/utils"
+	"github.com/veracode/scan_health/v2/report"
+	"github.com/veracode/scan_health/v2/utils"
 )
 
 func tooManyFilesUploaded(r *report.Report) {

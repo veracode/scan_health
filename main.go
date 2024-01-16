@@ -6,11 +6,11 @@ import (
 	"os"
 	"strings"
 
-	"github.com/antfie/scan_health/v2/checks"
-	"github.com/antfie/scan_health/v2/data"
-	"github.com/antfie/scan_health/v2/report"
-	"github.com/antfie/scan_health/v2/utils"
 	"github.com/fatih/color"
+	"github.com/veracode/scan_health/v2/checks"
+	"github.com/veracode/scan_health/v2/data"
+	"github.com/veracode/scan_health/v2/report"
+	"github.com/veracode/scan_health/v2/utils"
 )
 
 func main() {

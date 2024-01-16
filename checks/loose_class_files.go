@@ -1,6 +1,6 @@
 package checks
 
-import "github.com/antfie/scan_health/v2/report"
+import "github.com/veracode/scan_health/v2/report"
 
 // Test cases
 // https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview::1656378:24066707:24037910:24053560::::

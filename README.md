@@ -254,7 +254,7 @@ This tool makes the following API requests:
 
 | API                                                                         | Notes / API Documentation                                  |
 |-----------------------------------------------------------------------------|------------------------------------------------------------|
-| <https://github.com/antfie/scan_health/releases/latest>                     | To determine if a new version of the tool is available.    |
+| <https://github.com/veracode/scan_health/releases/latest>                     | To determine if a new version of the tool is available.    |
 | <https://analysiscenter.veracode.com/api/3.0/getmaintenancescheduleinfo.do> | <https://docs.veracode.com/r/r_getmaintenancescheduleinfo> |
 | <https://analysiscenter.veracode.com/api/5.0/detailedreport.do>             | <https://docs.veracode.com/r/r_detailedreport>             |
 | <https://analysiscenter.veracode.com/api/5.0/getappinfo.do>                 | <https://docs.veracode.com/r/r_getappinfo>                 |

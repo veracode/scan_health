@@ -1,7 +1,7 @@
 package checks
 
 import (
-	"github.com/antfie/scan_health/v2/report"
+	"github.com/veracode/scan_health/v2/report"
 )
 
 func moduleWarnings(r *report.Report) {

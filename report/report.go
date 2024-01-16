@@ -3,7 +3,7 @@ package report
 import (
 	"time"
 
-	"github.com/antfie/scan_health/v2/utils"
+	"github.com/veracode/scan_health/v2/utils"
 )
 
 type HealthTool struct {

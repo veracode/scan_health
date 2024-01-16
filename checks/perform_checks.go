@@ -1,6 +1,6 @@
 package checks
 
-import "github.com/antfie/scan_health/v2/report"
+import "github.com/veracode/scan_health/v2/report"
 
 func PerformChecks(r *report.Report, pr *report.Report) {
 	// This is a priority ordered list of checks to perform so the customer sees the most important issues first

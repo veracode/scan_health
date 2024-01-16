@@ -3,7 +3,7 @@ package main
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/antfie/scan_health/v2/utils"
+	"github.com/veracode/scan_health/v2/utils"
 	"io"
 	"net/http"
 
@@ -14,7 +14,7 @@ var AppVersion = "0.0"
 
 func notifyOfUpdates() {
 	client := &http.Client{}
-	req, err := http.NewRequest("GET", "https://github.com/antfie/scan_health/releases/latest", nil)
+	req, err := http.NewRequest("GET", "https://github.com/veracode/scan_health/releases/latest", nil)
 
 	if err != nil {
 		return

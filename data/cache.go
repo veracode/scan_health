@@ -4,7 +4,7 @@ import (
 	"crypto/sha1"
 	"encoding/hex"
 	"errors"
-	"github.com/antfie/scan_health/v2/utils"
+	"github.com/veracode/scan_health/v2/utils"
 	"os"
 	"path"
 	"path/filepath"

@@ -1,7 +1,7 @@
 package report
 
 import (
-	"github.com/antfie/scan_health/v2/utils"
+	"github.com/veracode/scan_health/v2/utils"
 	"strings"
 )
 
