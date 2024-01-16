@@ -12,7 +12,7 @@ scan performance and flaw quality. The scans must have completed for the tool to
 ## Key Features ✅
 
 * Identification of configuration issues and recommendations for improvements
-* Outputs to the console and also optionally JSON
+* Outputs a summary to the console and also optionally a full listing in JSON
 * Returns exit code 1 if there are any high severity issues found when using `-error-on-high-severity` flag
 * Set `-previous-scan=true` to run checks against the previous scan. We may make this the default at some point in the
   future
@@ -118,7 +118,7 @@ Recommendations
 💡 Consider scheduling a consultation to review the packaging and module configuration: https://docs.veracode.com/r/t_schedule_consultation.
 ```
 
-The tool also outputs JSON if the `-format json` flag is set. An example can be seen below:
+The tool also outputs JSON if the `-format json` flag is set. Note that unlike the console this JSON will not contain summaries but all the details. An example can be seen below:
 
 ```json
 {
