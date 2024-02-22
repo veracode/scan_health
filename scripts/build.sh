@@ -22,9 +22,9 @@ fi
 FLAGS="-X main.AppVersion=$VERSION -s -w"
 
 echo -e "${CYAN}Building v${VERSION}...${NC}"
-GOOS=darwin GOARCH=arm64 go build -ldflags="$FLAGS" -trimpath -o "dist/scan_health-mac-arm64" .
-GOOS=darwin GOARCH=amd64 go build -ldflags="$FLAGS" -trimpath -o "dist/scan_health-mac-amd64" .
-GOOS=linux GOARCH=amd64 go build -ldflags="$FLAGS" -trimpath -o "dist/scan_health-linux-amd64" .
-GOOS=windows GOARCH=amd64 go build -ldflags="$FLAGS" -trimpath -o "dist/scan_health-win.exe" .
+GOOS=darwin GOARCH=arm64 go build -ldflags="$FLAGS" -buildvcs=false -trimpath -o "dist/scan_health-mac-arm64" .
+GOOS=darwin GOARCH=amd64 go build -ldflags="$FLAGS" -buildvcs=false -trimpath -o "dist/scan_health-mac-amd64" .
+GOOS=linux GOARCH=amd64 go build -ldflags="$FLAGS" -buildvcs=false -trimpath -o "dist/scan_health-linux-amd64" .
+GOOS=windows GOARCH=amd64 go build -ldflags="$FLAGS" -buildvcs=false -trimpath -o "dist/scan_health-win.exe" .
 
 echo -e "${CYAN}Build Success${NC}"
