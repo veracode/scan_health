@@ -17,7 +17,6 @@ go vet ./...
 echo -e "${CYAN}Running gosec...${NC}"
 set +e # Don't fail on error for this
 gosec ./...
-set -1
 set -e
 
 echo -e "${CYAN}Testing...${NC}"
