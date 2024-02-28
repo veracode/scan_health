@@ -40,10 +40,6 @@ func main() {
 		utils.ErrorAndExit(fmt.Sprintf("The region from the URL (%s) does not match that specified by the command line (%s)", utils.ParseRegionFromUrl(*scan), *region), nil)
 	}
 
-	if !(*outputFormat == "console" || *outputFormat == "json") {
-		utils.ErrorAndExitWithUsage("Invalid output format. Must be either \"console\"or \"json\"")
-	}
-
 	var regionToUse string
 
 	// Region from the command line takes precedence
@@ -64,6 +60,10 @@ func main() {
 	case "health":
 		if len(*scan) < 1 {
 			utils.ErrorAndExitWithUsage("No Veracode Platform URL or build ID specified for the health review. Expected: \"scan_health -sast https://analysiscenter.veracode.com/auth/index.jsp...\"")
+		}
+
+		if !(*outputFormat == "console" || *outputFormat == "json") {
+			utils.ErrorAndExitWithUsage("Invalid output format. Must be either \"console\"or \"json\"")
 		}
 
 		performSASTHealthCheck(scan, api, regionToUse, includePreviousScan, outputFormat, jsonFilePath, errorOnHighSeverity)
