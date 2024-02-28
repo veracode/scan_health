@@ -47,7 +47,7 @@ func renderScanSummaryToConsole(report *Report) {
 	fmt.Printf("Engine version:          %s (Release notes: https://docs.veracode.com/updates/r/c_all_static)\n", report.Scan.EngineVersion)
 	fmt.Printf("Submitted:               %s (%s ago)\n", report.Scan.SubmittedDate, utils.FormatDuration(time.Since(report.Scan.SubmittedDate)))
 	fmt.Printf("Published:               %s (%s ago)\n", report.Scan.PublishedDate, utils.FormatDuration(time.Since(report.Scan.PublishedDate)))
-	fmt.Printf("Duration:                %s\n", utils.FormatDuration(report.Scan.ScanDuration))
+	fmt.Printf("Duration:                %s\n", utils.FormatDuration(report.Scan.Duration))
 }
 
 func renderFlawSummaryToConsole(flaws FlawSummary) {

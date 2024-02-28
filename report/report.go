@@ -29,7 +29,7 @@ type Scan struct {
 	EngineVersion        string        `json:"engine_version,omitempty"`
 	SubmittedDate        time.Time     `json:"submitted_date,omitempty"`
 	PublishedDate        time.Time     `json:"published_data,omitempty"`
-	ScanDuration         time.Duration `json:"scan_duration,omitempty"`
+	Duration             time.Duration `json:"duration,omitempty"`
 	AnalysisSize         uint64        `json:"analysis_size,omitempty"`
 	IsLatestScan         bool          `json:"is_latest_scan"`
 	IsSCADataAvailable   bool          `json:"is_sca_data_available"`

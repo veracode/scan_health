@@ -113,7 +113,7 @@ func (api API) populateDetailedReport(r *report.Report) {
 	}
 
 	if detailedReport.StaticAnalysis.SubmittedDate != "" && detailedReport.StaticAnalysis.PublishedDate != "" {
-		r.Scan.ScanDuration = r.Scan.PublishedDate.Sub(r.Scan.SubmittedDate)
+		r.Scan.Duration = r.Scan.PublishedDate.Sub(r.Scan.SubmittedDate)
 	}
 
 	r.Scan.IsLatestScan = detailedReport.IsLatestScan
