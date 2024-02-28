@@ -39,7 +39,7 @@ func TestModuleCount(t *testing.T) {
 	t.Run("Large Number of modules", func(t *testing.T) {
 		t.Parallel()
 
-		lotsOfModules := []report.Module{}
+		var lotsOfModules []report.Module
 
 		for i := 0; i < utils.MaximumModuleSelectedCountThreshold+1; i++ {
 			moduleName := fmt.Sprintf("module%d", i)

@@ -65,5 +65,5 @@ func performSASTCompare(scanA, scanB *string, api data.API, regionToUse string, 
 	// Wait for all the data to load
 	wg.Wait()
 
-	comparisons.PerformChecks(scanAReport, scanBReport)
+	comparisons.PerformComparisons(scanAReport, scanBReport)
 }
