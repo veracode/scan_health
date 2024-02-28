@@ -2,7 +2,7 @@ package checks
 
 import "github.com/veracode/scan_health/v2/report"
 
-func PerformChecks(r *report.Report, pr *report.Report) {
+func PerformChecks(r, pr *report.Report) {
 	// This is a priority ordered list of checks to perform so the customer sees the most important issues first
 
 	// We put these at the top because other checks may rely on the output of these

@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/veracode/scan_health/v2/comparisons"
 	"github.com/veracode/scan_health/v2/data"
 	"github.com/veracode/scan_health/v2/report"
 	"github.com/veracode/scan_health/v2/utils"
@@ -63,6 +64,5 @@ func performSASTCompare(scanA, scanB *string, api data.API, regionToUse string, 
 	// Wait for all the data to load
 	wg.Wait()
 
-	print("TODO")
-
+	comparisons.PerformChecks(scanAReport, scanBReport)
 }
