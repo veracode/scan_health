@@ -24,7 +24,7 @@ type analysisUnit struct {
 	PublishedDate string   `xml:"published_date,attr"`
 }
 
-func (api API) GetBuildInfo(applicationId, buildId, sandboxId int) *buildInfo {
+func (api API) getBuildInfo(applicationId, buildId, sandboxId int) *buildInfo {
 	sandboxFilter := ""
 
 	if sandboxId > 0 {

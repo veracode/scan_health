@@ -67,7 +67,7 @@ func normalizeFilename(filename string) string {
 	return normalized
 }
 
-type ModuleNameCount struct {
+type moduleNameCount struct {
 	Counter int
 	Strings []string
 }
@@ -75,8 +75,8 @@ type ModuleNameCount struct {
 // generateNameMappedArray takes a slice of modules, normalizes the name
 // and returns a map of module names to the number of times they appear in the slice
 // and a slice of the original module names.
-func generateNameMappedArray(modules []report.Module) map[string]ModuleNameCount {
-	moduleNameCountMap := make(map[string]ModuleNameCount)
+func generateNameMappedArray(modules []report.Module) map[string]moduleNameCount {
+	moduleNameCountMap := make(map[string]moduleNameCount)
 
 	for _, module := range modules {
 		normalizedName := normalizeFilename(module.Name)
@@ -88,7 +88,7 @@ func generateNameMappedArray(modules []report.Module) map[string]ModuleNameCount
 			moduleNameCountMap[normalizedName] = moduleNameCount
 		} else {
 			// If it doesn't exist, create a new entry
-			moduleNameCount := ModuleNameCount{
+			moduleNameCount := moduleNameCount{
 				Counter: 1, // Start with 1 because it's the first occurrence
 				Strings: []string{module.Name},
 			}

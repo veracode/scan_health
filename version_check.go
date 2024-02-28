@@ -10,7 +10,7 @@ import (
 	"github.com/fatih/color"
 )
 
-var AppVersion = "0.0"
+var appVersion = "0.0"
 
 func notifyOfUpdates() {
 	client := &http.Client{}
@@ -52,7 +52,7 @@ func notifyOfUpdates() {
 		return
 	}
 
-	appVersion, err := utils.StringToFloat(AppVersion)
+	appVersion, err := utils.StringToFloat(appVersion)
 
 	if err != nil {
 		return

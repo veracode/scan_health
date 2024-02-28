@@ -49,8 +49,8 @@ func performSASTCompare(scanA, scanB *string, api data.API, regionToUse string, 
 
 	wg.Add(2)
 
-	scanAReport := report.NewReport(scanABuildId, regionToUse, AppVersion, false)
-	scanBReport := report.NewReport(scanBBuildId, regionToUse, AppVersion, false)
+	scanAReport := report.NewReport(scanABuildId, regionToUse, appVersion, false)
+	scanBReport := report.NewReport(scanBBuildId, regionToUse, appVersion, false)
 
 	go func() {
 		defer wg.Done()

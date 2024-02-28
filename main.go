@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	fmt.Printf("Scan Health v%s\nCopyright © Veracode, Inc. 2023. All Rights Reserved.\nThis is an unofficial Veracode product. It does not come with any support or warranty.\n\n", AppVersion)
+	fmt.Printf("Scan Health v%s\nCopyright © Veracode, Inc. 2023. All Rights Reserved.\nThis is an unofficial Veracode product. It does not come with any support or warranty.\n\n", appVersion)
 	vid := flag.String("vid", "", "Veracode API ID - See https://docs.veracode.com/r/t_create_api_creds")
 	vkey := flag.String("vkey", "", "Veracode API key - See https://docs.veracode.com/r/t_create_api_creds")
 	profile := flag.String("profile", "default", "Veracode credential profile (default is \"default\") - See https://docs.veracode.com/r/c_httpie_tool#using-multiple-profiles")
@@ -52,7 +52,7 @@ func main() {
 	notifyOfUpdates()
 
 	apiId, apiKey := getCredentials(*vid, *vkey, *profile)
-	api := data.API{Id: apiId, Key: apiKey, Region: regionToUse, AppVersion: AppVersion, EnableCaching: *enableCaching}
+	api := data.API{Id: apiId, Key: apiKey, Region: regionToUse, AppVersion: appVersion, EnableCaching: *enableCaching}
 
 	api.AssertCredentialsWork()
 

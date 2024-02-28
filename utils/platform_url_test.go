@@ -9,22 +9,22 @@ import (
 func TestPlatformUrl(t *testing.T) {
 	t.Run("Valid Platform Url", func(t *testing.T) {
 		t.Parallel()
-		assert.True(t, IsPlatformURL("https://analysiscenter.veracode.com/auth/index.jsp#AnalyzeAppModuleList:41807:380748:24113946:5206587:24100796::::469963"))
+		assert.True(t, isPlatformURL("https://analysiscenter.veracode.com/auth/index.jsp#AnalyzeAppModuleList:41807:380748:24113946:5206587:24100796::::469963"))
 	})
 
 	t.Run("Valid Url, not the platform", func(t *testing.T) {
 		t.Parallel()
-		assert.False(t, IsPlatformURL("https://test.com/"))
+		assert.False(t, isPlatformURL("https://test.com/"))
 	})
 
 	t.Run("Valid Platform Url, mixed scheme/host case", func(t *testing.T) {
 		t.Parallel()
-		assert.True(t, IsPlatformURL("hTtps://aNalysiscenter.verAcode.cOm/auth/index.jsp#AnalyzeAppModuleList:41807:380748:24113946:5206587:24100796::::469963"))
+		assert.True(t, isPlatformURL("hTtps://aNalysiscenter.verAcode.cOm/auth/index.jsp#AnalyzeAppModuleList:41807:380748:24113946:5206587:24100796::::469963"))
 	})
 
 	t.Run("Valid Platform Domain, not a valid path", func(t *testing.T) {
 		t.Parallel()
-		assert.False(t, IsPlatformURL("https://analysiscenter.veracode.com/help"))
+		assert.False(t, isPlatformURL("https://analysiscenter.veracode.com/help"))
 	})
 
 	t.Run("Check Commercial Region From Url", func(t *testing.T) {

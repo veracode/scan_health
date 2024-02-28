@@ -18,12 +18,12 @@ var supportedPages = []string{
 	"ViewReportsDetailedReport",
 	"ReviewResultsSCA"}
 
-type Region struct {
+type region struct {
 	ID  string
 	URL string
 }
 
-var regions = []Region{
+var regions = []region{
 	{ID: "european", URL: "https://analysiscenter.veracode.eu"},
 	{ID: "us", URL: "https://analysiscenter.veracode.us"},
 	{ID: "commercial", URL: "https://analysiscenter.veracode.com"},
@@ -37,7 +37,7 @@ func reportPlatformUrlInvalid(url string) string {
 		strings.Join(supportedPages, ", "))
 }
 
-func IsPlatformURL(platformUrl string) bool {
+func isPlatformURL(platformUrl string) bool {
 
 	// We need to normalize, as schemes and hosts may be
 	// variable casing (as per RFC3986)
@@ -112,7 +112,7 @@ func ParseBuildIdFromScanInformation(urlOrBuildId string) (int, error) {
 		return buildId, nil
 	}
 
-	if !IsPlatformURL(urlOrBuildId) {
+	if !isPlatformURL(urlOrBuildId) {
 		return -1, errors.New(reportPlatformUrlInvalid(urlOrBuildId))
 	}
 

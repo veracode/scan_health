@@ -6,7 +6,7 @@ import (
 	"github.com/veracode/scan_health/v2/utils"
 )
 
-type HealthTool struct {
+type healthTool struct {
 	ReportDate time.Time `json:"report_date"`
 	Version    string    `json:"version"`
 	Region     string    `json:"region"`
@@ -94,22 +94,22 @@ type ModuleInstance struct {
 	Source          string   `json:"source,omitempty"`
 }
 
-type IssueSeverity string
+type issueSeverity string
 
 const (
-	IssueSeverityHigh   IssueSeverity = "high"
-	IssueSeverityMedium IssueSeverity = "medium"
+	IssueSeverityHigh   issueSeverity = "high"
+	IssueSeverityMedium issueSeverity = "medium"
 )
 
 type Issue struct {
 	Description     string        `json:"description,omitempty"`
-	Severity        IssueSeverity `json:"severity,omitempty"`
+	Severity        issueSeverity `json:"severity,omitempty"`
 	AffectedFiles   []string      `json:"affected_files,omitempty"`
 	AffectedModules []string      `json:"affected_modules,omitempty"`
 }
 
 type Report struct {
-	HealthTool           HealthTool     `json:"health_tool,omitempty"`
+	HealthTool           healthTool     `json:"health_tool,omitempty"`
 	LastAppActivity      time.Time      `json:"last_app_activity,omitempty"`
 	LastSandboxActivity  time.Time      `json:"last_sandbox_activity,omitempty"`
 	Scan                 Scan           `json:"scan,omitempty"`
@@ -125,7 +125,7 @@ type Report struct {
 
 func NewReport(buildId int, region, version string, isReportForOtherScan bool) *Report {
 	return &Report{
-		HealthTool:           HealthTool{ReportDate: time.Now(), Version: version, Region: region},
+		HealthTool:           healthTool{ReportDate: time.Now(), Version: version, Region: region},
 		Scan:                 Scan{BuildId: buildId},
 		Flaws:                FlawSummary{},
 		UploadedFiles:        []UploadedFile{},
@@ -136,11 +136,11 @@ func NewReport(buildId int, region, version string, isReportForOtherScan bool) *
 	}
 }
 
-func (r *Report) ReportIssue(issue string, severity IssueSeverity) {
+func (r *Report) ReportIssue(issue string, severity issueSeverity) {
 	r.Issues = append(r.Issues, Issue{Description: issue, Severity: severity})
 }
 
-func (r *Report) ReportFileIssue(issue string, severity IssueSeverity, files []string) {
+func (r *Report) ReportFileIssue(issue string, severity issueSeverity, files []string) {
 	for index, existingIssue := range r.Issues {
 		if existingIssue.Description == issue {
 			r.Issues[index].AffectedFiles = files
@@ -151,7 +151,7 @@ func (r *Report) ReportFileIssue(issue string, severity IssueSeverity, files []s
 	r.Issues = append(r.Issues, Issue{Description: issue, Severity: severity, AffectedFiles: files})
 }
 
-func (r *Report) ReportModuleIssue(issue string, severity IssueSeverity, modules []string) {
+func (r *Report) ReportModuleIssue(issue string, severity issueSeverity, modules []string) {
 	for index, existingIssue := range r.Issues {
 		if existingIssue.Description == issue {
 			r.Issues[index].AffectedModules = modules

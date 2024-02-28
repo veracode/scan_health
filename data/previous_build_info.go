@@ -7,7 +7,7 @@ import (
 
 func (api API) GetPreviousBuildId(r *report.Report) int {
 	for _, build := range r.OtherScans {
-		buildInfo := api.GetBuildInfo(r.Scan.ApplicationId, build.BuildId, build.SandboxId)
+		buildInfo := api.getBuildInfo(r.Scan.ApplicationId, build.BuildId, build.SandboxId)
 
 		if buildInfo.Build.AnalysisUnit.Status != "Results Ready" {
 			continue
