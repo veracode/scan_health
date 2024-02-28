@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"github.com/fatih/color"
 	"github.com/veracode/scan_health/v2/comparisons"
 	"github.com/veracode/scan_health/v2/data"
 	"github.com/veracode/scan_health/v2/report"
@@ -41,9 +42,9 @@ func performSASTCompare(scanA, scanB *string, api data.API, regionToUse string, 
 		utils.ErrorAndExit("These are both the same scan", nil)
 	}
 
-	utils.ColorPrintf(fmt.Sprintf("Comparing SAST scan build ID %d against %d in the %s region\n",
-		scanABuildId,
-		scanBBuildId,
+	utils.ColorPrintf(fmt.Sprintf("Comparing SAST scan %s against scan %s in the %s region\n",
+		color.HiGreenString("\"A\" (Build id = %d)", scanABuildId),
+		color.HiMagentaString("\"B\" (Build id = %d)", scanBBuildId),
 		regionToUse))
 
 	wg.Add(2)

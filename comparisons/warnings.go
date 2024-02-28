@@ -16,6 +16,14 @@ func reportWarnings(a, b *report.Report) {
 		report.WriteString("* The scan engine versions are different. This means there has been one or more deployments of the Veracode scan engine between these scans. This can sometimes explain why new flaws might be reported (due to improved scan coverage), and others are no longer reported (due to a reduction of False Positives)\n")
 	}
 
+	if a.Scan.AccountId != b.Scan.AccountId {
+		report.WriteString("* These scans are from different accounts\n")
+	}
+
+	if a.Scan.ApplicationId != b.Scan.ApplicationId {
+		report.WriteString("* These scans are from different application profiles\n")
+	}
+
 	if !a.Scan.IsLatestScan {
 		if len(a.Scan.SandboxName) > 0 {
 			report.WriteString(fmt.Sprintf("* Scan A is not the latest SAST scan in the sandbox \"%s\"\n", a.Scan.SandboxName))
