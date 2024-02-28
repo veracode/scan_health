@@ -8,4 +8,6 @@ func PerformChecks(a, b *report.Report) {
 	reportCommonalities(a, b)
 	reportSummaryDifferences("A", a, b)
 	reportSummaryDifferences("B", a, b)
+
+	reportSummary(a, b)
 }

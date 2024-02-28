@@ -9,7 +9,7 @@ import (
 )
 
 func reportSummaryDifferences(side string, a, b *report.Report) {
-	utils.ColorPrintf(getFormattedSideStringWithMessage(side, fmt.Sprintf("\nScan %s", side)))
+	utils.ColorPrintf(utils.GetFormattedSideStringWithMessage(side, fmt.Sprintf("\nScan %s", side)))
 	fmt.Println("\n======")
 
 	reportForThisSide := a
@@ -56,7 +56,7 @@ func reportSummaryDifferences(side string, a, b *report.Report) {
 
 	fmt.Printf("Submitted:          %s (%s ago)\n", reportForThisSide.Scan.SubmittedDate, utils.FormatDuration(time.Since(reportForThisSide.Scan.SubmittedDate)))
 	fmt.Printf("Published:          %s (%s ago)\n", reportForThisSide.Scan.PublishedDate, utils.FormatDuration(time.Since(reportForThisSide.Scan.PublishedDate)))
-	fmt.Printf("Duration:           %s\n", utils.FormatDuration(reportForThisSide.Scan.ScanDuration))
+	fmt.Printf("Duration:           %s\n", utils.FormatDuration(reportForThisSide.Scan.Duration))
 
 	if !(a.Flaws.Total == b.Flaws.Total && a.Flaws.Mitigated == b.Flaws.Mitigated && a.Flaws.TotalAffectingPolicy == b.Flaws.TotalAffectingPolicy && a.Flaws.OpenAffectingPolicy == b.Flaws.OpenAffectingPolicy && a.Flaws.OpenButNotAffectingPolicy == b.Flaws.OpenButNotAffectingPolicy) {
 		flawsFormatted := fmt.Sprintf("Flaws:              %d total, %d mitigated, %d policy affecting, %d open affecting policy, %d open not affecting policy\n", reportForThisSide.Flaws.Total, reportForThisSide.Flaws.Mitigated, reportForThisSide.Flaws.TotalAffectingPolicy, reportForThisSide.Flaws.OpenAffectingPolicy, reportForThisSide.Flaws.OpenButNotAffectingPolicy)
@@ -67,12 +67,4 @@ func reportSummaryDifferences(side string, a, b *report.Report) {
 			fmt.Print(flawsFormatted)
 		}
 	}
-}
-
-func getFormattedSideStringWithMessage(side, message string) string {
-	if side == "A" {
-		return color.HiGreenString(message)
-	}
-
-	return color.HiMagentaString(message)
 }
