@@ -60,6 +60,8 @@ type detailedReportFlaw struct {
 	RemediationStatus       string   `xml:"remediation_status,attr"`     // Fixed, New, Reopened, Mitigated, Potential False Positive
 	MitigationStatus        string   `xml:"mitigation_status,attr"`      // none, accepted, rejected
 	Mitigation              string   `xml:"mitigation_status_desc,attr"` // Mitigation Accepted, Not Mitigated, Mitigation Proposed
+	SourceFile              string   `xml:"sourcefilepath,attr"`
+	LineNumber              int      `xml:"line,attr"`
 	ModulePath              string
 }
 
@@ -172,6 +174,23 @@ func populateModulesFromFlaws(r *report.Report, detailedReport detailedReport) {
 				if modulePartIndex > 0 {
 					r.AddModuleDependency(modulePart, modulePathParts[modulePartIndex-1])
 				}
+			}
+		}
+
+		// Populate the flaw details per-module
+		for i, module := range r.Modules {
+			if strings.EqualFold(flaw.Module, module.Name) {
+				r.Modules[i].FlawDetails = append(r.Modules[i].FlawDetails, report.FlawDetails{
+					ID:                      flaw.ID,
+					CWE:                     flaw.CWE,
+					AffectsPolicyCompliance: flaw.AffectsPolicyCompliance,
+					RemediationStatus:       flaw.RemediationStatus,
+					MitigationStatus:        flaw.MitigationStatus,
+					Mitigation:              flaw.Mitigation,
+					SourceFile:              flaw.SourceFile,
+					LineNumber:              flaw.LineNumber,
+					ModulePath:              flaw.ModulePath,
+				})
 			}
 		}
 	}

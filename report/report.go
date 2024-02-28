@@ -44,6 +44,18 @@ type FlawSummary struct {
 	OpenButNotAffectingPolicy int `json:"open_but_not_affecting_policy,omitempty"`
 }
 
+type FlawDetails struct {
+	ID                      int
+	CWE                     int
+	AffectsPolicyCompliance bool
+	RemediationStatus       string
+	MitigationStatus        string
+	Mitigation              string
+	SourceFile              string
+	LineNumber              int
+	ModulePath              string
+}
+
 type UploadedFile struct {
 	Id           int    `json:"id,omitempty"`
 	Name         string `json:"name,omitempty"`
@@ -60,6 +72,7 @@ type Module struct {
 	IsIgnored    bool             `json:"is_ignored"`
 	Instances    []ModuleInstance `json:"instances,omitempty"`
 	Flaws        FlawSummary      `json:"flaws,omitempty"`
+	FlawDetails  []FlawDetails    `json:"-"`
 	DependencyOf []string         `json:"dependency_of,omitempty"`
 }
 
