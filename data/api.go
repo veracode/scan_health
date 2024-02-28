@@ -20,7 +20,6 @@ type API struct {
 }
 
 func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
-
 	baseUrl := utils.ParseBaseUrlFromRegion(api.Region)
 	fullUrl := baseUrl + apiUrl
 
