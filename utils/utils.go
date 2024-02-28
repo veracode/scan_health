@@ -74,6 +74,22 @@ func PrintTitle(title string) {
 	fmt.Println(strings.Repeat("=", len(title)))
 }
 
+func GetFormattedSideString(side string) string {
+	if side == "A" {
+		return color.HiGreenString("A")
+	}
+
+	return color.HiMagentaString("B")
+}
+
+func GetFormattedSideStringWithMessage(side, message string) string {
+	if side == "A" {
+		return color.HiGreenString(message)
+	}
+
+	return color.HiMagentaString(message)
+}
+
 func Top5StringList(items []string) string {
 	var processedValues []string
 	var itemStrings []string
