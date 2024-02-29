@@ -2,34 +2,71 @@
 ![Docker Image Size](https://img.shields.io/docker/image-size/antfie/scan_health/latest)
 ![Downloads](https://img.shields.io/github/downloads/antfie/scan_health/total)
 
-# Veracode SAST Scan Health 🏥
+# Veracode Scan Health Tool 🏥
 
 This is an unofficial Veracode product. It does not come with any support or warranty.
 
-Use this console tool to see the health of Veracode Static Analysis (SAST) scans and get some suggestions to improve
-scan performance and flaw quality. The scans must have completed for the tool to work.
+Use this console tool to gain insight into the health of a Veracode scan. The report includes any problems found as well as suggestions to improve scan performance and flaw quality. At present this tool only works on Static Analysis (SAST) scans.
 
-## Health Report
+The tool has the following modes of operation:
 
-## Scan Compare
+* **Health Report** - For when we want to know if a given SAST scan has been configured correctly
+* **Scan Compare** - For when we want to compare two SAST scans for troubleshooting issues
 
 ## Key Features ✅
 
-* Identification of configuration issues and recommendations for improvements
-* Outputs a summary to the console and also optionally a full listing in JSON
-* Returns exit code 1 if there are any high severity issues found when using `-error-on-high-severity` flag
+* Uses the [Veracode APIs](https://docs.veracode.com/r/Veracode_APIs) and standard Veracode [API Credentials File](https://docs.veracode.com/r/c_api_credentials3).
+* Easy to understand configuration issues and recommendations.
+* Outputs a summary to the console and also optionally a full listing in JSON.
+* Returns exit code 1 if there are any serious configuration issues found when using `-error-on-high-severity` flag. 
 * Set `-previous-scan=true` to run checks against the previous scan. We may make this the default at some point in the
-  future
+  future.
 
-## Usage
+## Installation 📦
 
-This tool makes use of the Veracode APIs ([listed below](#outbound-api-calls)). You will need Veracode API credentials
-and the [Reviewer or Security Lead role](https://docs.veracode.com/r/c_API_roles_details#results-api) for this tool to
-work. We recommend you configure
-a [Veracode API credentials file](https://docs.veracode.com/r/c_configure_api_cred_file). Alternatively you can use
+The easiest way to install this is to download the binary from GitHub, but there are other options.
+
+### From GitHub 
+
+From the [Releases](https://github.com/veracode/scan_health/releases) page you can download the latest version of this standalone executable for Windows, Linux and macOS. Note that at this time we are unable to code-sign these binaries.
+
+### Using Docker 🐳
+
+You can also use the [Docker image](docker pull antfie/scan_health):
+
+### Compile Manually
+
+You will need the latest version of [Go](https://go.dev/dl/) and then run the following commands to get the code and compile it:
+
+```bash
+git clone https://github.com/veracode/scan_health
+cd scan_health
+./scripts/build.sh
+```
+
+In the `dist` folder you should find the compiled binaries.
+
+## Configuration 🛠️
+
+This tool makes use of the [Veracode APIs](https://docs.veracode.com/r/Veracode_APIs) ([listed below](#outbound-api-calls)). You will need a Veracode [API Credentials File](https://docs.veracode.com/r/c_api_credentials3) and the [Reviewer or Security Lead role](https://docs.veracode.com/r/c_API_roles_details#results-api) for this tool to work.
+
+Follow the instructions on how to configure a Veracode [API Credentials File](https://docs.veracode.com/r/c_api_credentials3) if you do not already have this set up.
+
+Alternatively you can use
 environment
 variables (`VERACODE_API_KEY_ID` and `VERACODE_API_KEY_SECRET`) or the CLI flags (`-vid` and `-vkey`) to authenticate
 with the Veracode APIs.
+
+## Health Report
+
+The most common use of this tool is to get a health report for a given scan.
+
+## Scan Compare
+
+
+## Usage
+
+
 
 ```sh
 ./scan_health -h
