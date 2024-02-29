@@ -94,7 +94,7 @@ The most common use of this tool is to get a health report for a given scan.
 ./scan_health -action health -sast https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002
 ```
 
-Here is an example output of the tool.
+Here is an example report:
 
 ```
 Scan Health v2.32
@@ -240,20 +240,23 @@ The tool also outputs JSON if the `-format json` flag is set. Note that unlike t
 
 ### Scan Compare
 
-TODO
+Scans can be compared like so:
+
+```bash
+./scan_health -action compare -a https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002 -b https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002
+```
 
 ## Different ways to run
 
-### Using Docker 🐳
+If you know the build IDs you can use them instead of URLs if preferred, like so:
 
 ```sh
-docker pull antfie/scan_health
-docker run -t -v "$HOME/.veracode:/.veracode" antfie/scan_health -sast https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002
+./scan_health -sast 22132159
 ```
 
 ### Using a zsh helper alias
 
-add this to your `~/.zshrc` file:
+If you use the zsh shell you might want to have a helper alias. To do that add this to your `~/.zshrc` file:
 
 ```sh
 alias vsh='f() { /path/to/scan_health-mac-arm64 -sast "$1" };f'
@@ -265,17 +268,13 @@ Then you can simply run:
 vsh https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002
 ```
 
-If you know the build IDs you can use them instead of URLs if preferred, like so:
+## Development 🪚
 
-```sh
-./scan_health -sast 22132159
-```
-
-## Development 🛠️
-
-You may want to run using the `-cache=true` flag to speed up development by caching the API results.
+You may want to use the `-cache=true` flag to speed up development by caching API responses. It is not recommended to use caching in production as sensitive data may be left in files.
 
 ### Compiling
+
+Runningt he build script will also run the tests:
 
 ```sh
 ./scripts/build.sh
@@ -300,4 +299,3 @@ This tool makes the following API requests:
 | <https://analysiscenter.veracode.com/api/5.0/getfilelist.do>                | <https://docs.veracode.com/r/r_getfilelist>                |
 | <https://analysiscenter.veracode.com/api/5.0/getprescanresults.do>          | <https://docs.veracode.com/r/r_getprescanresults>          |
 | <https://analysiscenter.veracode.com/api/5.0/getsandboxlist.do>             | <https://docs.veracode.com/r/r_getsandboxlist>             |
-
