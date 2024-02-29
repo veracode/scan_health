@@ -32,7 +32,11 @@ From the [Releases](https://github.com/veracode/scan_health/releases) page you c
 
 ### Using Docker 🐳
 
-You can also use the [Docker image](docker pull antfie/scan_health):
+You can also use the [Docker image](https://hub.docker.com/r/antfie/scan_health):
+
+```bash
+docker pull antfie/scan_health
+```
 
 ### Compile Manually
 
