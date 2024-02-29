@@ -61,49 +61,37 @@ environment
 variables (`VERACODE_API_KEY_ID` and `VERACODE_API_KEY_SECRET`) or the CLI flags (`-vid` and `-vkey`) to authenticate
 with the Veracode APIs.
 
-## Health Report
+### Using Docker 🐳
 
-The most common use of this tool is to get a health report for a given scan.
+If you are using Docker you can mount the API credentials file in the container like this:
 
-## Scan Compare
+```bash
+docker run -t -v "$HOME/.veracode:/.veracode" antfie/scan_health -action helth -sast https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002
+```
 
+## Using the Tool
 
-## Usage
+Simply running the tool with `-h` should provide helpful usage instructions like so:
 
-
-
-```sh
-./scan_health -h
-Scan Health v2.32
-Copyright © Veracode, Inc. 2023. All Rights Reserved.
+```bash
+Scan Health v2.34
+Copyright © Veracode, Inc. 2024. All Rights Reserved.
 This is an unofficial Veracode product. It does not come with any support or warranty.
 
--cache
+Usage of ./dist/scan_health-mac-amd64:
+  -cache
     	Enable caching of API responses (useful for development)
   -error-on-high-severity
     	Return a non-zero exit code if any high severity issues are found
-  -format string
-    	Output format [console, json] (default "console")
-  -json-file string
-    	Optional file for writing JSON output to
-  -previous-scan
-    	Enable comparison with the previous scan (this will result in many requests being made)
-  -profile string
-    	Veracode credential profile - See https://docs.veracode.com/r/c_httpie_tool#using-multiple-profiles (default "default")
-  -region string
-    	Veracode Region [commercial, us, european]. Required if a Build ID is specified.
-  -sast string
-    	Veracode Platform URL or build ID for a SAST application health review
-  -vid string
-    	Veracode API ID - See https://docs.veracode.com/r/t_create_api_creds
-  -vkey string
-    	Veracode API key - See https://docs.veracode.com/r/t_create_api_creds
+  ...
 ```
 
-### Example
+### Health Report
 
-```sh
-./scan_health -sast https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002
+The most common use of this tool is to get a health report for a given scan.
+
+```bash
+./scan_health -action health -sast https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002
 ```
 
 Here is an example output of the tool.
@@ -249,6 +237,10 @@ The tool also outputs JSON if the `-format json` flag is set. Note that unlike t
   "last_activity": "2023-01-31T08:52:10Z"
 }
 ```
+
+### Scan Compare
+
+TODO
 
 ## Different ways to run
 
