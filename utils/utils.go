@@ -90,6 +90,14 @@ func GetFormattedSideStringWithMessage(side, message string) string {
 	return color.HiMagentaString(message)
 }
 
+func GetFormattedOnlyInSideString(side string) string {
+	if side == "A" {
+		return color.HiGreenString("Only in A")
+	}
+
+	return color.HiMagentaString("Only in B")
+}
+
 func Top5StringList(items []string) string {
 	var processedValues []string
 	var itemStrings []string

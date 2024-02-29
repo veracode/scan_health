@@ -8,6 +8,6 @@ func PerformComparisons(a, b *report.Report) {
 	reportCommonalities(a, b)
 	reportSummaryDifferences("A", a, b)
 	reportSummaryDifferences("B", a, b)
-
+	reportSelectedModuleDifferences(a, b)
 	reportSummary(a, b)
 }

@@ -2,12 +2,16 @@
 ![Docker Image Size](https://img.shields.io/docker/image-size/antfie/scan_health/latest)
 ![Downloads](https://img.shields.io/github/downloads/antfie/scan_health/total)
 
-# Veracode Scan Health 🏥
+# Veracode SAST Scan Health 🏥
 
 This is an unofficial Veracode product. It does not come with any support or warranty.
 
 Use this console tool to see the health of Veracode Static Analysis (SAST) scans and get some suggestions to improve
 scan performance and flaw quality. The scans must have completed for the tool to work.
+
+## Health Report
+
+## Scan Compare
 
 ## Key Features ✅
 
