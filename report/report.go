@@ -113,14 +113,14 @@ type Report struct {
 	LastAppActivity      time.Time      `json:"last_app_activity,omitempty"`
 	LastSandboxActivity  time.Time      `json:"last_sandbox_activity,omitempty"`
 	Scan                 Scan           `json:"scan,omitempty"`
-	OtherScans           []Scan         `json:"other_scans,omitempty"`
+	OtherScans           []Scan         `json:"-"`
 	Flaws                FlawSummary    `json:"flaws,omitempty"`
 	UploadedFiles        []UploadedFile `json:"uploaded_files,omitempty"`
 	Modules              []Module       `json:"modules,omitempty"`
 	SCAComponents        []string       `json:"sca_components,omitempty"`
 	Issues               []Issue        `json:"issues,omitempty"`
 	Recommendations      []string       `json:"recommendations,omitempty"`
-	IsReportForOtherScan bool
+	IsReportForOtherScan bool           `json:"-"`
 }
 
 func NewReport(buildId int, region, version string, isReportForOtherScan bool) *Report {
