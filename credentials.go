@@ -81,13 +81,13 @@ func getCredentials(id, key string, profile string) (string, string) {
 	var credentialsFilePath = filepath.Join(homePath, ".veracode", "credentials")
 
 	if _, err := os.Stat(credentialsFilePath); errors.Is(err, os.ErrNotExist) {
-		utils.ErrorAndExit("Could not resolve any API credentials. Use either -vid and -vkey command line arguments, set VERACODE_API_KEY_ID and VERACODE_API_KEY_SECRET environment variables or create a Veracode credentials file. See https://docs.veracode.com/r/c_configure_api_cred_file", err)
+		utils.ErrorAndExit("Could not resolve any API credentials. Use either -vid and -vkey command line arguments, set VERACODE_API_KEY_ID and VERACODE_API_KEY_SECRET environment variables or create a Veracode credentials file. See https://docs.veracode.com/r/c_api_credentials3", err)
 
 	}
 
 	cfg, err := ini.Load(credentialsFilePath)
 	if err != nil {
-		utils.ErrorAndExit("Could not open the Veracode credentials file. See https://docs.veracode.com/r/c_configure_api_cred_file", err)
+		utils.ErrorAndExit("Could not open the Veracode credentials file. See https://docs.veracode.com/r/c_api_credentials3", err)
 
 	}
 
@@ -116,7 +116,7 @@ func getCredentials(id, key string, profile string) (string, string) {
 		return id, key
 	}
 
-	utils.ErrorAndExit("Could not parse credentials from the Veracode credentials file. See https://docs.veracode.com/r/c_configure_api_cred_file", nil)
+	utils.ErrorAndExit("Could not parse credentials from the Veracode credentials file. See https://docs.veracode.com/r/c_api_credentials3", nil)
 
 	return "", ""
 }
