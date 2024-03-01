@@ -21,10 +21,7 @@ export VERSION=$1
 echo -e "${CYAN}Releasing v${VERSION}...${NC}"
 
 docker pull alpine
-
-docker build -t antfie/scan_health:$VERSION .
 docker build -t antfie/scan_health .
-docker push antfie/scan_health:$VERSION
 docker push antfie/scan_health
 
 docker scout cves antfie/scan_health
