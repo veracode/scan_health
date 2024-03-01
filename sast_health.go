@@ -20,7 +20,7 @@ func performSASTHealthCheck(scan *string, api data.API, regionToUse string, incl
 		buildId,
 		regionToUse))
 
-	healthReport := report.NewReport(buildId, regionToUse, appVersion, false)
+	healthReport := report.NewReport(buildId, regionToUse, AppVersion, false)
 	api.PopulateReportWithDataFromAPI(healthReport, *includePreviousScan)
 
 	if !healthReport.Scan.IsLatestScan {
@@ -37,7 +37,7 @@ func performSASTHealthCheck(scan *string, api data.API, regionToUse string, incl
 		previousBuildId := api.GetPreviousBuildId(healthReport)
 
 		if previousBuildId > 0 {
-			previousHealthReport = report.NewReport(previousBuildId, regionToUse, appVersion, true)
+			previousHealthReport = report.NewReport(previousBuildId, regionToUse, AppVersion, true)
 			api.PopulateReportWithDataFromAPI(previousHealthReport, false)
 		}
 	}
