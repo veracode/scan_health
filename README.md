@@ -16,6 +16,7 @@ The tool has the following modes of operation:
 ## Key Features ✅
 
 * Uses the [Veracode APIs](https://docs.veracode.com/r/Veracode_APIs) and standard Veracode [API Credentials File](https://docs.veracode.com/r/c_api_credentials3).
+* Works in Veracode Commerical (US) and European regions.
 * Easy to understand configuration issues and recommendations.
 * Outputs a summary to the console and also optionally a full listing in JSON.
 * Returns exit code 1 if there are any serious configuration issues found when using `-error-on-high-severity` flag. 
