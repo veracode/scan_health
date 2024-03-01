@@ -6,7 +6,7 @@ require (
 	github.com/antfie/veracode-go-hmac-authentication v1.0.0
 	github.com/dustin/go-humanize v1.0.1
 	github.com/fatih/color v1.16.0
-	github.com/stretchr/testify v1.8.4
+	github.com/stretchr/testify v1.9.0
 	gopkg.in/ini.v1 v1.67.0
 )
 
