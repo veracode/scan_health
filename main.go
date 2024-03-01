@@ -11,8 +11,8 @@ import (
 
 func main() {
 	fmt.Printf("Scan Health v%s\nCopyright © Veracode, Inc. 2023. All Rights Reserved.\nThis is an unofficial Veracode product. It does not come with any support or warranty.\n\n", appVersion)
-	vid := flag.String("vid", "", "Veracode API ID - See https://docs.veracode.com/r/t_create_api_creds")
-	vkey := flag.String("vkey", "", "Veracode API key - See https://docs.veracode.com/r/t_create_api_creds")
+	vid := flag.String("vid", "", "Veracode API ID - See https://docs.veracode.com/r/c_api_credentials3")
+	vkey := flag.String("vkey", "", "Veracode API key - See https://docs.veracode.com/r/c_api_credentials3")
 	profile := flag.String("profile", "default", "Veracode credential profile (default is \"default\") - See https://docs.veracode.com/r/c_httpie_tool#using-multiple-profiles")
 	region := flag.String("region", "", "Veracode Region [commercial, us, european], required if a Build ID is specified")
 	action := flag.String("action", "health", "An action to perform [health (default), compare]")

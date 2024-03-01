@@ -48,6 +48,8 @@ cd scan_health
 ./scripts/build.sh
 ```
 
+Note it is best to point to the latest release commit as the main branch can sometimes have have work in progress.
+
 In the `dist` folder you should find the compiled binaries.
 
 ## Configuration 🛠️
