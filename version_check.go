@@ -10,6 +10,7 @@ import (
 	"github.com/fatih/color"
 )
 
+//goland:noinspection GoUnnecessarilyExportedIdentifiers
 var AppVersion = "0.0"
 
 func notifyOfUpdates() {
