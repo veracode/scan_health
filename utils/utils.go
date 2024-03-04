@@ -167,3 +167,13 @@ func ErrorAndExitWithUsage(message string) {
 func FormatBytes(size uint64) string {
 	return strings.Replace(humanize.Bytes(size), " ", "", 1)
 }
+
+func IsInIntArray(x int, y []int) bool {
+	for _, i := range y {
+		if x == i {
+			return true
+		}
+	}
+
+	return false
+}

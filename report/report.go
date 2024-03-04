@@ -35,27 +35,6 @@ type Scan struct {
 	IsSCADataAvailable   bool          `json:"is_sca_data_available"`
 }
 
-type FlawSummary struct {
-	Total                     int `json:"total,omitempty"`
-	Fixed                     int `json:"fixed,omitempty"`
-	TotalAffectingPolicy      int `json:"total_affecting_policy,omitempty"`
-	Mitigated                 int `json:"mitigated,omitempty"`
-	OpenAffectingPolicy       int `json:"open_affecting_policy,omitempty"`
-	OpenButNotAffectingPolicy int `json:"open_but_not_affecting_policy,omitempty"`
-}
-
-type FlawDetails struct {
-	ID                      int
-	CWE                     int
-	AffectsPolicyCompliance bool
-	RemediationStatus       string
-	MitigationStatus        string
-	Mitigation              string
-	SourceFile              string
-	LineNumber              int
-	ModulePath              string
-}
-
 type UploadedFile struct {
 	Id           int    `json:"id,omitempty"`
 	Name         string `json:"name,omitempty"`

@@ -9,5 +9,7 @@ func PerformComparisons(a, b *report.Report) {
 	reportSummaryDifferences("A", a, b)
 	reportSummaryDifferences("B", a, b)
 	reportSelectedModuleDifferences(a, b)
+	reportModuleDifferences(a, b)
+	reportFlawDifferences(a, b)
 	reportSummary(a, b)
 }
