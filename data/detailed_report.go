@@ -98,6 +98,8 @@ func (api API) populateDetailedReport(r *report.Report) {
 	r.Scan.ApplicationId = detailedReport.AppId
 	r.Scan.ApplicationName = html.UnescapeString(detailedReport.AppName)
 	r.Scan.SandboxId = detailedReport.SandboxId
+	r.Scan.AnalysisId = detailedReport.AnalysisId
+	r.Scan.StaticAnalysisUnitId = detailedReport.StaticAnalysisUnitId
 	r.Scan.ScanName = html.UnescapeString(detailedReport.StaticAnalysis.ScanName)
 	r.Scan.ReviewModulesUrl = detailedReport.getReviewModulesUrl(r.HealthTool.Region)
 	r.Scan.TriageFlawsUrl = detailedReport.getTriageFlawsUrl(r.HealthTool.Region)

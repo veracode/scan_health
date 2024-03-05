@@ -1,6 +1,7 @@
 package report
 
 import (
+	"fmt"
 	"time"
 
 	"github.com/veracode/scan_health/v2/utils"
@@ -21,6 +22,8 @@ type Scan struct {
 	SandboxId            int           `json:"sandbox_id,omitempty"`
 	SandboxName          string        `json:"sandbox_name,omitempty"`
 	BuildId              int           `json:"build_id,omitempty"`
+	AnalysisId           int           `json:"analysis_id,omitempty"`
+	StaticAnalysisUnitId int           `json:"static_analysis_unit_id,omitempty"`
 	ReviewModulesUrl     string        `json:"review_modules_url,omitempty"`
 	TriageFlawsUrl       string        `json:"triage_flaws_url,omitempty"`
 	TotalFilesUploaded   int           `json:"total_files_uploaded,omitempty"`
@@ -89,6 +92,28 @@ func NewReport(buildId int, region, version string, isReportForOtherScan bool) *
 
 func (r *Report) ReportIssue(issue string, severity issueSeverity) {
 	r.Issues = append(r.Issues, Issue{Description: issue, Severity: severity})
+}
+
+func (r *Report) GetReviewModulesUrl() string {
+	return fmt.Sprintf("%s/auth/index.jsp#AnalyzeAppModuleList:%d:%d:%d:%d:%d::::%d",
+		utils.ParseBaseUrlFromRegion(r.HealthTool.Region),
+		r.Scan.AccountId,
+		r.Scan.ApplicationId,
+		r.Scan.BuildId,
+		r.Scan.AnalysisId,
+		r.Scan.StaticAnalysisUnitId,
+		r.Scan.SandboxId)
+}
+
+func (r *Report) GetTriageFlawsUrl() string {
+	return fmt.Sprintf("%s/auth/index.jsp#ReviewResultsStaticFlaws:%d:%d:%d:%d:%d::::%d",
+		utils.ParseBaseUrlFromRegion(r.HealthTool.Region),
+		r.Scan.AccountId,
+		r.Scan.ApplicationId,
+		r.Scan.BuildId,
+		r.Scan.AnalysisId,
+		r.Scan.StaticAnalysisUnitId,
+		r.Scan.SandboxId)
 }
 
 func (r *Report) ReportFileIssue(issue string, severity issueSeverity, files []string) {

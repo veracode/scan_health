@@ -34,9 +34,8 @@ func reportSummaryDifferences(side string, a, b *report.Report) {
 		fmt.Printf("Scan name:          \"%s\"\n", reportForThisSide.Scan.ScanName)
 	}
 
-	// TODO: fix up these URLs
-	//fmt.Printf("Review Modules URL: %s\n", thisDetailedReport.getReviewModulesUrl(region))
-	//fmt.Printf("Triage Flaws URL:   %s\n", thisDetailedReport.getTriageFlawsUrl(region))
+	fmt.Printf("Review Modules URL: %s\n", reportForThisSide.GetReviewModulesUrl())
+	fmt.Printf("Triage Flaws URL:   %s\n", reportForThisSide.GetTriageFlawsUrl())
 
 	if len(a.UploadedFiles) != len(b.UploadedFiles) {
 		fmt.Printf("Files uploaded:     %d\n", len(reportForThisSide.UploadedFiles))
