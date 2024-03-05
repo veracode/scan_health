@@ -61,51 +61,54 @@ func compareTopLevelNotSelectedModules(r *strings.Builder, side string, a, b *re
 			continue
 		}
 
-		var formattedSupportIssues = ""
-		var formattedMissingSupportedFiles = ""
-		var formattedSize = ""
-		var formattedMd5 = ""
-		var formattedPlatform = ""
-		var isDependency = ""
+		reportOnModules(r, side, moduleFoundInThisSide)
+	}
+}
 
-		// Note We are only working with the first instance we find, this needs some thinking, should we or work across all + any differences for duplicates
-		for _, instance := range moduleFoundInThisSide.Instances {
-			if instance.Issues != nil {
-				formattedSupportIssues = fmt.Sprintf(", %s", color.HiYellowString("Support issues = %d", len(instance.Issues)))
-			}
+func reportOnModules(r *strings.Builder, side string, moduleFoundInThisSide report.Module) {
+	var formattedSupportIssues = ""
+	var formattedMissingSupportedFiles = ""
+	var formattedSize = ""
+	var formattedMd5 = ""
+	var formattedPlatform = ""
+	var isDependency = ""
 
-			if len(formattedMissingSupportedFiles) < 1 && getMissingSupportedFileCount(instance) > 0 {
-				formattedMissingSupportedFiles = fmt.Sprintf(", %s", color.HiYellowString("Missing Supporting Files = %d", getMissingSupportedFileCount(instance)))
-			}
-
-			if len(formattedSize) < 1 && len(instance.Size) > 0 {
-				formattedSize = fmt.Sprintf(", Size = %s", instance.Size)
-			}
-
-			if len(formattedMd5) < 1 && len(instance.MD5) > 0 {
-				formattedMd5 = fmt.Sprintf(", MD5 = %s", instance.MD5)
-			}
-
-			if len(formattedPlatform) < 1 && len(instance.Architecture) > 0 {
-				formattedPlatform = fmt.Sprintf(", Platform = %s/%s/%s", instance.Architecture, instance.OperatingSystem, instance.Compiler)
-			}
-
-			if len(isDependency) < 1 && instance.IsDependency {
-				isDependency = "Module is Dependency"
-			}
+	// Note We are only working with the first instance we find, this needs some thinking, should we or work across all + any differences for duplicates
+	for _, instance := range moduleFoundInThisSide.Instances {
+		if instance.Issues != nil {
+			formattedSupportIssues = fmt.Sprintf(", %s", color.HiYellowString("Support issues = %d", len(instance.Issues)))
 		}
 
-		r.WriteString(fmt.Sprintf("%s: \"%s\"%s%s%s%s%s%s\n",
-			utils.GetFormattedOnlyInSideString(side),
-			moduleFoundInThisSide.Name,
-			formattedSize,
-			formattedSupportIssues,
-			formattedMissingSupportedFiles,
-			isDependency,
-			formattedMd5,
-			formattedPlatform))
+		if len(formattedMissingSupportedFiles) < 1 && getMissingSupportedFileCount(instance) > 0 {
+			formattedMissingSupportedFiles = fmt.Sprintf(", %s", color.HiYellowString("Missing Supporting Files = %d", getMissingSupportedFileCount(instance)))
+		}
 
+		if len(formattedSize) < 1 && len(instance.Size) > 0 {
+			formattedSize = fmt.Sprintf(", Size = %s", instance.Size)
+		}
+
+		if len(formattedMd5) < 1 && len(instance.MD5) > 0 {
+			formattedMd5 = fmt.Sprintf(", MD5 = %s", instance.MD5)
+		}
+
+		if len(formattedPlatform) < 1 && len(instance.Architecture) > 0 {
+			formattedPlatform = fmt.Sprintf(", Platform = %s/%s/%s", instance.Architecture, instance.OperatingSystem, instance.Compiler)
+		}
+
+		if len(isDependency) < 1 && instance.IsDependency {
+			isDependency = " Module is Dependency"
+		}
 	}
+
+	r.WriteString(fmt.Sprintf("%s: \"%s\"%s%s%s%s%s%s\n",
+		utils.GetFormattedOnlyInSideString(side),
+		moduleFoundInThisSide.Name,
+		formattedSize,
+		formattedSupportIssues,
+		formattedMissingSupportedFiles,
+		isDependency,
+		formattedMd5,
+		formattedPlatform))
 }
 
 func isModuleInOtherReportUnselectedModules(module report.Module, other *report.Report) bool {

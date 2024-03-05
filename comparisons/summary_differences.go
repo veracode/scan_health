@@ -41,7 +41,7 @@ func reportSummaryDifferences(side string, a, b *report.Report) {
 		fmt.Printf("Files uploaded:     %d\n", len(reportForThisSide.UploadedFiles))
 	}
 
-	if len(a.Modules) != len(b.Modules) {
+	if len(a.GetPrescanModules()) != len(b.GetPrescanModules()) {
 		fmt.Printf("Total modules:      %d\n", len(reportForThisSide.Modules))
 	}
 

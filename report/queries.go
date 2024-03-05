@@ -9,22 +9,27 @@ func (r *Report) GetSelectedModules() []Module {
 
 	for _, module := range r.Modules {
 		for _, instance := range module.Instances {
-			found := false
-
-			for _, selectedModule := range selectedModules {
-				if selectedModule.Name == module.Name {
-					found = true
-					continue
-				}
-			}
-
-			if !found && instance.IsSelected {
+			if !module.IsInListByName(selectedModules) && instance.IsSelected {
 				selectedModules = append(selectedModules, module)
 			}
 		}
 	}
 
 	return selectedModules
+}
+
+func (r *Report) GetPrescanModules() []Module {
+	var prescanModules []Module
+
+	for _, module := range r.Modules {
+		for _, instance := range module.Instances {
+			if !module.IsInListByName(prescanModules) && instance.Source == "prescan_module_list" {
+				prescanModules = append(prescanModules, module)
+			}
+		}
+	}
+
+	return prescanModules
 }
 
 func (r *Report) FancyListMatchUploadedFiles(fancyList []string) []string {

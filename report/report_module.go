@@ -106,3 +106,13 @@ func (m *Module) HasStatus(status string) bool {
 
 	return false
 }
+
+func (m *Module) IsInListByName(modules []Module) bool {
+	for _, existingModule := range modules {
+		if existingModule.Name == m.Name {
+			return true
+		}
+	}
+
+	return false
+}
