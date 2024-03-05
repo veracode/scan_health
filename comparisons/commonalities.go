@@ -27,9 +27,8 @@ func reportCommonalities(a, b *report.Report) {
 		r.WriteString(fmt.Sprintf("Files uploaded:     %d\n", len(a.UploadedFiles)))
 	}
 
-	// TODO: check this is the correct count - we infer moduels from flaws.
-	if len(a.Modules) == len(b.Modules) {
-		r.WriteString(fmt.Sprintf("Total modules:      %d\n", len(a.Modules)))
+	if len(a.GetPrescanModules()) == len(b.GetPrescanModules()) {
+		r.WriteString(fmt.Sprintf("Total modules:      %d\n", len(a.GetPrescanModules())))
 	}
 
 	if len(a.GetSelectedModules()) == len(b.GetSelectedModules()) {

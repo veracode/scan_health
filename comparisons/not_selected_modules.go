@@ -47,7 +47,7 @@ func compareTopLevelNotSelectedModules(r *strings.Builder, side string, a, b *re
 	}
 
 	for _, moduleFoundInThisSide := range reportForThisSide.Modules {
-		if onlyDependencies && !moduleFoundInThisSide.IsDependency() {
+		if moduleFoundInThisSide.IsDependency() != onlyDependencies {
 			continue
 		}
 
