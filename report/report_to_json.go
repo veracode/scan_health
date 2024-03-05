@@ -15,7 +15,7 @@ func (r *Report) renderToJson(filePath string) {
 	}
 
 	if filePath != "" {
-		if err := os.WriteFile(filePath, formattedJson, 0666); err != nil {
+		if err := os.WriteFile(filePath, formattedJson, 0600); err != nil {
 			utils.ErrorAndExit("Could not save JSON file", err)
 		}
 		return

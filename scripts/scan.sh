@@ -21,12 +21,10 @@ echo -e "${CYAN}Packaging...${NC}"
 go mod vendor
 rm -f -- scan/veracode.zip
 cd ..
-zip -r scan_health/scan/veracode.zip scan_health -x "scan_health/dist/*" -x "scan_health/cache/*" \
-  -x "scan_health/scan/*" -x "scan_health/scripts/*" -x "scan_health/docs/*" -x "scan_health/.git/*" \
-  -x "scan_health/.idea/*" -x "**/.DS_Store" -x "scan_health/.*"
+zip -r scan_health/scan/veracode.zip scan_health -i "*.go" -i "**go.mod" -i "**go.sum"
 cd scan_health
 
-echo -e "${CYAN}Scanning...${NC}"
+echo -e "${CYAN}SAST Scanning with Veracode...${NC}"
 cd scan
 java -jar pipeline-scan.jar --baseline_file baseline.json --file veracode.zip
 cd ..

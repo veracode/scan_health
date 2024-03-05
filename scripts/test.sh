@@ -15,11 +15,9 @@ echo -e "${CYAN}Running go vet...${NC}"
 go vet ./...
 
 echo -e "${CYAN}Running gosec...${NC}"
-set +e # Don't fail on error for this
 gosec ./...
-set -e
 
-echo -e "${CYAN}Testing...${NC}"
+echo -e "${CYAN}Running unit tests...${NC}"
 
 go test -v -coverprofile coverage.out -failfast -shuffle on ./...
 go tool cover -html=coverage.out -o coverage.html

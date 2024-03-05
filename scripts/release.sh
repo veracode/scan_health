@@ -17,6 +17,7 @@ fi
 export VERSION=$1
 
 ./scripts/build.sh
+./scripts/scan.sh
 
 echo -e "${CYAN}Releasing v${VERSION}...${NC}"
 

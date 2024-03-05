@@ -1,7 +1,7 @@
 package data
 
 import (
-	"crypto/sha1"
+	"crypto/sha256"
 	"encoding/hex"
 	"errors"
 	"github.com/veracode/scan_health/v2/utils"
@@ -22,7 +22,7 @@ func getCachedResponse(url string) []byte {
 		return nil
 	}
 
-	data, err := os.ReadFile(filePath)
+	data, err := os.ReadFile(path.Clean(filePath))
 
 	if err != nil {
 		utils.ErrorAndExit("Could not load data from cache", err)
@@ -36,7 +36,7 @@ var cacheDirectoryInitialized = false
 func cacheResponse(url string, data []byte) {
 	if !cacheDirectoryInitialized {
 		if _, err := os.Stat("cache"); errors.Is(err, os.ErrNotExist) {
-			err := os.Mkdir("cache", 0777)
+			err := os.Mkdir("cache", 0750)
 
 			if err != nil {
 				utils.ErrorAndExit("Could not create cache path", err)
@@ -53,7 +53,7 @@ func cacheResponse(url string, data []byte) {
 		utils.ErrorAndExit("Could not resolve absolute path", err)
 	}
 
-	err = os.WriteFile(filePath, data, 0777)
+	err = os.WriteFile(filePath, data, 0600)
 
 	if err != nil {
 		utils.ErrorAndExit("Could not cache data", err)
@@ -61,7 +61,7 @@ func cacheResponse(url string, data []byte) {
 }
 
 func getHash(data string) string {
-	h := sha1.New()
+	h := sha256.New()
 	h.Write([]byte(data))
 	return hex.EncodeToString(h.Sum(nil))
 }
