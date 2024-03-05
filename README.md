@@ -69,7 +69,7 @@ with the Veracode APIs.
 If you are using Docker you can mount the API credentials file in the container like this:
 
 ```bash
-docker run -t -v "$HOME/.veracode:/.veracode" antfie/scan_health -action helth -sast https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002
+docker run -t -v "$HOME/.veracode:/.veracode" antfie/scan_health -action helth -sast https://analysiscenter.veracode.com/auth/index.jsp#...
 ```
 
 ## Using the Tool
@@ -94,7 +94,7 @@ Usage of ./dist/scan_health-mac-amd64:
 The most common use of this tool is to get a health report for a given scan.
 
 ```bash
-./scan_health -action health -sast https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002
+./scan_health -action health -sast https://analysiscenter.veracode.com/auth/index.jsp#...
 ```
 
 Here is an example report:
@@ -246,7 +246,7 @@ The tool also outputs JSON if the `-format json` flag is set. Note that unlike t
 Scans can be compared like so:
 
 ```bash
-./scan_health -action compare -a https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002 -b https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002
+./scan_health -action compare -a https://analysiscenter.veracode.com/auth/index.jsp#... -b https://analysiscenter.veracode.com/auth/index.jsp#...
 ```
 
 ## Different ways to run
@@ -268,7 +268,7 @@ alias vsh='f() { /path/to/scan_health-mac-arm64 -sast "$1" };f'
 Then you can simply run:
 
 ```sh
-vsh https://analysiscenter.veracode.com/auth/index.jsp#StaticOverview:75603:793744:22132159:22103486:22119136::::5000002
+vsh https://analysiscenter.veracode.com/auth/index.jsp#...
 ```
 
 ## Development 🪚
