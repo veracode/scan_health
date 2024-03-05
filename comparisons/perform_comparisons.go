@@ -9,6 +9,8 @@ func PerformComparisons(a, b *report.Report) {
 	reportSummaryDifferences("A", a, b)
 	reportSummaryDifferences("B", a, b)
 	reportSelectedModuleDifferences(a, b)
+	reportNotSelectedModuleDifferences(a, b)
+	reportDependencyModuleDifferences(a, b)
 	reportDuplicateFiles("A", a.UploadedFiles)
 	reportDuplicateFiles("B", b.UploadedFiles)
 	reportModuleDifferences(a, b)

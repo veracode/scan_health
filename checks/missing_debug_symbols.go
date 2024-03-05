@@ -21,7 +21,7 @@ func missingDebugSymbols(r *report.Report) {
 			continue
 		}
 
-		for _, issue := range module.GetAllIssues() {
+		for _, issue := range module.Issues() {
 			if strings.Contains(issue, "No supporting files or PDB files") {
 				if !utils.IsStringInStringArray(module.Name, foundModules) {
 					foundModules = append(foundModules, module.Name)

@@ -97,7 +97,11 @@ func getFlawsFromReport(r *report.Report) []report.FlawDetails {
 	var flaws []report.FlawDetails
 
 	for _, module := range r.Modules {
-		flaws = append(flaws, module.FlawDetails...)
+		for _, f := range module.FlawDetails {
+			if !f.IsInList(flaws) {
+				flaws = append(flaws, module.FlawDetails...)
+			}
+		}
 	}
 
 	return flaws

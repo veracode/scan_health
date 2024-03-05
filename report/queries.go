@@ -2,7 +2,6 @@ package report
 
 import (
 	"github.com/veracode/scan_health/v2/utils"
-	"strings"
 )
 
 func (r *Report) GetSelectedModules() []Module {
@@ -69,78 +68,4 @@ func (r *Report) FancyListMatchSelectedModules(fancyList []string) []string {
 	}
 
 	return selectedModules
-}
-
-func (module *Module) IsDotNetOrCPPModule() bool {
-	lowerCaseModuleName := strings.ToLower(module.Name)
-
-	return strings.HasSuffix(lowerCaseModuleName, ".dll") || strings.HasSuffix(lowerCaseModuleName, ".exe")
-}
-
-func (module *Module) IsJavaModule() bool {
-	lowerCaseModuleName := strings.ToLower(module.Name)
-
-	return strings.HasSuffix(lowerCaseModuleName, ".war") || strings.HasSuffix(lowerCaseModuleName, ".ear") || strings.HasSuffix(lowerCaseModuleName, ".jar")
-}
-
-func (module *Module) IsJavaScriptModule() bool {
-	return strings.HasPrefix(strings.ToLower(module.Name), "js files within") || strings.HasPrefix(strings.ToLower(module.Name), "js files extracted from")
-}
-
-func (module *Module) IsNodeModule() bool {
-	return strings.Contains(strings.ToLower(module.Name), "_nodemodule_")
-}
-
-func (module *Module) IsDependency() bool {
-	for _, instance := range module.Instances {
-		if instance.IsDependency {
-			return true
-		}
-	}
-
-	return false
-}
-
-func (module *Module) HasFatalErrors() bool {
-	for _, instance := range module.Instances {
-		if instance.HasFatalErrors {
-			return true
-		}
-	}
-
-	return false
-}
-
-func (module *Module) IsSelected() bool {
-	for _, instance := range module.Instances {
-		if instance.IsSelected {
-			return true
-		}
-	}
-
-	return false
-}
-
-func (module *Module) GetAllIssues() []string {
-	var issues []string
-
-	for _, instance := range module.Instances {
-		for _, issue := range instance.Issues {
-			if !utils.IsStringInStringArray(issue, issues) {
-				issues = append(issues, issue)
-			}
-		}
-	}
-
-	return issues
-}
-
-func (module *Module) HasStatus(status string) bool {
-	for _, instance := range module.Instances {
-		if strings.EqualFold(status, instance.Status) {
-			return true
-		}
-	}
-
-	return false
 }

@@ -45,34 +45,6 @@ type UploadedFile struct {
 	Source       string `json:"source,omitempty"`
 }
 
-type Module struct {
-	Name         string           `json:"name,omitempty"`
-	IsThirdParty bool             `json:"is_third_party"`
-	IsIgnored    bool             `json:"is_ignored"`
-	Instances    []ModuleInstance `json:"instances,omitempty"`
-	Flaws        FlawSummary      `json:"flaws,omitempty"`
-	FlawDetails  []FlawDetails    `json:"-"`
-	DependencyOf []string         `json:"dependency_of,omitempty"`
-}
-
-type ModuleInstance struct {
-	Id              int      `json:"id,omitempty"`
-	Compiler        string   `json:"compiler,omitempty"`
-	OperatingSystem string   `json:"operating_system,omitempty"`
-	Architecture    string   `json:"architecture,omitempty"`
-	IsDependency    bool     `json:"is_dependency"`
-	IsSelected      bool     `json:"is_selected"`
-	WasScanned      bool     `json:"was_scanned"`
-	HasFatalErrors  bool     `json:"has_fatal_errors"`
-	Status          string   `json:"status,omitempty"`
-	Platform        string   `json:"platform,omitempty"`
-	Size            string   `json:"size,omitempty"`
-	MD5             string   `json:"md5,omitempty"`
-	Issues          []string `json:"issues,omitempty"`
-	SizeBytes       int      `json:"size_bytes,omitempty"`
-	Source          string   `json:"source,omitempty"`
-}
-
 type issueSeverity string
 
 const (

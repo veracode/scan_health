@@ -7,7 +7,7 @@ import (
 	"github.com/veracode/scan_health/v2/report"
 )
 
-func UNUSED(x ...interface{}) {}
+func unused(x ...interface{}) {}
 
 // Test data:
 //
@@ -51,7 +51,7 @@ func compareModuleSelection(r *report.Report, pr *report.Report) {
 	currentModuleNameCountMap := generateNameMappedArray(currentSelectedModules)
 	previousModuleNameCountMap := generateNameMappedArray(previousSelectedModules)
 
-	UNUSED(currentModuleNameCountMap, previousModuleNameCountMap)
+	unused(currentModuleNameCountMap, previousModuleNameCountMap)
 }
 
 func normalizeFilename(filename string) string {

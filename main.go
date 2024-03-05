@@ -80,6 +80,6 @@ func main() {
 			utils.ErrorAndExit("The SAST scans are for different regions. We can only compare SAST scans within the same region.", nil)
 		}
 
-		performSASTCompare(scanA, scanB, api, regionToUse, outputFormat, jsonFilePath)
+		performSASTCompare(scanA, scanB, api, regionToUse)
 	}
 }

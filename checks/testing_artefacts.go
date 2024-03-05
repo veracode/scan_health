@@ -90,7 +90,7 @@ func detectTestArtefactsInModuleIssues(r *report.Report) {
 	var foundModules []string
 
 	for _, module := range r.Modules {
-		for _, issue := range module.GetAllIssues() {
+		for _, issue := range module.Issues() {
 			if strings.Contains(strings.ToLower(issue), "test/") {
 				if !utils.IsStringInStringArray(module.Name, foundModules) {
 					foundModules = append(foundModules, module.Name)

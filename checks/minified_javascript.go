@@ -50,7 +50,7 @@ func detectMinifiedJSModules(r *report.Report) {
 			continue
 		}
 
-		for _, issue := range module.GetAllIssues() {
+		for _, issue := range module.Issues() {
 			if strings.Contains(issue, "because we think it is minified") || strings.Contains(strings.ToLower(issue), "dist/") {
 				if !utils.IsStringInStringArray(module.Name, foundModules) {
 					foundModules = append(foundModules, module.Name)

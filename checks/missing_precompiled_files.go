@@ -55,7 +55,7 @@ func detectMissingPrecompiledFilesFromModules(r *report.Report) {
 			continue
 		}
 
-		for _, issue := range module.GetAllIssues() {
+		for _, issue := range module.Issues() {
 			if strings.Contains(issue, "No precompiled files were found for this .NET web application") {
 				if !utils.IsStringInStringArray(module.Name, foundModules) {
 					foundModules = append(foundModules, module.Name)

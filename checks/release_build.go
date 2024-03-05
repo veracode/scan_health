@@ -30,7 +30,7 @@ func detectDotNetReleasePathsInModuleIssues(r *report.Report) {
 			continue
 		}
 
-		for _, issue := range module.GetAllIssues() {
+		for _, issue := range module.Issues() {
 			if strings.Contains(strings.ToLower(issue), "release/") {
 				if !utils.IsStringInStringArray(module.Name, foundModules) {
 					foundModules = append(foundModules, module.Name)

@@ -21,7 +21,7 @@ type FlawDetails struct {
 	ModulePath              string
 }
 
-func (f FlawDetails) IsOpen() bool {
+func (f *FlawDetails) IsOpen() bool {
 	if f.RemediationStatus == "Fixed" {
 		return false
 	}
@@ -31,4 +31,14 @@ func (f FlawDetails) IsOpen() bool {
 	}
 
 	return true
+}
+
+func (f *FlawDetails) IsInList(flaws []FlawDetails) bool {
+	for _, existingFlaw := range flaws {
+		if existingFlaw.ID == f.ID {
+			return true
+		}
+	}
+
+	return false
 }

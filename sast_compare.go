@@ -10,7 +10,7 @@ import (
 	"sync"
 )
 
-func performSASTCompare(scanA, scanB *string, api data.API, regionToUse string, outputFormat, jsonFilePath *string) {
+func performSASTCompare(scanA, scanB *string, api data.API, regionToUse string) {
 	var wg sync.WaitGroup
 	var scanABuildId int
 	var scanBBuildId int
