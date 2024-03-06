@@ -1,6 +1,6 @@
 module github.com/veracode/scan_health/v2
 
-go 1.19
+go 1.22
 
 require (
 	github.com/antfie/veracode-go-hmac-authentication v1.0.0
