@@ -1,6 +1,6 @@
-![Go Version](https://img.shields.io/github/go-mod/go-version/antfie/scan_health)
+![Go Version](https://img.shields.io/github/go-mod/go-version/veracode/scan_health)
 ![Docker Image Size](https://img.shields.io/docker/image-size/antfie/scan_health/latest)
-![Downloads](https://img.shields.io/github/downloads/antfie/scan_health/total)
+![Downloads](https://img.shields.io/github/downloads/veracode/scan_health/total)
 
 # Veracode Scan Health Tool 🏥
 
