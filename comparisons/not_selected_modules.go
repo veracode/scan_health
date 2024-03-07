@@ -91,8 +91,12 @@ func reportOnModules(r *strings.Builder, side string, moduleFoundInThisSide repo
 			formattedMd5 = fmt.Sprintf(", MD5 = %s", instance.MD5)
 		}
 
-		if len(formattedPlatform) < 1 && len(instance.Architecture) > 0 {
-			formattedPlatform = fmt.Sprintf(", Platform = %s/%s/%s", instance.Architecture, instance.OperatingSystem, instance.Compiler)
+		if len(formattedPlatform) < 1 {
+			if len(instance.Architecture) > 0 {
+				formattedPlatform = fmt.Sprintf(", Platform = %s/%s/%s", instance.Architecture, instance.OperatingSystem, instance.Compiler)
+			} else if len(instance.Platform) > 0 {
+				formattedPlatform = fmt.Sprintf(", Platform = %s", instance.Platform)
+			}
 		}
 
 		if len(isDependency) < 1 && instance.IsDependency {
