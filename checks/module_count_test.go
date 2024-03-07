@@ -16,8 +16,7 @@ func generateModule(name string) report.Module {
 		IsIgnored:    false,
 		IsThirdParty: false,
 		Instances: []report.ModuleInstance{
-			{IsDependency: false},
-			{IsSelected: true},
+			{Id: 1},
 		}}
 }
 
@@ -41,7 +40,7 @@ func TestModuleCount(t *testing.T) {
 
 		var lotsOfModules []report.Module
 
-		for i := 0; i < utils.MaximumModuleSelectedCountThreshold+1; i++ {
+		for i := 0; i < utils.MaximumModuleCountThreshold+1; i++ {
 			moduleName := fmt.Sprintf("module%d", i)
 			lotsOfModules = append(lotsOfModules, generateModule(moduleName))
 		}
@@ -56,7 +55,32 @@ func TestModuleCount(t *testing.T) {
 			t.FailNow()
 		}
 
-		assert.Contains(t, mockReport.Issues[0].Description, fmt.Sprintf("%d modules were selected", utils.MaximumModuleSelectedCountThreshold+1))
+		assert.Contains(t, mockReport.Issues[0].Description, fmt.Sprintf("%d modules were identified from the upload", utils.MaximumModuleCountThreshold+1))
 	})
 
+	t.Run("Large Number of Selected modules", func(t *testing.T) {
+		t.Parallel()
+
+		var lotsOfModules []report.Module
+
+		for i := 0; i < utils.MaximumModuleSelectedCountThreshold+1; i++ {
+			moduleName := fmt.Sprintf("module%d", i)
+			module := generateModule(moduleName)
+			module.Instances[0].IsSelected = true
+			module.Instances[0].Source = report.DetailedReportModuleSelected
+			lotsOfModules = append(lotsOfModules, module)
+		}
+
+		mockReport := report.Report{
+			Modules: lotsOfModules,
+		}
+
+		moduleCount(&mockReport)
+
+		if !assert.Equal(t, 1, len(mockReport.Issues)) {
+			t.FailNow()
+		}
+
+		assert.Contains(t, mockReport.Issues[0].Description, fmt.Sprintf("%d modules were selected", utils.MaximumModuleSelectedCountThreshold+1))
+	})
 }

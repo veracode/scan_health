@@ -8,10 +8,16 @@ func (r *Report) GetSelectedModules() []Module {
 	var selectedModules []Module
 
 	for _, module := range r.Modules {
+		found := false
+
 		for _, instance := range module.Instances {
-			if !module.IsInListByName(selectedModules) && instance.IsSelected {
-				selectedModules = append(selectedModules, module)
+			if instance.Source == DetailedReportModuleSelected {
+				found = true
 			}
+		}
+
+		if found {
+			selectedModules = append(selectedModules, module)
 		}
 	}
 
@@ -23,7 +29,7 @@ func (r *Report) GetPrescanModules() []Module {
 
 	for _, module := range r.Modules {
 		for _, instance := range module.Instances {
-			if !module.IsInListByName(prescanModules) && instance.Source == "prescan_module_list" {
+			if !module.IsInListByName(prescanModules) && instance.Source == PrescanModuleList {
 				prescanModules = append(prescanModules, module)
 			}
 		}

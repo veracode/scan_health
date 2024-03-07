@@ -97,6 +97,7 @@ func TestGeneralRecommendations(t *testing.T) {
 					Instances: []report.ModuleInstance{{
 						IsSelected:     false,
 						HasFatalErrors: false,
+						Source:         report.DetailedReportModuleSelected,
 					}},
 				},
 				{Name: "gradle-wrapper.jar",
@@ -105,6 +106,7 @@ func TestGeneralRecommendations(t *testing.T) {
 					Instances: []report.ModuleInstance{{
 						IsSelected:     true,
 						HasFatalErrors: false,
+						Source:         report.DetailedReportModuleSelected,
 					}},
 				},
 				{Name: "test.jar",
@@ -113,6 +115,7 @@ func TestGeneralRecommendations(t *testing.T) {
 					Instances: []report.ModuleInstance{{
 						IsSelected:     false,
 						HasFatalErrors: false,
+						Source:         report.DetailedReportModuleSelected,
 					}},
 				},
 			},

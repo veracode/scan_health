@@ -85,12 +85,18 @@ func TestTestingArtefacts(t *testing.T) {
 				{Name: "moq.dll",
 					Instances: []report.ModuleInstance{
 						{IsDependency: false},
-						{IsSelected: true},
+						{
+							IsSelected: true,
+							Source:     report.DetailedReportModuleSelected,
+						},
 					}},
 				{Name: "standalone.unittests.dll",
 					Instances: []report.ModuleInstance{
 						{IsDependency: false},
-						{IsSelected: true},
+						{
+							IsSelected: true,
+							Source:     report.DetailedReportModuleSelected,
+						},
 					}},
 			},
 			UploadedFiles: []report.UploadedFile{

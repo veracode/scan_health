@@ -42,6 +42,7 @@ func TestGradleWrapper(t *testing.T) {
 					Instances: []report.ModuleInstance{{
 						IsSelected:     false,
 						HasFatalErrors: false,
+						Source:         report.DetailedReportModuleSelected,
 					}},
 				},
 				{Name: "gradle-wrapper.jar",
@@ -50,6 +51,7 @@ func TestGradleWrapper(t *testing.T) {
 					Instances: []report.ModuleInstance{{
 						IsSelected:     true,
 						HasFatalErrors: false,
+						Source:         report.DetailedReportModuleSelected,
 					}},
 				},
 				{Name: "test.jar",
@@ -58,6 +60,7 @@ func TestGradleWrapper(t *testing.T) {
 					Instances: []report.ModuleInstance{{
 						IsSelected:     false,
 						HasFatalErrors: false,
+						Source:         report.DetailedReportModuleSelected,
 					}},
 				},
 			},

@@ -15,13 +15,13 @@ func TestOverScanning(t *testing.T) {
 			Modules: []report.Module{
 				{
 					Name: "common-lib.dll", Instances: []report.ModuleInstance{
-						{IsSelected: true},
+						{IsSelected: true, Source: report.DetailedReportModuleSelected},
 					},
 					DependencyOf: []string{"app.dll"},
 				},
 				{
 					Name: "app.dll", Instances: []report.ModuleInstance{
-						{IsSelected: true},
+						{IsSelected: true, Source: report.DetailedReportModuleSelected},
 					},
 				},
 			},
@@ -47,19 +47,19 @@ func TestOverScanning(t *testing.T) {
 			Modules: []report.Module{
 				{
 					Name: "common-lib.dll", Instances: []report.ModuleInstance{
-						{IsSelected: true},
+						{IsSelected: true, Source: report.DetailedReportModuleSelected},
 					},
 					DependencyOf: []string{"app.dll"},
 				},
 				{
 					Name: "common-models.dll", Instances: []report.ModuleInstance{
-						{IsSelected: true},
+						{IsSelected: true, Source: report.DetailedReportModuleSelected},
 					},
 					DependencyOf: []string{"app.dll"},
 				},
 				{
 					Name: "app.dll", Instances: []report.ModuleInstance{
-						{IsSelected: true},
+						{IsSelected: true, Source: report.DetailedReportModuleSelected},
 					},
 				},
 			},

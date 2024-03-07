@@ -87,9 +87,9 @@ func TestMissingPrecompiledFiles(t *testing.T) {
 		t.Parallel()
 		testReport := report.Report{
 			Modules: []report.Module{
-				{Name: "file1.dll", Instances: []report.ModuleInstance{{IsDependency: false}, {IsSelected: true}}},
-				{Name: "file2.dll", Instances: []report.ModuleInstance{{IsDependency: false}, {IsSelected: true}}},
-				{Name: "file3.dll", Instances: []report.ModuleInstance{{IsDependency: false}, {IsSelected: true},
+				{Name: "file1.dll", Instances: []report.ModuleInstance{{IsDependency: false, Source: report.DetailedReportModuleSelected}, {IsSelected: true, Source: report.DetailedReportModuleSelected}}},
+				{Name: "file2.dll", Instances: []report.ModuleInstance{{IsDependency: false, Source: report.DetailedReportModuleSelected}, {IsSelected: true, Source: report.DetailedReportModuleSelected}}},
+				{Name: "file3.dll", Instances: []report.ModuleInstance{{IsDependency: false, Source: report.DetailedReportModuleSelected}, {IsSelected: true, Source: report.DetailedReportModuleSelected},
 					{Issues: []string{"No precompiled files were found for this .NET web application"}}},
 				},
 			},
@@ -113,11 +113,11 @@ func TestMissingPrecompiledFiles(t *testing.T) {
 		t.Parallel()
 		testReport := report.Report{
 			Modules: []report.Module{
-				{Name: "file1.dll", Instances: []report.ModuleInstance{{IsDependency: false}, {IsSelected: true}}},
-				{Name: "file2.dll", Instances: []report.ModuleInstance{{IsDependency: false}, {IsSelected: true},
+				{Name: "file1.dll", Instances: []report.ModuleInstance{{IsDependency: false, Source: report.DetailedReportModuleSelected}, {IsSelected: true, Source: report.DetailedReportModuleSelected}}},
+				{Name: "file2.dll", Instances: []report.ModuleInstance{{IsDependency: false, Source: report.DetailedReportModuleSelected}, {IsSelected: true, Source: report.DetailedReportModuleSelected},
 					{Issues: []string{"No precompiled files were found for this .NET web application"}}},
 				},
-				{Name: "file3.dll", Instances: []report.ModuleInstance{{IsDependency: false}, {IsSelected: true},
+				{Name: "file3.dll", Instances: []report.ModuleInstance{{IsDependency: false, Source: report.DetailedReportModuleSelected}, {IsSelected: true, Source: report.DetailedReportModuleSelected},
 					{Issues: []string{"No precompiled files were found for this .NET web application"}}},
 				},
 			},

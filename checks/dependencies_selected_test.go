@@ -29,8 +29,7 @@ func TestDependenciesSelected(t *testing.T) {
 			Modules: []report.Module{
 				{Name: "Test",
 					Instances: []report.ModuleInstance{
-						{IsDependency: true},
-						{IsSelected: true},
+						{IsDependency: true, IsSelected: true, Source: report.DetailedReportModuleSelected},
 					}},
 			},
 		}

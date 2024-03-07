@@ -134,7 +134,7 @@ func populateDetailedReportModules(r *report.Report, staticAnalysis detailedRepo
 			Architecture:    html.UnescapeString(module.Architecture),
 			IsSelected:      true,
 			WasScanned:      true,
-			Source:          "detailed_report_module_selected",
+			Source:          report.DetailedReportModuleSelected,
 		})
 	}
 }

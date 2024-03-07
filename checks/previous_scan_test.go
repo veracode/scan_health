@@ -96,8 +96,8 @@ func TestPreviousScan(t *testing.T) {
 				BuildId: 1,
 			},
 			Modules: []report.Module{
-				{Name: "file3.jar", Instances: []report.ModuleInstance{{IsDependency: false, IsSelected: true}}},
-				{Name: "file4.jar", Instances: []report.ModuleInstance{{IsDependency: false, IsSelected: false}}},
+				{Name: "file3.jar", Instances: []report.ModuleInstance{{IsDependency: false, IsSelected: true, Source: report.DetailedReportModuleSelected}}},
+				{Name: "file4.jar", Instances: []report.ModuleInstance{{IsDependency: false, IsSelected: false, Source: report.DetailedReportModuleSelected}}},
 			},
 			UploadedFiles: []report.UploadedFile{
 				{Id: 333333, Name: "file3.jar", MD5: "hash2", IsIgnored: false, IsThirdParty: false},
@@ -132,8 +132,8 @@ func TestPreviousScan(t *testing.T) {
 				BuildId: 1,
 			},
 			Modules: []report.Module{
-				{Name: "file3.jar", Instances: []report.ModuleInstance{{IsDependency: false, IsSelected: true}}},
-				{Name: "file4.jar", Instances: []report.ModuleInstance{{IsDependency: false, IsSelected: false}}},
+				{Name: "file3.jar", Instances: []report.ModuleInstance{{IsDependency: false, IsSelected: true, Source: report.DetailedReportModuleSelected}}},
+				{Name: "file4.jar", Instances: []report.ModuleInstance{{IsDependency: false, IsSelected: false, Source: report.DetailedReportModuleSelected}}},
 			},
 			UploadedFiles: []report.UploadedFile{
 				{Id: 333333, Name: "file3.jar", MD5: "hash2", IsIgnored: false, IsThirdParty: false},

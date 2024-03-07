@@ -29,11 +29,11 @@ func TestMissingSupportingFiles(t *testing.T) {
 		t.Parallel()
 		testReport := report.Report{
 			Modules: []report.Module{
-				{Name: "file1.dll", Instances: []report.ModuleInstance{{IsDependency: false}, {IsSelected: true}}},
-				{Name: "file2.dll", Instances: []report.ModuleInstance{{IsDependency: false}, {IsSelected: true}, {Issues: []string{
+				{Name: "file1.dll", Instances: []report.ModuleInstance{{IsDependency: false, Source: report.DetailedReportModuleSelected}, {IsSelected: true, Source: report.DetailedReportModuleSelected}}},
+				{Name: "file2.dll", Instances: []report.ModuleInstance{{IsDependency: false, Source: report.DetailedReportModuleSelected}, {IsSelected: true, Source: report.DetailedReportModuleSelected}, {Issues: []string{
 					"Missing Supporting Files - 1 File",
 				}}}},
-				{Name: "file3.dll", Instances: []report.ModuleInstance{{IsDependency: false}, {IsSelected: false}}},
+				{Name: "file3.dll", Instances: []report.ModuleInstance{{IsDependency: false, Source: report.DetailedReportModuleSelected}, {IsSelected: false, Source: report.DetailedReportModuleSelected}}},
 			},
 			Issues: []report.Issue{},
 		}
@@ -51,11 +51,11 @@ func TestMissingSupportingFiles(t *testing.T) {
 		t.Parallel()
 		testReport := report.Report{
 			Modules: []report.Module{
-				{Name: "file1.dll", Instances: []report.ModuleInstance{{IsDependency: false}, {IsSelected: true}}},
-				{Name: "file2.dll", Instances: []report.ModuleInstance{{IsDependency: false}, {IsSelected: true}, {Issues: []string{
+				{Name: "file1.dll", Instances: []report.ModuleInstance{{IsDependency: false, Source: report.DetailedReportModuleSelected}, {IsSelected: true, Source: report.DetailedReportModuleSelected}}},
+				{Name: "file2.dll", Instances: []report.ModuleInstance{{IsDependency: false, Source: report.DetailedReportModuleSelected}, {IsSelected: true, Source: report.DetailedReportModuleSelected}, {Issues: []string{
 					"Missing Supporting Files - 3 Files",
 				}}}},
-				{Name: "file3.dll", Instances: []report.ModuleInstance{{IsDependency: false}, {IsSelected: false}}},
+				{Name: "file3.dll", Instances: []report.ModuleInstance{{IsDependency: false, Source: report.DetailedReportModuleSelected}, {IsSelected: false, Source: report.DetailedReportModuleSelected}}},
 			},
 			Issues: []report.Issue{},
 		}
@@ -73,14 +73,14 @@ func TestMissingSupportingFiles(t *testing.T) {
 		t.Parallel()
 		testReport := report.Report{
 			Modules: []report.Module{
-				{Name: "file1.dll", Instances: []report.ModuleInstance{{IsDependency: false}, {IsSelected: true}}},
-				{Name: "file2.dll", Instances: []report.ModuleInstance{{IsDependency: false}, {IsSelected: true}, {Issues: []string{
+				{Name: "file1.dll", Instances: []report.ModuleInstance{{IsDependency: false, Source: report.DetailedReportModuleSelected}, {IsSelected: true, Source: report.DetailedReportModuleSelected}}},
+				{Name: "file2.dll", Instances: []report.ModuleInstance{{IsDependency: false, Source: report.DetailedReportModuleSelected}, {IsSelected: true, Source: report.DetailedReportModuleSelected}, {Issues: []string{
 					"Missing Supporting Files - 1 File",
 					"Missing Supporting Files - 1 File",
 					"Missing Supporting Files - 1 File",
 					"Missing Supporting Files - 1 File",
 				}}}},
-				{Name: "file3.dll", Instances: []report.ModuleInstance{{IsDependency: false}, {IsSelected: false}}},
+				{Name: "file3.dll", Instances: []report.ModuleInstance{{IsDependency: false, Source: report.DetailedReportModuleSelected}, {IsSelected: false, Source: report.DetailedReportModuleSelected}}},
 			},
 			Issues: []report.Issue{},
 		}
@@ -98,13 +98,13 @@ func TestMissingSupportingFiles(t *testing.T) {
 		t.Parallel()
 		testReport := report.Report{
 			Modules: []report.Module{
-				{Name: "file1.dll", Instances: []report.ModuleInstance{{IsDependency: false}, {IsSelected: true}, {Issues: []string{
+				{Name: "file1.dll", Instances: []report.ModuleInstance{{IsDependency: false, Source: report.DetailedReportModuleSelected}, {IsSelected: true, Source: report.DetailedReportModuleSelected}, {Issues: []string{
 					"Missing Supporting Files - 1 File",
 				}}}},
-				{Name: "file2.dll", Instances: []report.ModuleInstance{{IsDependency: false}, {IsSelected: true}, {Issues: []string{
+				{Name: "file2.dll", Instances: []report.ModuleInstance{{IsDependency: false, Source: report.DetailedReportModuleSelected}, {IsSelected: true, Source: report.DetailedReportModuleSelected}, {Issues: []string{
 					"Missing Supporting Files - 1 File",
 				}}}},
-				{Name: "file3.dll", Instances: []report.ModuleInstance{{IsDependency: false}, {IsSelected: false}}},
+				{Name: "file3.dll", Instances: []report.ModuleInstance{{IsDependency: false, Source: report.DetailedReportModuleSelected}, {IsSelected: false, Source: report.DetailedReportModuleSelected}}},
 			},
 			Issues: []report.Issue{},
 		}

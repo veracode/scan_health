@@ -15,22 +15,29 @@ type Module struct {
 	DependencyOf []string         `json:"dependency_of,omitempty"`
 }
 
+type ModuleInstanceSource string
+
+const (
+	DetailedReportModuleSelected ModuleInstanceSource = "detailed_report_module_selected"
+	PrescanModuleList            ModuleInstanceSource = "prescan_module_list"
+)
+
 type ModuleInstance struct {
-	Id              int      `json:"id,omitempty"`
-	Compiler        string   `json:"compiler,omitempty"`
-	OperatingSystem string   `json:"operating_system,omitempty"`
-	Architecture    string   `json:"architecture,omitempty"`
-	IsDependency    bool     `json:"is_dependency"`
-	IsSelected      bool     `json:"is_selected"`
-	WasScanned      bool     `json:"was_scanned"`
-	HasFatalErrors  bool     `json:"has_fatal_errors"`
-	Status          string   `json:"status,omitempty"`
-	Platform        string   `json:"platform,omitempty"`
-	Size            string   `json:"size,omitempty"`
-	MD5             string   `json:"md5,omitempty"`
-	Issues          []string `json:"issues,omitempty"`
-	SizeBytes       int      `json:"size_bytes,omitempty"`
-	Source          string   `json:"source,omitempty"`
+	Id              int                  `json:"id,omitempty"`
+	Compiler        string               `json:"compiler,omitempty"`
+	OperatingSystem string               `json:"operating_system,omitempty"`
+	Architecture    string               `json:"architecture,omitempty"`
+	IsDependency    bool                 `json:"is_dependency"`
+	IsSelected      bool                 `json:"is_selected"`
+	WasScanned      bool                 `json:"was_scanned"`
+	HasFatalErrors  bool                 `json:"has_fatal_errors"`
+	Status          string               `json:"status,omitempty"`
+	Platform        string               `json:"platform,omitempty"`
+	Size            string               `json:"size,omitempty"`
+	MD5             string               `json:"md5,omitempty"`
+	Issues          []string             `json:"issues,omitempty"`
+	SizeBytes       int                  `json:"size_bytes,omitempty"`
+	Source          ModuleInstanceSource `json:"source,omitempty"`
 }
 
 func (m *Module) IsSelected() bool {
