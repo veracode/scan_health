@@ -104,6 +104,11 @@ func getFlawsFromReport(r *report.Report) []report.FlawDetails {
 		}
 	}
 
+	// Sort by flaw ID
+	sort.Slice(flaws, func(i, j int) bool {
+		return flaws[i].ID < flaws[j].ID
+	})
+
 	return flaws
 }
 
