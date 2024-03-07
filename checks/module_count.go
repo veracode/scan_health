@@ -26,12 +26,12 @@ func moduleCount(r *report.Report) {
 		return
 	}
 
-	var modules []string
+	var moduleNames []string
 
 	for _, module := range r.Modules {
-		modules = append(modules, module.Name)
+		moduleNames = append(moduleNames, module.Name)
 	}
 
-	r.ReportModuleIssue(fmt.Sprintf("%d modules were identified from the upload. This is a lot of modules and is an indicator that the compilation/upload may be suboptimal.", len(r.Modules)), report.IssueSeverityMedium, modules)
+	r.ReportModuleIssue(fmt.Sprintf("%d modules were identified from the upload. This is a lot of modules and is an indicator that the compilation/upload may be suboptimal.", len(r.Modules)), report.IssueSeverityMedium, moduleNames)
 	r.MakeRecommendation("Ensure the correct modules have been selected for analysis and that the packaging guidance has been followed.")
 }
