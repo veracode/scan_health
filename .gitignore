@@ -1,8 +1,4 @@
 dist
 vendor
 cache
-/scan/pipeline-scan.jar
-/scan/veracode.zip
-/scan/veracode
-/scan/README
-/scan/LICENSE
+scan
