@@ -26,7 +26,7 @@ cd ..
 
 
 echo -e "\n${CYAN}SAST Scanning with Veracode...${NC}"
-./scan/veracode static scan --baseline-file sast_baseline.json --results-file dist/sast.json scan/veracode.zip
+./scan/veracode static scan --baseline-file sast_baseline.json --results-file dist/sast_results.json scan/veracode.zip
 
 
 echo -e "\n${CYAN}Container scanning with Veracode...${NC}"
