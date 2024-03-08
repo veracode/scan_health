@@ -74,7 +74,7 @@ func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
 	}
 
 	if resp.StatusCode == 403 {
-		utils.ErrorAndExit("This request was forbidden. Ensure you can view these scans within the Veracode Platform. For help contact your Veracode administrator and refer to https://docs.veracode.com/r/c_API_roles_details", nil)
+		utils.ErrorAndExit("This request was forbidden. Do you need to specify a profile \"-profile xyz\"?. Is this the right profile name to use?. Ensure you can view these scans within the Veracode Platform. For help contact your Veracode administrator and refer to https://docs.veracode.com/r/c_API_roles_details", nil)
 	}
 
 	if resp.StatusCode != http.StatusOK {
