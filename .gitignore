@@ -3,10 +3,6 @@ vendor
 cache
 /scan/pipeline-scan.jar
 /scan/veracode.zip
-/scan/results.json
-/scan/filtered_results.json
 /scan/veracode
 /scan/README
 /scan/LICENSE
-coverage.html
-coverage.out

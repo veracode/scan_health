@@ -17,7 +17,7 @@ zip -r scan_health/scan/veracode.zip scan_health -i "*.go" -i "**go.mod" -i "**g
 cd scan_health
 
 
-echo -e "\n${CYAN}Downloading Veracode CLI...${NC}"
+echo -e "\n${CYAN}Downloading the Veracode CLI...${NC}"
 cd scan
 set +e # Ignore failure which happens if the CLI is the current latest version
 curl -fsS https://tools.veracode.com/veracode-cli/install | sh
@@ -26,7 +26,7 @@ cd ..
 
 
 echo -e "\n${CYAN}SAST Scanning with Veracode...${NC}"
-./scan/veracode scan --type archive --source scan/veracode.zip --format table
+./scan/veracode static scan --baseline-file sast_baseline.json --results-file dist/sast.json scan/veracode.zip
 
 
 echo -e "\n${CYAN}Container scanning with Veracode...${NC}"
@@ -36,3 +36,8 @@ set -e
 
 echo -e "\n${CYAN}Container scanning with Scout...${NC}"
 docker scout cves antfie/scan_health
+
+
+echo -e "\n${CYAN}Generating SBOMs...${NC}"
+./scan/veracode sbom --type archive --source scan/veracode.zip --output dist/veracode.zip.sbom.json
+./scan/veracode sbom --type image --source antfie/scan_health:latest --output dist/docker.sbom.json

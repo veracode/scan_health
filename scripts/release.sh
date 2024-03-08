@@ -24,9 +24,12 @@ echo
 ./scripts/build.sh
 
 
-echo -e "${CYAN}Creating Docker image v${VERSION}...${NC}"
+echo -e "\n${CYAN}Creating Docker image v${VERSION}...${NC}"
 docker pull alpine
 docker build -t antfie/scan_health .
+
+
+echo -e "\n${CYAN}Publishing Docker image v${VERSION}...${NC}"
 docker push antfie/scan_health
 
 

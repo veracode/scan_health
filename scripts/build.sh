@@ -8,6 +8,7 @@ GREEN='\033[0;32m'
 CYAN='\033[1;36m'
 NC='\033[0m' # No Color
 
+rm -rf ./dist/*
 ./scripts/test.sh
 
 if [[ -z "${VERSION}" ]]; then
@@ -16,7 +17,7 @@ fi
 
 FLAGS="-X main.AppVersion=$VERSION -s -w"
 
-echo -e "${CYAN}Building v${VERSION}...${NC}"
+echo -e "\n${CYAN}Building v${VERSION}...${NC}"
 GOOS=darwin GOARCH=arm64 go build -ldflags="$FLAGS" -buildvcs=false -trimpath -o "dist/scan_health-mac-arm64" .
 GOOS=darwin GOARCH=amd64 go build -ldflags="$FLAGS" -buildvcs=false -trimpath -o "dist/scan_health-mac-amd64" .
 GOOS=linux GOARCH=amd64 go build -ldflags="$FLAGS" -buildvcs=false -trimpath -o "dist/scan_health-linux-amd64" .
