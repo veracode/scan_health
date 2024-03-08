@@ -92,7 +92,7 @@ func getCredentials(id, key string, profile string) (string, string) {
 	}
 
 	if !cfg.HasSection(profile) {
-		utils.ErrorAndExit(fmt.Sprintf("Could not find the profile [%s] within the Veracode credentials file. See https://docs.veracode.com/r/c_httpie_tool", profile), nil)
+		utils.ErrorAndExit(fmt.Sprintf("Could not find the profile [%s] within the Veracode credentials file. Do you need to specify the \"-profile xyz\" flag?. See https://docs.veracode.com/r/c_httpie_tool", profile), nil)
 
 	}
 
