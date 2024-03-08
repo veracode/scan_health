@@ -22,4 +22,4 @@ GOOS=darwin GOARCH=amd64 go build -ldflags="$FLAGS" -buildvcs=false -trimpath -o
 GOOS=linux GOARCH=amd64 go build -ldflags="$FLAGS" -buildvcs=false -trimpath -o "dist/scan_health-linux-amd64" .
 GOOS=windows GOARCH=amd64 go build -ldflags="$FLAGS" -buildvcs=false -trimpath -o "dist/scan_health.exe" .
 
-echo -e "${CYAN}Build Success${NC}"
+echo -e "\n${CYAN}Build Success${NC}"

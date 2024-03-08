@@ -11,13 +11,13 @@ NC='\033[0m' # No Color
 echo -e "${CYAN}Linting...${NC}"
 gofmt -s -w .
 
-echo -e "${CYAN}Running go vet...${NC}"
+echo -e "\n${CYAN}Running go vet...${NC}"
 go vet ./...
 
-echo -e "${CYAN}Running gosec...${NC}"
+echo -e "\n${CYAN}Running gosec...${NC}"
 gosec ./...
 
-echo -e "${CYAN}Running unit tests...${NC}"
+echo -e "\n${CYAN}Running unit tests...${NC}"
 
 go test -v -coverprofile coverage.out -failfast -shuffle on ./...
 go tool cover -html=coverage.out -o coverage.html

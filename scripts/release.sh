@@ -16,15 +16,22 @@ fi
 
 export VERSION=$1
 
-./scripts/build.sh
-./scripts/scan.sh
 
 echo -e "${CYAN}Releasing v${VERSION}...${NC}"
 
+
+echo
+./scripts/build.sh
+
+
+echo -e "${CYAN}Creating Docker image v${VERSION}...${NC}"
 docker pull alpine
 docker build -t antfie/scan_health .
 docker push antfie/scan_health
 
-docker scout cves antfie/scan_health
 
-echo -e "${GREEN}Release Success${NC}"
+echo
+./scripts/scan.sh
+
+
+echo -e "\n${GREEN}Release Success${NC}"

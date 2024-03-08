@@ -8,23 +8,31 @@ GREEN='\033[0;32m'
 CYAN='\033[1;36m'
 NC='\033[0m' # No Color
 
-# Download and extract the pipeline scan
-if [ ! -f scan/pipeline-scan.jar ]; then
-    echo -e "${CYAN}Downloading Veracode Pipeline Scanner...${NC}"
-    curl -O https://downloads.veracode.com/securityscan/pipeline-scan-LATEST.zip
-    unzip pipeline-scan-LATEST.zip pipeline-scan.jar
-    mv pipeline-scan.jar scan/pipeline-scan.jar
-    rm pipeline-scan-LATEST.zip
-fi
 
-echo -e "${CYAN}Packaging...${NC}"
+echo -e "${CYAN}Packaging for SAST scanning...${NC}"
 go mod vendor
 rm -f -- scan/veracode.zip
 cd ..
 zip -r scan_health/scan/veracode.zip scan_health -i "*.go" -i "**go.mod" -i "**go.sum"
 cd scan_health
 
-echo -e "${CYAN}SAST Scanning with Veracode...${NC}"
+
+echo -e "\n${CYAN}Downloading Veracode CLI...${NC}"
 cd scan
-java -jar pipeline-scan.jar --baseline_file baseline.json --file veracode.zip
+set +e # Ignore failure which happens if the CLI is the current latest version
+curl -fsS https://tools.veracode.com/veracode-cli/install | sh
+set -e
 cd ..
+
+
+echo -e "\n${CYAN}SAST Scanning with Veracode...${NC}"
+./scan/veracode scan --type archive --source scan/veracode.zip --format table
+
+
+echo -e "\n${CYAN}Container scanning with Veracode...${NC}"
+set +e # Ignore failure
+./scan/veracode scan --type image --source antfie/scan_health:latest --format table
+set -e
+
+echo -e "\n${CYAN}Container scanning with Scout...${NC}"
+docker scout cves antfie/scan_health
