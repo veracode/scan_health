@@ -35,9 +35,15 @@ func main() {
 		utils.ErrorAndExitWithUsage(fmt.Sprintf("Invalid region \"%s\". Must be either \"commercial\", \"us\" or \"european\"", *region))
 	}
 
+	firstScanLink := *scan
+
+	if len(firstScanLink) == 0 && len(*scanA) > 0 {
+		firstScanLink = *scanA
+	}
+
 	if *region != "" &&
-		(strings.HasPrefix(*scan, "https://") && utils.ParseRegionFromUrl(*scan) != *region) {
-		utils.ErrorAndExit(fmt.Sprintf("The region from the URL (%s) does not match that specified by the command line (%s)", utils.ParseRegionFromUrl(*scan), *region), nil)
+		(strings.HasPrefix(*scan, "https://") && utils.ParseRegionFromUrl(firstScanLink) != *region) {
+		utils.ErrorAndExit(fmt.Sprintf("The region from the URL (%s) does not match that specified by the command line (%s)", utils.ParseRegionFromUrl(firstScanLink), *region), nil)
 	}
 
 	var regionToUse string
@@ -46,7 +52,7 @@ func main() {
 	if len(*region) > 0 {
 		regionToUse = *region
 	} else {
-		regionToUse = utils.ParseRegionFromUrl(*scan)
+		regionToUse = utils.ParseRegionFromUrl(firstScanLink)
 	}
 
 	notifyOfUpdates()
