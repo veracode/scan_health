@@ -30,9 +30,8 @@ echo -e "\n${CYAN}SAST Scanning with Veracode...${NC}"
 
 
 echo -e "\n${CYAN}Container scanning with Veracode...${NC}"
-set +e # Ignore failure
-./scan/veracode scan --type image --source antfie/scan_health:latest --format table
-set -e
+./scan/veracode scan --type image --source antfie/scan_health:latest --output dist/container_results.json
+
 
 echo -e "\n${CYAN}Container scanning with Scout...${NC}"
 docker scout cves antfie/scan_health
@@ -40,4 +39,4 @@ docker scout cves antfie/scan_health
 
 echo -e "\n${CYAN}Generating SBOMs...${NC}"
 ./scan/veracode sbom --type archive --source scan/veracode.zip --output dist/veracode.zip.sbom.json
-./scan/veracode sbom --type image --source antfie/scan_health:latest --output dist/docker.sbom.json
+./scan/veracode sbom --type image --source antfie/scan_health:latest --output dist/container.sbom.json
