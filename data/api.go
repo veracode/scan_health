@@ -17,6 +17,7 @@ type API struct {
 	Region        string
 	AppVersion    string
 	EnableCaching bool
+	Profile       string
 }
 
 func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
@@ -65,16 +66,22 @@ func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
 		utils.ErrorAndExit("There was a problem processing the API response. Please check your connectivity and the service status page at https://status.veracode.com", err)
 	}
 
+	profileFlagHint := "Do you need to specify \"-profile xyz\"?."
+
+	if api.Profile != "default" {
+		profileFlagHint = fmt.Sprintf("Is \"%s\" the right profile name to use for this region?.", api.Profile)
+	}
+
 	if resp.StatusCode == 401 {
 		if strings.HasSuffix(parsedUrl.Path, "getmaintenancescheduleinfo.do") {
-			utils.ErrorAndExit("There was a problem with your credentials. Please check your credentials are valid for this Veracode region. For help contact your Veracode administrator.", nil)
+			utils.ErrorAndExit(fmt.Sprintf("There was a problem with your credentials. %s Please check your credentials are valid for this Veracode region. For help contact your Veracode administrator.", profileFlagHint), nil)
 		} else {
-			utils.ErrorAndExit("You are not authorized to perform this action. Please check you have the \"Results API\" user role set. For help contact your Veracode administrator and refer to https://docs.veracode.com/r/c_API_roles_details", nil)
+			utils.ErrorAndExit(fmt.Sprintf("You are not authorized to perform this action. %s Please check you have the \"Results API\" user role set. For help contact your Veracode administrator and refer to https://docs.veracode.com/r/c_API_roles_details", profileFlagHint), nil)
 		}
 	}
 
 	if resp.StatusCode == 403 {
-		utils.ErrorAndExit("This request was forbidden. Do you need to specify a profile \"-profile xyz\"?. Is this the right profile name to use?. Ensure you can view these scans within the Veracode Platform. For help contact your Veracode administrator and refer to https://docs.veracode.com/r/c_API_roles_details", nil)
+		utils.ErrorAndExit(fmt.Sprintf("This request was forbidden. %s Ensure you can view these scans within the Veracode Platform. For help contact your Veracode administrator and refer to https://docs.veracode.com/r/c_API_roles_details", profileFlagHint), nil)
 	}
 
 	if resp.StatusCode != http.StatusOK {

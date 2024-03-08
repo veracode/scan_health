@@ -52,7 +52,14 @@ func main() {
 	notifyOfUpdates()
 
 	apiId, apiKey := getCredentials(*vid, *vkey, *profile)
-	api := data.API{Id: apiId, Key: apiKey, Region: regionToUse, AppVersion: AppVersion, EnableCaching: *enableCaching}
+	api := data.API{
+		Id:            apiId,
+		Key:           apiKey,
+		Region:        regionToUse,
+		AppVersion:    AppVersion,
+		EnableCaching: *enableCaching,
+		Profile:       *profile,
+	}
 
 	api.AssertCredentialsWork()
 
