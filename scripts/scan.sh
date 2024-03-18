@@ -38,5 +38,5 @@ docker scout cves antfie/scan_health
 
 
 echo -e "\n${CYAN}Generating SBOMs...${NC}"
-./scan/veracode sbom --type archive --source scan/veracode.zip --output dist/veracode.zip.sbom.json
+./scan/veracode sbom --type archive --source scan/veracode.zip --output dist/src.sbom.json
 ./scan/veracode sbom --type image --source antfie/scan_health:latest --output dist/container.sbom.json
