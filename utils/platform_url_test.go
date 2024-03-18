@@ -97,4 +97,12 @@ func TestPlatformUrl(t *testing.T) {
 		validRegion := IsValidRegion("apac")
 		assert.False(t, validRegion)
 	})
+
+	t.Run("Should parse applciation ID from platform URL", func(t *testing.T) {
+		t.Parallel()
+		applicationId, err := ParseApplicationIdFromPlatformUrl("https://analysiscenter.veracode.com/auth/index.jsp#ReviewResultsStaticFlaws:29692:771572:33659037:33628505:33644155:::2018345")
+
+		assert.Nil(t, err)
+		assert.Equal(t, 771572, applicationId)
+	})
 }

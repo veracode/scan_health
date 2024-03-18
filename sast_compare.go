@@ -52,6 +52,20 @@ func performSASTCompare(scanA, scanB *string, api data.API, regionToUse string) 
 	scanAReport := report.NewReport(scanABuildId, regionToUse, AppVersion, false)
 	scanBReport := report.NewReport(scanBBuildId, regionToUse, AppVersion, false)
 
+	// Try to set the application ID however we could be working from a build ID so this may not be available
+	scanAApplicationId, err := utils.ParseApplicationIdFromPlatformUrl(*scanA)
+
+	if err == nil {
+		scanAReport.Scan.ApplicationId = scanAApplicationId
+	}
+
+	// Try to set the application ID however we could be working from a build ID so this may not be available
+	scanBApplicationId, err := utils.ParseApplicationIdFromPlatformUrl(*scanB)
+
+	if err == nil {
+		scanBReport.Scan.ApplicationId = scanBApplicationId
+	}
+
 	go func() {
 		defer wg.Done()
 		api.PopulateReportWithDataFromAPI(scanAReport, false)

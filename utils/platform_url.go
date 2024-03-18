@@ -131,3 +131,24 @@ func ParseBuildIdFromScanInformation(urlOrBuildId string) (int, error) {
 
 	return -1, errors.New(reportPlatformUrlInvalid(urlOrBuildId))
 }
+
+func ParseApplicationIdFromPlatformUrl(url string) (int, error) {
+	if !isPlatformURL(url) {
+		return -1, errors.New(reportPlatformUrlInvalid(url))
+	}
+
+	var urlFragment = strings.Split(url, "#")[1]
+
+	if isParseableURL(urlFragment) {
+		buildId, err := strconv.Atoi(strings.Split(urlFragment, ":")[2])
+
+		if err != nil {
+			return -1, errors.New(reportPlatformUrlInvalid(url))
+		}
+
+		return buildId, nil
+
+	}
+
+	return -1, errors.New(reportPlatformUrlInvalid(url))
+}

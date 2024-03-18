@@ -21,6 +21,14 @@ func performSASTHealthCheck(scan *string, api data.API, regionToUse string, incl
 		regionToUse))
 
 	healthReport := report.NewReport(buildId, regionToUse, AppVersion, false)
+
+	// Try to set the application ID however we could be working from a build ID so this may not be available
+	applicationId, err := utils.ParseApplicationIdFromPlatformUrl(*scan)
+
+	if err == nil {
+		healthReport.Scan.ApplicationId = applicationId
+	}
+
 	api.PopulateReportWithDataFromAPI(healthReport, *includePreviousScan)
 
 	if !healthReport.Scan.IsLatestScan {
@@ -38,6 +46,7 @@ func performSASTHealthCheck(scan *string, api data.API, regionToUse string, incl
 
 		if previousBuildId > 0 {
 			previousHealthReport = report.NewReport(previousBuildId, regionToUse, AppVersion, true)
+			previousHealthReport.Scan.ApplicationId = healthReport.Scan.ApplicationId
 			api.PopulateReportWithDataFromAPI(previousHealthReport, false)
 		}
 	}

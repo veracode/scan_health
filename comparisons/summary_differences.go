@@ -18,7 +18,7 @@ func reportSummaryDifferences(side string, a, b *report.Report) {
 		reportForThisSide = b
 	}
 
-	if a.Scan.AccountId != b.Scan.AccountId {
+	if a.Scan.AccountId != b.Scan.AccountId && reportForThisSide.Scan.AccountId > 0 {
 		fmt.Printf("Account ID:         %d\n", reportForThisSide.Scan.AccountId)
 	}
 
@@ -30,7 +30,7 @@ func reportSummaryDifferences(side string, a, b *report.Report) {
 		fmt.Printf("Sandbox:            \"%s\"\n", reportForThisSide.Scan.SandboxName)
 	}
 
-	if a.Scan.ScanName != b.Scan.ScanName {
+	if a.Scan.ScanName != b.Scan.ScanName && len(reportForThisSide.Scan.ScanName) > 0 {
 		fmt.Printf("Scan name:          \"%s\"\n", reportForThisSide.Scan.ScanName)
 	}
 
@@ -49,13 +49,15 @@ func reportSummaryDifferences(side string, a, b *report.Report) {
 		fmt.Printf("Modules selected:   %d\n", len(reportForThisSide.GetSelectedModules()))
 	}
 
-	if a.Scan.EngineVersion != b.Scan.EngineVersion {
+	if a.Scan.EngineVersion != b.Scan.EngineVersion && len(reportForThisSide.Scan.EngineVersion) > 0 {
 		fmt.Printf("Engine version:     %s\n", reportForThisSide.Scan.EngineVersion)
 	}
 
-	fmt.Printf("Submitted:          %s (%s ago)\n", reportForThisSide.Scan.SubmittedDate, utils.FormatDuration(time.Since(reportForThisSide.Scan.SubmittedDate)))
-	fmt.Printf("Published:          %s (%s ago)\n", reportForThisSide.Scan.PublishedDate, utils.FormatDuration(time.Since(reportForThisSide.Scan.PublishedDate)))
-	fmt.Printf("Duration:           %s\n", utils.FormatDuration(reportForThisSide.Scan.Duration))
+	if !reportForThisSide.Scan.SubmittedDate.IsZero() {
+		fmt.Printf("Submitted:          %s (%s ago)\n", reportForThisSide.Scan.SubmittedDate, utils.FormatDuration(time.Since(reportForThisSide.Scan.SubmittedDate)))
+		fmt.Printf("Published:          %s (%s ago)\n", reportForThisSide.Scan.PublishedDate, utils.FormatDuration(time.Since(reportForThisSide.Scan.PublishedDate)))
+		fmt.Printf("Duration:           %s\n", utils.FormatDuration(reportForThisSide.Scan.Duration))
+	}
 
 	if !(a.Flaws.Total == b.Flaws.Total && a.Flaws.Mitigated == b.Flaws.Mitigated && a.Flaws.TotalAffectingPolicy == b.Flaws.TotalAffectingPolicy && a.Flaws.OpenAffectingPolicy == b.Flaws.OpenAffectingPolicy && a.Flaws.OpenButNotAffectingPolicy == b.Flaws.OpenButNotAffectingPolicy) {
 		flawsFormatted := fmt.Sprintf("Flaws:              %d total, %d mitigated, %d policy affecting, %d open affecting policy, %d open not affecting policy\n", reportForThisSide.Flaws.Total, reportForThisSide.Flaws.Mitigated, reportForThisSide.Flaws.TotalAffectingPolicy, reportForThisSide.Flaws.OpenAffectingPolicy, reportForThisSide.Flaws.OpenButNotAffectingPolicy)

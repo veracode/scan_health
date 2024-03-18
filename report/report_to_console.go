@@ -11,8 +11,13 @@ import (
 func (r *Report) renderToConsole() {
 	renderScanSummaryToConsole(r)
 	renderUploadedFilesToConsole(r)
-	renderSelectedModulesToConsole(r)
-	renderFlawSummaryToConsole(r.Flaws)
+
+	// The scan may not have finished
+	if len(r.GetSelectedModules()) > 0 {
+		renderSelectedModulesToConsole(r)
+		renderFlawSummaryToConsole(r.Flaws)
+	}
+
 	renderIssues(r.Issues)
 	renderRecommendations(r.Recommendations)
 }
@@ -20,7 +25,7 @@ func (r *Report) renderToConsole() {
 func renderScanSummaryToConsole(report *Report) {
 	utils.PrintTitle("Scan Summary")
 
-	if report.Scan.BusinessUnit != "Not Specified" {
+	if report.Scan.BusinessUnit != "Not Specified" && len(report.Scan.BusinessUnit) > 0 {
 		fmt.Printf("Business unit:           %s\n", report.Scan.BusinessUnit)
 	}
 
@@ -37,17 +42,37 @@ func renderScanSummaryToConsole(report *Report) {
 		}
 	}
 
-	fmt.Printf("Scan name:               %s\n", report.Scan.ScanName)
-	fmt.Printf("Review modules URL:      %s\n", report.Scan.ReviewModulesUrl)
-	fmt.Printf("Triage flaws URL:        %s\n", report.Scan.TriageFlawsUrl)
+	if len(report.Scan.ScanName) > 0 {
+		fmt.Printf("Scan name:               %s\n", report.Scan.ScanName)
+	}
+
+	// Scan may not have been submitted
+	if len(report.Scan.ReviewModulesUrl) > 0 {
+		fmt.Printf("Review modules URL:      %s\n", report.Scan.ReviewModulesUrl)
+		fmt.Printf("Triage flaws URL:        %s\n", report.Scan.TriageFlawsUrl)
+	}
+
 	fmt.Printf("Files uploaded:          %d\n", len(report.UploadedFiles))
 	fmt.Printf("Total modules:           %d\n", len(report.Modules))
-	fmt.Printf("Analysis size:           %s\n", utils.FormatBytes(report.Scan.AnalysisSize))
+
+	// Scan may not have been submitted
+	if report.Scan.AnalysisSize > 0 {
+		fmt.Printf("Analysis size:           %s\n", utils.FormatBytes(report.Scan.AnalysisSize))
+	}
+
 	fmt.Printf("Modules selected:        %d\n", len(report.GetSelectedModules()))
-	fmt.Printf("Engine version:          %s (Release notes: https://docs.veracode.com/updates/r/c_all_static)\n", report.Scan.EngineVersion)
-	fmt.Printf("Submitted:               %s (%s ago)\n", report.Scan.SubmittedDate, utils.FormatDuration(time.Since(report.Scan.SubmittedDate)))
-	fmt.Printf("Published:               %s (%s ago)\n", report.Scan.PublishedDate, utils.FormatDuration(time.Since(report.Scan.PublishedDate)))
-	fmt.Printf("Duration:                %s\n", utils.FormatDuration(report.Scan.Duration))
+
+	// Scan may not have been submitted
+	if len(report.Scan.EngineVersion) > 0 {
+		fmt.Printf("Engine version:          %s (Release notes: https://docs.veracode.com/updates/r/c_all_static)\n", report.Scan.EngineVersion)
+	}
+
+	// Scan may not have been submitted
+	if !report.Scan.SubmittedDate.IsZero() {
+		fmt.Printf("Submitted:               %s (%s ago)\n", report.Scan.SubmittedDate, utils.FormatDuration(time.Since(report.Scan.SubmittedDate)))
+		fmt.Printf("Published:               %s (%s ago)\n", report.Scan.PublishedDate, utils.FormatDuration(time.Since(report.Scan.PublishedDate)))
+		fmt.Printf("Duration:                %s\n", utils.FormatDuration(report.Scan.Duration))
+	}
 }
 
 func renderFlawSummaryToConsole(flaws FlawSummary) {

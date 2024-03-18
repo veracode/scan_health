@@ -19,7 +19,7 @@ func reportCommonalities(a, b *report.Report) {
 		r.WriteString(fmt.Sprintf("Sandbox:            \"%s\"\n", a.Scan.SandboxName))
 	}
 
-	if a.Scan.ScanName == b.Scan.ScanName {
+	if a.Scan.ScanName == b.Scan.ScanName && len(a.Scan.ScanName) > 0 {
 		r.WriteString(fmt.Sprintf("Scan name:          \"%s\"\n", a.Scan.ScanName))
 	}
 
@@ -35,7 +35,7 @@ func reportCommonalities(a, b *report.Report) {
 		r.WriteString(fmt.Sprintf("Modules selected:   %d\n", len(a.GetSelectedModules())))
 	}
 
-	if a.Scan.EngineVersion == b.Scan.EngineVersion {
+	if a.Scan.EngineVersion == b.Scan.EngineVersion && len(a.Scan.EngineVersion) > 0 {
 		r.WriteString(fmt.Sprintf("Engine version:     %s\n", a.Scan.EngineVersion))
 	}
 
