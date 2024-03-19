@@ -8,10 +8,12 @@ GREEN='\033[0;32m'
 CYAN='\033[1;36m'
 NC='\033[0m' # No Color
 
+mkdir -p scan
+rm -f -- scan/veracode.zip
+
 
 echo -e "${CYAN}Packaging for SAST scanning...${NC}"
 go mod vendor
-rm -f -- scan/veracode.zip
 cd ..
 zip -r scan_health/scan/veracode.zip scan_health -i "*.go" -i "**go.mod" -i "**go.sum"
 cd scan_health
