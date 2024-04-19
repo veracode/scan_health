@@ -17,6 +17,7 @@ func detectUnwantedFiles(r *report.Report) {
 	processUnwantedFiles(r, []string{"*.pyd"}, "Python-compiled DLL", []string{"Do not upload Python-compiled DLLs (.pyd files)."})
 	processUnwantedFiles(r, []string{"*.pyc"}, "compiled Python file", []string{"Veracode requires Python source code for analysis. Do not upload compiled Python files."})
 	processUnwantedFiles(r, []string{"*.deploy"}, "ClickOnce \".deploy\" files", []string{"Veracode does not support ClickOnce deployments."})
+	processUnwantedFiles(r, []string{"WibuCmNET.dll"}, "CodeMeter obfuscation file", []string{"Do not use code obfuscation tools other than Dotfuscator Community Edition. Using other code obfuscation tools may prevent the static binary scan from succeeding."})
 }
 
 func processUnwantedFiles(r *report.Report, filePatterns []string, fileType string, recommendations []string) {
