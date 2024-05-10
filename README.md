@@ -288,9 +288,9 @@ Runningt he build script will also run the tests:
 
 If you find a bug, please file an Issue right here in GitHub, and I will try to resolve it in a timely manner.
 
-## Outbound API Calls
+## API Calls
 
-This tool makes the following API requests:
+This tool makes the following read-only API requests for data:
 
 | API                                                                         | Notes / API Documentation                                  |
 |-----------------------------------------------------------------------------|------------------------------------------------------------|
