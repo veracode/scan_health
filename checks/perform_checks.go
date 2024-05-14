@@ -34,6 +34,7 @@ func PerformChecks(r, pr *report.Report) {
 	tooManyFilesUploaded(r)
 	excessMicrosoft(r)
 	looseClassFiles(r)
+	unsupportedGoWorkspaceFiles(r)
 
 	// Module selection issues
 	unselectedFirstParty(r)
