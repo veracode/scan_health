@@ -84,7 +84,7 @@ func TestGeneralRecommendations(t *testing.T) {
 		assert.Empty(t, testReport.Issues)
 
 		// Additional recommendations are made on the presence of 'module' in the recommendations list
-		assert.Equal(t, 6, len(testReport.Recommendations))
+		assert.Equal(t, 7, len(testReport.Recommendations))
 	})
 
 	t.Run("Gradle Wrapper is the only selected one", func(t *testing.T) {
@@ -129,6 +129,6 @@ func TestGeneralRecommendations(t *testing.T) {
 
 		assert.Contains(t, testReport.Issues[0].Description, "The only module selected ")
 
-		assert.Equal(t, 1, len(testReport.Recommendations))
+		assert.Equal(t, 2, len(testReport.Recommendations))
 	})
 }

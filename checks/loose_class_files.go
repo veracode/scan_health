@@ -20,10 +20,12 @@ func looseClassFiles(r *report.Report) {
 	if len(foundFiles) > 0 {
 		r.ReportFileIssue("Java class files were not packaged within a JAR, WAR or EAR file. This is an indicator that the compilation/upload may be suboptimal.", report.IssueSeverityMedium, foundFiles)
 		r.MakeRecommendation("Do not upload Java class files. Veracode requires the Java application to be compiled into a JAR, WAR or EAR file as per the packaging instructions.")
+		r.MakeRecommendation("The Veracode CLI can be used to package Java apps: https://docs.veracode.com/r/About_auto_packaging")
 	}
 
 	if len(foundModules) > 0 {
 		r.ReportModuleIssue("Java class files were not packaged within a JAR, WAR or EAR file. This is an indicator that the compilation/upload may be suboptimal.", report.IssueSeverityMedium, foundModules)
 		r.MakeRecommendation("Do not upload Java class files. Veracode requires the Java application to be compiled into a JAR, WAR or EAR file as per the packaging instructions.")
+		r.MakeRecommendation("The Veracode CLI can be used to package Java apps: https://docs.veracode.com/r/About_auto_packaging")
 	}
 }

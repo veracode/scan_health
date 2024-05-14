@@ -71,7 +71,7 @@ func TestMinifiedJavaScript(t *testing.T) {
 
 		assert.Contains(t, mockReport.Issues[0].Description, "2 minified")
 		assert.Equal(t, report.IssueSeverityMedium, mockReport.Issues[0].Severity)
-		assert.Equal(t, 2, len(mockReport.Recommendations))
+		assert.Equal(t, 3, len(mockReport.Recommendations))
 	})
 
 	t.Run("Testing for /dist/ JS Files", func(t *testing.T) {
@@ -90,7 +90,7 @@ func TestMinifiedJavaScript(t *testing.T) {
 
 		assert.Equal(t, 1, len(mockReport.Issues))
 		assert.Equal(t, report.IssueSeverityMedium, mockReport.Issues[0].Severity)
-		assert.Equal(t, 2, len(mockReport.Recommendations))
+		assert.Equal(t, 3, len(mockReport.Recommendations))
 	})
 
 	t.Run("Testing for minification by name", func(t *testing.T) {
@@ -111,6 +111,6 @@ func TestMinifiedJavaScript(t *testing.T) {
 		assert.Contains(t, mockReport.Issues[0].Description, "2 minified")
 		assert.Equal(t, report.IssueSeverityMedium, mockReport.Issues[0].Severity)
 
-		assert.Equal(t, 2, len(mockReport.Recommendations))
+		assert.Equal(t, 3, len(mockReport.Recommendations))
 	})
 }

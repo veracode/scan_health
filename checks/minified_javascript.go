@@ -76,4 +76,5 @@ func detectMinifiedJSModules(r *report.Report) {
 func makeJSRecommendations(r *report.Report) {
 	r.MakeRecommendation("Veracode requires that you submit JavaScript as source code in a format readable by developers. Avoid build steps that minify, concatenate, obfuscate, bundle, or otherwise compress JavaScript sources. Veracode ignores files that have filenames that suggest that they are concatenated or minified.")
 	r.MakeRecommendation("Review the JavaScript/TypeScript packaging instructions: https://docs.veracode.com/r/compilation_jscript.")
+	r.MakeRecommendation("The Veracode CLI can be used to package JavaScript apps: https://docs.veracode.com/r/About_auto_packaging")
 }

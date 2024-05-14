@@ -41,7 +41,7 @@ func TestLooseClassFiles(t *testing.T) {
 		}
 
 		assert.Contains(t, testReport.Issues[0].Description, "Java class files were not packaged")
-		assert.Equal(t, 1, len(testReport.Recommendations))
+		assert.Equal(t, 2, len(testReport.Recommendations))
 	})
 
 	t.Run("One class Module", func(t *testing.T) {
@@ -63,7 +63,7 @@ func TestLooseClassFiles(t *testing.T) {
 
 		looseClassFiles(&testReport)
 		assert.Contains(t, testReport.Issues[0].Description, "Java class files were not packaged")
-		assert.Equal(t, 1, len(testReport.Recommendations))
+		assert.Equal(t, 2, len(testReport.Recommendations))
 	})
 
 	t.Run("A Class Files and a class module", func(t *testing.T) {
@@ -89,6 +89,6 @@ func TestLooseClassFiles(t *testing.T) {
 
 		looseClassFiles(&testReport)
 		assert.Contains(t, testReport.Issues[0].Description, "Java class files were not packaged")
-		assert.Equal(t, 1, len(testReport.Recommendations))
+		assert.Equal(t, 2, len(testReport.Recommendations))
 	})
 }

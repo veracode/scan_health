@@ -62,7 +62,7 @@ func TestUnscannableJava(t *testing.T) {
 		unscannableJava(&mockReport)
 
 		assert.Equal(t, 1, len(mockReport.Issues))
-		assert.Equal(t, 1, len(mockReport.Recommendations))
+		assert.Equal(t, 2, len(mockReport.Recommendations))
 	})
 
 	t.Run("3 Java Files, 2 unscannable", func(t *testing.T) {
@@ -97,6 +97,6 @@ func TestUnscannableJava(t *testing.T) {
 		}
 
 		assert.Contains(t, mockReport.Issues[0].Description, "2 Java modules")
-		assert.Equal(t, 1, len(mockReport.Recommendations))
+		assert.Equal(t, 2, len(mockReport.Recommendations))
 	})
 }
