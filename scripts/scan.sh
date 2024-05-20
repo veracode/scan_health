@@ -9,7 +9,7 @@ CYAN='\033[1;36m'
 NC='\033[0m' # No Color
 
 mkdir -p scan
-rm -f -- scan/veracode.zip
+rm -f -- scan/veracode-auto-pack-scan_health-go.zip
 
 
 echo -e "\n${CYAN}Downloading the Veracode CLI...${NC}"
