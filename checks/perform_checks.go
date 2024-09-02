@@ -47,7 +47,10 @@ func PerformChecks(r, pr *report.Report) {
 	previousScan(r, pr)
 	minifiedJavaScript(r)
 	releaseBuild(r)
-	sizes(r)
+
+	// This has been disabled as it is unreliable
+	//sizes(r)
+
 	moduleCount(r)
 	regularScans(r)
 

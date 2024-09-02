@@ -116,7 +116,8 @@ func previousScan(r *report.Report, pr *report.Report) {
 	// Files:
 	// Compare number of files uploaded?
 
-	compareModuleCount(r, pr)
+	// Disable unreliable checks
+	//compareModuleCount(r, pr)
 	// compareModuleSelection(r, pr)
 
 	// TODO
