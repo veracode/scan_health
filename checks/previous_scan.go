@@ -7,6 +7,33 @@ import (
 	"github.com/veracode/scan_health/v2/report"
 )
 
+func previousScan(r *report.Report, pr *report.Report) {
+
+	if pr.Scan.BuildId == 0 {
+		return
+	}
+
+	// SubScan types
+	// Modules:
+	// Compare module number - different number of modules > DONE.
+	// Compare modules themselves - how do we distinguish versions?
+	//   - if we have test-1.1.jar and test-2.0.jar in one scan, does that count as 2 instances of test.jar?
+	// Compare module selection - different modules selected (needs to account for version numbers)
+	// Compare scan size (if calculable) - warning not error if scan size has changed by, say, 20%
+	// Compare technologies? Or is compare module selection enough for customers who change what they're scanning?
+	// Files:
+	// Compare number of files uploaded?
+
+	// Disable unreliable checks
+	//compareModuleCount(r, pr)
+	// compareModuleSelection(r, pr)
+
+	// TODO
+
+	//r.ReportIssue("The uploaded modules for this scan do not match the modules you uploaded for the previous scan. In this scan TODO modules were identified, and TODO were selected for scanning, whereas in the previous scan we observed TODO modules, TODO of which had been selected for scanning. Also noticeable was the total analysis size difference between the two scans.", report.IssueSeverityMedium)
+	//r.MakeRecommendation("The use of automation will lead to consistent scans.")
+}
+
 func unused(x ...interface{}) {}
 
 // Test data:
@@ -55,7 +82,6 @@ func compareModuleSelection(r *report.Report, pr *report.Report) {
 }
 
 func normalizeFilename(filename string) string {
-
 	// Define a regular expression to match version numbers and "SNAPSHOT"
 	// It ensures that the version number is at the end of the filename, preceded by a hyphen,
 	// and followed by a file extension.
@@ -97,31 +123,4 @@ func generateNameMappedArray(modules []report.Module) map[string]moduleNameCount
 	}
 
 	return moduleNameCountMap
-}
-
-func previousScan(r *report.Report, pr *report.Report) {
-
-	if pr.Scan.BuildId == 0 {
-		return
-	}
-
-	// SubScan types
-	// Modules:
-	// Compare module number - different number of modules > DONE.
-	// Compare modules themselves - how do we distinguish versions?
-	//   - if we have test-1.1.jar and test-2.0.jar in one scan, does that count as 2 instances of test.jar?
-	// Compare module selection - different modules selected (needs to account for version numbers)
-	// Compare scan size (if calculable) - warning not error if scan size has changed by, say, 20%
-	// Compare technologies? Or is compare module selection enough for customers who change what they're scanning?
-	// Files:
-	// Compare number of files uploaded?
-
-	// Disable unreliable checks
-	//compareModuleCount(r, pr)
-	// compareModuleSelection(r, pr)
-
-	// TODO
-
-	//r.ReportIssue("The uploaded modules for this scan do not match the modules you uploaded for the previous scan. In this scan TODO modules were identified, and TODO were selected for scanning, whereas in the previous scan we observed TODO modules, TODO of which had been selected for scanning. Also noticeable was the total analysis size difference between the two scans.", report.IssueSeverityMedium)
-	//r.MakeRecommendation("The use of automation will lead to consistent scans.")
 }
