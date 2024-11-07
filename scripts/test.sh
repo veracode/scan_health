@@ -14,10 +14,6 @@ gofmt -s -w .
 echo -e "\n${CYAN}Running go vet...${NC}"
 go vet ./...
 
-echo -e "\n${CYAN}Running gosec...${NC}"
-gosec ./...
-
 echo -e "\n${CYAN}Running unit tests...${NC}"
-
 go test -v -coverprofile dist/coverage.out -failfast -shuffle on ./...
 go tool cover -html=dist/coverage.out -o dist/coverage.html

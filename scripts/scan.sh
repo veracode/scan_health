@@ -8,6 +8,9 @@ GREEN='\033[0;32m'
 CYAN='\033[1;36m'
 NC='\033[0m' # No Color
 
+echo -e "\n${CYAN}Running gosec...${NC}"
+gosec ./...
+
 zipFilePath=".veracode_scan/packages/veracode-auto-pack-scan_health-go.zip"
 
 rm -rf -- .veracode_scan
