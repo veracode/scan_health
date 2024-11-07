@@ -23,6 +23,7 @@ func main() {
 	jsonFilePath := flag.String("json-file", "", "Optional file for writing JSON output to")
 	includePreviousScan := flag.Bool("previous-scan", false, "Enable comparison with the previous scan (this will result in many requests being made)")
 	enableCaching := flag.Bool("cache", false, "Enable caching of API responses (useful for development). It is not recommended to use caching as sensitive data will be stored on disk.\n")
+	debugMode := flag.Bool("debug", false, "Enable the debug mode (useful for development).\n")
 	errorOnHighSeverity := flag.Bool("error-on-high-severity", false, "Return a non-zero exit code if any high severity issues are found")
 
 	flag.Parse()
@@ -65,6 +66,7 @@ func main() {
 		AppVersion:    AppVersion,
 		EnableCaching: *enableCaching,
 		Profile:       *profile,
+		DebugMode:     *debugMode,
 	}
 
 	api.AssertCredentialsWork()

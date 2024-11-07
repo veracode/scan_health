@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"net/url"
 	"strings"
+	"time"
 
 	"github.com/antfie/veracode-go-hmac-authentication/hmac"
 )
@@ -18,6 +19,7 @@ type API struct {
 	AppVersion    string
 	EnableCaching bool
 	Profile       string
+	DebugMode     bool
 }
 
 func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
@@ -54,13 +56,23 @@ func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
 	req.Header.Add("Authorization", authorizationHeader)
 	req.Header.Add("User-Agent", fmt.Sprintf("ScanHealth/%s", api.AppVersion))
 
+	start := time.Now()
+
 	resp, err := client.Do(req)
+
+	if api.DebugMode {
+		fmt.Printf("Request to <%s> took %.2f seconds and returned status %d\n", parsedUrl.String(), time.Since(start).Seconds(), resp.StatusCode)
+	}
 
 	if err != nil {
 		utils.ErrorAndExit("There was a problem communicating with the API. Please check your connectivity and the service status page at https://status.veracode.com", err)
 	}
 
 	body, err := io.ReadAll(resp.Body)
+
+	if api.DebugMode {
+		fmt.Printf("Request to <%s> returned body %s\n", parsedUrl.String(), string(body))
+	}
 
 	if err != nil {
 		utils.ErrorAndExit("There was a problem processing the API response. Please check your connectivity and the service status page at https://status.veracode.com", err)
