@@ -258,6 +258,8 @@ If you know the build IDs you can use them instead of URLs if preferred, like so
 ./scan_health -sast 22132159
 ```
 
+Please note that this will only work if the scan has a Detailed Report, i.e. the scan has finished. It is preferable to use scan URLs over build IDs. 
+
 ### Using a zsh helper alias
 
 If you use the zsh shell you might want to have a helper alias. To do that add this to your `~/.zshrc` file:
