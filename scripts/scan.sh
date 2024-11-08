@@ -9,12 +9,12 @@ CYAN='\033[1;36m'
 NC='\033[0m' # No Color
 
 
-echo -e "\n${CYAN}Running gosec...${NC}"
-gosec ./...
-
-
 mkdir -p scan
 rm -rf -- scan/packages
+
+
+echo -e "\n${CYAN}Running gosec...${NC}"
+gosec ./...
 
 
 echo -e "\n${CYAN}Downloading the Veracode CLI...${NC}"
