@@ -54,6 +54,7 @@ java -jar scan/veracode-api.jar \
      -deleteincompletescan 2 \
      -filepath scan/packages \
      -include "$entrypointModules" \
+     -scanpollinginterval 30 \
      -scantimeout 15
 
 
