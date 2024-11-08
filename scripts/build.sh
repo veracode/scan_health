@@ -8,7 +8,8 @@ GREEN='\033[0;32m'
 CYAN='\033[1;36m'
 NC='\033[0m' # No Color
 
-rm -rf ./dist/*
+rm -rf dist
+mkdir dist
 ./scripts/test.sh
 
 if [[ -z "${VERSION}" ]]; then
