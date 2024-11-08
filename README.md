@@ -1,7 +1,8 @@
 ![GitHub License](https://img.shields.io/github/license/veracode/scan_health)
 ![Go Version](https://img.shields.io/github/go-mod/go-version/veracode/scan_health)
 [![Go Report Card](https://goreportcard.com/badge/github.com/veracode/scan_health/v2)](https://goreportcard.com/report/github.com/github.com/veracode/scan_health/v2)
-![Downloads](https://img.shields.io/github/downloads/veracode/scan_health/total)
+![GitHub Release](https://img.shields.io/github/v/release/veracode/scan_health)
+![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/veracode/scan_health/total)
 ![Docker Image Size](https://img.shields.io/docker/image-size/antfie/scan_health/latest)
 ![Docker Pulls](https://img.shields.io/docker/pulls/antfie/scan_health)
 
