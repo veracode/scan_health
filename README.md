@@ -10,7 +10,7 @@
 
 **Note this tool is not an official Veracode product. It comes with no support or warranty.**
 
-Use this console tool to gain insight into the health of a Veracode scan. The report includes any problems found as well as suggestions to improve scan performance and flaw quality. At present this tool only works on Static Analysis (SAST) scans.
+Use this console tool to gain insight into the health of a Veracode SAST scan. The report includes any problems found as well as suggestions to improve scan performance and flaw quality. At present this tool only works on Static Analysis (SAST) scans.
 
 The tool has the following modes of operation:
 
