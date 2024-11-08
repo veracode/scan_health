@@ -59,8 +59,8 @@ java -jar scan/veracode-api.jar \
 
 
 echo -e "\n${CYAN}Container scanning with Veracode...${NC}"
-#./scan/veracode scan --type image --source antfie/scan_health:latest \
-#                     --output dist/container_results.json
+./scan/veracode scan --type image --source antfie/scan_health:latest \
+                     --output dist/container_results.json
 
 
 echo -e "\n${CYAN}Container scanning with Scout...${NC}"
