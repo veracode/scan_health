@@ -6,12 +6,12 @@
       "templated": false
     },
     "self": {
-      "href": "/scans/4ede6190-d448-47a3-b98a-cac697d62caa/findings",
+      "href": "/scans/37b6f0f8-6695-475b-8c4d-d8d0d801abcf/findings",
       "name": "",
       "templated": false
     },
     "help": {
-      "href": "https://help.veracode.com/reader/tS9CaFwL4_lbIEWWomsJoA/ovfZGgu96UINQxIuTqRDwg",
+      "href": "https://docs.veracode.com/",
       "name": "",
       "templated": false
     },
@@ -41,154 +41,12 @@
       "templated": false
     }
   },
-  "scan_id": "4ede6190-d448-47a3-b98a-cac697d62caa",
-  "scan_status": "SUCCESS",
-  "message": "Scan successful. Results size: 4331 bytes",
+  "scan_id": "37b6f0f8-6695-475b-8c4d-d8d0d801abcf",
+  "scan_status": "CANCELLED",
+  "message": "No modules matched user criteria",
   "modules": [
-    "veracode-auto-pack-scan_health-go.zip_htmlgocode.veracodegen.htmla.goa",
-    "JS files within veracode-auto-pack-scan_health-go.zip"
+    "veracode-auto-pack-scan_health-go.zip_htmlgocode.veracodegen.htmla.goa"
   ],
-  "modules_count": 2,
-  "findings": [
-    {
-      "title": "hash",
-      "issue_id": 1000,
-      "gob": "B",
-      "severity": 3,
-      "issue_type_id": "taint",
-      "issue_type": "URL Redirection to Untrusted Site ('Open Redirect')",
-      "cwe_id": "601",
-      "display_text": "\u003cspan\u003eThis call to hash() contains a URL redirection to untrusted site flaw.  Writing untrusted input into a URL value could cause the web application to redirect the request to the specified URL, leading to phishing attempts to steal user credentials.\u003c/span\u003e \u003cspan\u003eAlways validate untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible. \u003c/span\u003e \u003cspan\u003eReferences: \u003ca href=\"https://cwe.mitre.org/data/definitions/601.html\"\u003eCWE\u003c/a\u003e \u003ca href=\"https://cheatsheetseries.owasp.org/cheatsheets/Unvalidated_Redirects_and_Forwards_Cheat_Sheet.html\"\u003eOWASP\u003c/a\u003e\u003c/span\u003e",
-      "files": {
-        "source_file": {
-          "file": "scan_health/dist/coverage.html",
-          "line": 5787,
-          "function_name": "select",
-          "qualified_function_name": "select",
-          "function_prototype": "select(: any,  : any, ...) : any",
-          "scope": "UNKNOWN"
-        }
-      },
-      "flaw_match": {
-        "procedure_hash": "4107151812",
-        "prototype_hash": "2184253894",
-        "flaw_hash": "3734439054",
-        "flaw_hash_count": 1,
-        "flaw_hash_ordinal": 1,
-        "cause_hash": "2866949028",
-        "cause_hash_count": 1,
-        "cause_hash_ordinal": 1,
-        "cause_hash2": "1522093433",
-        "cause_hash2_ordinal": "5"
-      },
-      "stack_dumps": {
-        "stack_dump": [
-          {
-            "Frame": [
-              {
-                "FrameId": "0",
-                "FunctionName": "select",
-                "SourceFile": "scan_health/dist/coverage.html",
-                "SourceLine": "5786",
-                "SourceFileId": "2",
-                "StatementText": {},
-                "QualifiedFunctionName": "select",
-                "FunctionPrototype": "select(: any,  : any, ...) : any"
-              },
-              {
-                "FrameId": "1",
-                "FunctionName": "select",
-                "SourceFile": "scan_health/dist/coverage.html",
-                "SourceLine": "5786",
-                "SourceFileId": "2",
-                "StatementText": {},
-                "VarNames": "/**X-VC scoperef targetid=\"28302\" */part/**X-VC /scoperef */",
-                "QualifiedFunctionName": "select",
-                "FunctionPrototype": "select(: any,  : any, ...) : any"
-              },
-              {
-                "FrameId": "2",
-                "FunctionName": "select",
-                "SourceFile": "scan_health/dist/coverage.html",
-                "SourceLine": "5784",
-                "SourceFileId": "2",
-                "StatementText": {},
-                "VarNames": "/**X-VC scoperef targetid=\"28302\" */part/**X-VC /scoperef */",
-                "QualifiedFunctionName": "select",
-                "FunctionPrototype": "select(: any,  : any, ...) : any"
-              },
-              {
-                "FrameId": "3",
-                "FunctionName": "select",
-                "SourceFile": "scan_health/dist/coverage.html",
-                "SourceLine": "5778",
-                "SourceFileId": "2",
-                "StatementText": {},
-                "VarNames": "/**X-VC defscope id=\"28302\" */var part : any/**X-VC /defscope */",
-                "QualifiedFunctionName": "select",
-                "FunctionPrototype": "select(: any,  : any, ...) : any"
-              },
-              {
-                "FrameId": "4",
-                "FunctionName": "lambda_1",
-                "SourceFile": "scan_health/dist/coverage.html",
-                "SourceLine": "5793",
-                "SourceFileId": "2",
-                "StatementText": {},
-                "VarNames": "/**X-VC scoperef targetid=\"28420\" */location/**X-VC /scoperef */",
-                "QualifiedFunctionName": "lambda_1",
-                "FunctionPrototype": "lambda_1(: any, ...) : any"
-              },
-              {
-                "FrameId": "5",
-                "FunctionName": "!main",
-                "SourceFile": "UNKNOWN",
-                "SourceLine": "-1",
-                "SourceFileId": "-1",
-                "StatementText": {},
-                "VarNames": "/**X-VC scoperef targetid=\"28487\" */window/**X-VC /scoperef */",
-                "QualifiedFunctionName": "!main",
-                "FunctionPrototype": "!main() : void"
-              },
-              {
-                "FrameId": "6",
-                "FunctionName": "!main",
-                "SourceFile": "UNKNOWN",
-                "SourceLine": "-1",
-                "SourceFileId": "-1",
-                "StatementText": {},
-                "VarNames": "/**X-VC scoperef targetid=\"26997\" */Window/**X-VC /scoperef */",
-                "QualifiedFunctionName": "!main",
-                "FunctionPrototype": "!main() : void"
-              },
-              {
-                "FrameId": "7",
-                "FunctionName": "!main",
-                "SourceFile": "UNKNOWN",
-                "SourceLine": "-1",
-                "SourceFileId": "-1",
-                "StatementText": {},
-                "VarNames": "/**X-VC scoperef targetid=\"27073\" */t301/**X-VC /scoperef */",
-                "QualifiedFunctionName": "!main",
-                "FunctionPrototype": "!main() : void"
-              },
-              {
-                "FrameId": "8",
-                "FunctionName": "!main",
-                "SourceFile": "UNKNOWN",
-                "SourceLine": "-1",
-                "SourceFileId": "-1",
-                "StatementText": {},
-                "VarNames": "/**X-VC scoperef targetid=\"27073\" */t301/**X-VC /scoperef */",
-                "QualifiedFunctionName": "!main",
-                "FunctionPrototype": "!main() : void"
-              }
-            ]
-          }
-        ]
-      },
-      "flaw_details_link": "https://downloads.veracode.com/securityscan/cwe/v4/java/601.html"
-    }
-  ],
+  "modules_count": 1,
   "selected_modules": []
 }
