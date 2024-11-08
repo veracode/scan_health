@@ -26,7 +26,7 @@ echo
 
 echo -e "\n${CYAN}Creating Docker image v${VERSION}...${NC}"
 docker pull alpine
-docker build -t antfie/scan_health .
+docker build -t antfie/scan_health . --no-cache
 
 
 echo -e "\n${CYAN}Publishing Docker image v${VERSION}...${NC}"

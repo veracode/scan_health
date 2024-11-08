@@ -72,7 +72,7 @@ with the Veracode APIs.
 If you are using Docker you can mount the API credentials file in the container like this:
 
 ```bash
-docker run -t -v "$HOME/.veracode:/.veracode" antfie/scan_health -action helth -sast https://analysiscenter.veracode.com/auth/index.jsp#...
+docker run -t -v "$HOME/.veracode:/.veracode" antfie/scan_health -action health -sast https://analysiscenter.veracode.com/auth/index.jsp#...
 ```
 
 ## Using the Tool
