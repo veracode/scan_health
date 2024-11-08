@@ -38,20 +38,6 @@ echo -e "\n${CYAN}SAST Scanning with Veracode (Pipeline)...${NC}"
                             --include "$entrypointModules"
 
 
-echo -e "\n${CYAN}Container scanning with Veracode...${NC}"
-#./scan/veracode scan --type image --source antfie/scan_health:latest \
-#                     --output dist/container_results.json
-
-
-echo -e "\n${CYAN}Container scanning with Scout...${NC}"
-docker scout cves antfie/scan_health
-
-
-echo -e "\n${CYAN}Generating SBOMs...${NC}"
-./scan/veracode sbom --type archive --source $zipFilePath --output dist/src.sbom.json
-./scan/veracode sbom --type image --source antfie/scan_health:latest --output dist/container.sbom.json
-
-
 echo -e "\n${CYAN}SAST Scanning with Veracode (Policy)...${NC}"
 
 if [ ! -e "scan/veracode-api.jar" ]; then
@@ -69,3 +55,17 @@ java -jar scan/veracode-api.jar \
      -filepath scan/packages \
      -include "$entrypointModules" \
      -scantimeout 15
+
+
+echo -e "\n${CYAN}Container scanning with Veracode...${NC}"
+#./scan/veracode scan --type image --source antfie/scan_health:latest \
+#                     --output dist/container_results.json
+
+
+echo -e "\n${CYAN}Container scanning with Scout...${NC}"
+docker scout cves antfie/scan_health
+
+
+echo -e "\n${CYAN}Generating SBOMs...${NC}"
+./scan/veracode sbom --type archive --source $zipFilePath --output dist/src.sbom.json
+./scan/veracode sbom --type image --source antfie/scan_health:latest --output dist/container.sbom.json
