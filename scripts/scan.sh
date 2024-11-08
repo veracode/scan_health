@@ -67,5 +67,5 @@ java -jar scan/veracode-api.jar \
      -version "`date "+%Y-%m-%d %H:%M:%S"`" \
      -deleteincompletescan 2 \
      -filepath scan/packages \
-     -include "$entrypointModules"
+     -include "$entrypointModules" \
      -scantimeout 15
