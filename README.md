@@ -31,6 +31,18 @@ The tool has the following modes of operation:
 
 The easiest way to install this is to download the binary from GitHub, but there are other options.
 
+### Homebrew
+
+```bash
+# If you don't have brew installed, install it from here: https://brew.sh/
+
+# Add the brew tap to your local machine
+brew tap veracode/tap
+
+# Install the tool
+brew install scan_health
+```
+
 ### From GitHub 
 
 From the [Releases](https://github.com/veracode/scan_health/releases) page you can download the latest version of this standalone executable for Windows, Linux and macOS. Note that at this time we are unable to code-sign these binaries.
