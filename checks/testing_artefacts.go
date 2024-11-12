@@ -52,7 +52,7 @@ func detectSelectedTestingModules(r *report.Report, testFilePatterns []string) {
 		return
 	}
 
-	message := fmt.Sprintf("A testing artefact was uploaded and selected as a module: \"%s\".", selectedTestingModules[0])
+	message := fmt.Sprintf("A testing artefact was uploaded and selected as a module for analysis: \"%s\".", selectedTestingModules[0])
 
 	if len(selectedTestingModules) > 1 {
 		message = fmt.Sprintf(
