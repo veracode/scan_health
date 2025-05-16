@@ -37,8 +37,8 @@ func duplicateModules(r *report.Report) {
 	}
 
 	if len(differentDuplicates)+len(differentDuplicates) > 0 {
-		r.MakeRecommendation("De-duplicate the modules/components before upload for optimal scan quality. Typically following the packaging instructions will result in an upload with no/few duplicates. Duplicate file names with different contents as this can lead to indeterminate scan results.")
-		r.MakeRecommendation("Ensure you only upload one version of an application/component of your application in each scan.")
+		r.MakeRecommendation("De-duplicate the modules/components before upload for optimal scan quality. Typically following the packaging instructions or using the Veracode auto-packager will result in an upload with no/few duplicates. Having duplicate file names with different contents can lead to indeterminate scan results.")
+		r.MakeRecommendation("Ensure you only upload one version of an application/component of your application in each scan. Refer to considerations on how to scope and structure application profile uploads properly at https://docs.veracode.com/r/request_profile")
 	}
 }
 
