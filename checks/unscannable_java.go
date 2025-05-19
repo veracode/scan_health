@@ -32,5 +32,5 @@ func unscannableJava(r *report.Report) {
 
 	r.ReportModuleIssue(message, report.IssueSeverityHigh, foundModules)
 	r.MakeRecommendation("Veracode requires the Java application to be compiled into a JAR, WAR or EAR file as per the packaging instructions.")
-	r.MakeRecommendation("The Veracode CLI can be used to package Java apps: https://docs.veracode.com/r/About_auto_packaging")
+	r.MakeRecommendation("The Veracode CLI can be used to package Java apps: https://docs.veracode.com/r/About_auto_packaging.")
 }

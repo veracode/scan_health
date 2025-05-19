@@ -26,5 +26,5 @@ func gradleWrapper(r *report.Report) {
 
 	r.ReportModuleIssue(message, report.IssueSeverityHigh, selectedModules)
 	r.MakeRecommendation("The \"gradle-wrapper.jar\" component should not be uploaded or selected for analysis.")
-	r.MakeRecommendation("The Veracode CLI can be used to package Java apps: https://docs.veracode.com/r/About_auto_packaging")
+	r.MakeRecommendation("The Veracode CLI can be used to package Java apps: https://docs.veracode.com/r/About_auto_packaging.")
 }
