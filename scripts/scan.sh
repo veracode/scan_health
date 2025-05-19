@@ -34,8 +34,7 @@ entrypointModules="Go files within veracode-auto-pack-scan_health-go.zip"
 echo -e "\n${CYAN}SAST Scanning with Veracode (Pipeline)...${NC}"
 ./scan/veracode static scan $zipFilePath \
                             --baseline-file sast_baseline.json \
-                            --results-file dist/sast_results.json \
-                            --include "$entrypointModules"
+                            --results-file dist/sast_results.json
 
 
 echo -e "\n${CYAN}SAST Scanning with Veracode (Policy)...${NC}"
