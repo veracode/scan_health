@@ -63,10 +63,10 @@ func detectMinifiedJSModules(r *report.Report) {
 		return
 	}
 
-	message := fmt.Sprintf("A minified JavaScript file was found within this module: \"%s\". This file might not be scanned.", foundModules[0])
+	message := fmt.Sprintf("A minified JavaScript file was found within this module: \"%s\". This minified file might not be scanned.", foundModules[0])
 
 	if len(foundModules) > 1 {
-		message = fmt.Sprintf("%d minified JavaScript files were found within this module: %s. These files might not be scanned.", len(foundModules), utils.Top5StringList(foundModules))
+		message = fmt.Sprintf("%d minified JavaScript files were found within this module: %s. These minified files might not be scanned.", len(foundModules), utils.Top5StringList(foundModules))
 	}
 
 	r.ReportModuleIssue(message, report.IssueSeverityMedium, foundModules)
