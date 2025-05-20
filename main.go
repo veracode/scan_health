@@ -10,7 +10,7 @@ import (
 )
 
 func main() {
-	fmt.Printf("Scan Health v%s\nCopyright © Veracode, Inc. 2024. All Rights Reserved.\nThis is an unofficial Veracode product. It does not come with any support or warranty.\n\n", AppVersion)
+	fmt.Printf("Scan Health v%s\nCopyright © Veracode, Inc. 2025. All Rights Reserved.\nThis is an unofficial Veracode product. It does not come with any support or warranty.\n\n", AppVersion)
 	vid := flag.String("vid", "", "Veracode API ID - See https://docs.veracode.com/r/c_api_credentials3")
 	vkey := flag.String("vkey", "", "Veracode API key - See https://docs.veracode.com/r/c_api_credentials3")
 	profile := flag.String("profile", "default", "Veracode credential profile - See https://docs.veracode.com/r/c_httpie_tool#using-multiple-profiles")
