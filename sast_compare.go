@@ -19,19 +19,23 @@ func performSASTCompare(scanA, scanB *string, api data.API, regionToUse string) 
 
 	go func() {
 		defer wg.Done()
+
 		buildId, err := utils.ParseBuildIdFromScanInformation(*scanA)
 		if err != nil {
-			utils.ErrorAndExit(fmt.Sprintf("Could not parse build ID from %s", *scanA), err)
+			utils.ErrorAndExit(fmt.Sprintf("Could not parse build ID from: \"%s\"", *scanA), err)
 		}
+
 		scanABuildId = buildId
 	}()
 
 	go func() {
 		defer wg.Done()
+
 		buildId, err := utils.ParseBuildIdFromScanInformation(*scanB)
 		if err != nil {
-			utils.ErrorAndExit(fmt.Sprintf("Could not parse build ID from %s", *scanB), err)
+			utils.ErrorAndExit(fmt.Sprintf("Could not parse build ID from: \"%s\"", *scanB), err)
 		}
+
 		scanBBuildId = buildId
 	}()
 

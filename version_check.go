@@ -15,7 +15,8 @@ var AppVersion = "0.0"
 
 func notifyOfUpdates() {
 	client := &http.Client{}
-	req, err := http.NewRequest("GET", "https://github.com/veracode/scan_health/releases/latest", nil)
+	url := "https://github.com/veracode/scan_health/releases/latest"
+	req, err := http.NewRequest("GET", url, nil)
 
 	if err != nil {
 		return
@@ -60,6 +61,6 @@ func notifyOfUpdates() {
 	}
 
 	if latestReleasedVersion > appVersion {
-		color.HiYellow(fmt.Sprintf("Please upgrade to the latest version of this tool (v%s) by visiting https://github.com/veracode/scan_health/releases/latest\n", response["tag_name"]))
+		color.HiYellow(fmt.Sprintf("Please upgrade to the latest version of this tool (v%s) by visiting %s\n", response["tag_name"], url))
 	}
 }
