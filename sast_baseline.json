@@ -1,52 +1,139 @@
 {
-  "_links": {
-    "root": {
-      "href": "/",
-      "name": "",
-      "templated": false
-    },
-    "self": {
-      "href": "/scans/37b6f0f8-6695-475b-8c4d-d8d0d801abcf/findings",
-      "name": "",
-      "templated": false
-    },
-    "help": {
-      "href": "https://docs.veracode.com/",
-      "name": "",
-      "templated": false
-    },
-    "create": {
-      "href": "",
-      "name": "",
-      "templated": false
-    },
-    "start": {
-      "href": "",
-      "name": "",
-      "templated": false
-    },
-    "details": {
-      "href": "",
-      "name": "",
-      "templated": false
-    },
-    "upload": {
-      "href": "",
-      "name": "",
-      "templated": false
-    },
-    "cancel": {
-      "href": "",
-      "name": "",
-      "templated": false
-    }
-  },
-  "scan_id": "37b6f0f8-6695-475b-8c4d-d8d0d801abcf",
-  "scan_status": "CANCELLED",
-  "message": "No modules matched user criteria",
-  "modules": [
-    "veracode-auto-pack-scan_health-go.zip_htmlgocode.veracodegen.htmla.goa"
-  ],
-  "modules_count": 1,
-  "selected_modules": []
+   "_links": {
+      "root": {
+         "href": "/",
+         "name": "",
+         "templated": false
+      },
+      "self": {
+         "href": "/scans/b97e7343-4620-459a-8b36-40d40e9101a2/findings",
+         "name": "",
+         "templated": false
+      },
+      "help": {
+         "href": "https://docs.veracode.com/",
+         "name": "",
+         "templated": false
+      },
+      "create": {
+         "href": "",
+         "name": "",
+         "templated": false
+      },
+      "start": {
+         "href": "",
+         "name": "",
+         "templated": false
+      },
+      "details": {
+         "href": "",
+         "name": "",
+         "templated": false
+      },
+      "upload": {
+         "href": "",
+         "name": "",
+         "templated": false
+      },
+      "cancel": {
+         "href": "",
+         "name": "",
+         "templated": false
+      }
+   },
+   "scan_id": "b97e7343-4620-459a-8b36-40d40e9101a2",
+   "scan_status": "SUCCESS",
+   "message": "Scan successful. Results size: 3726 bytes",
+   "modules": [
+      "GOLANG files within veracode-auto-pack-scan_health-go.zip_htmlgocode.veracodegen.htmla"
+   ],
+   "modules_count": 1,
+   "findings": [
+      {
+         "title": "os::WriteFile",
+         "issue_id": 1000,
+         "image_path": "report",
+         "gob": "B",
+         "severity": 3,
+         "issue_type_id": "taint",
+         "issue_type": "External Control of File Name or Path",
+         "cwe_id": "73",
+         "exploit_level": "0",
+         "display_text": "\u003cspan\u003eThis call to os::WriteFile() contains a path manipulation flaw.  The argument to the function is a filename constructed using untrusted input.  If an attacker is allowed to specify all or part of the filename, it may be possible to gain unauthorized access to files on the server, including those outside the webroot, that would be normally be inaccessible to end users.  The level of exposure depends on the effectiveness of input validation routines, if any. The first argument to WriteFile() contains tainted data from the variable cleanPath. The tainted data originated from an earlier call to flag.String.\u003c/span\u003e \u003cspan\u003eValidate all untrusted input to ensure that it conforms to the expected format, using centralized data validation routines when possible.  When using blocklists, be sure that the sanitizing routine performs a sufficient number of iterations to remove all instances of disallowed characters.\u003c/span\u003e \u003cspan\u003eReferences: \u003ca href=\"https://cwe.mitre.org/data/definitions/73.html\"\u003eCWE\u003c/a\u003e \u003ca href=\"https://owasp.org/www-community/attacks/Path_Traversal\"\u003eOWASP\u003c/a\u003e\u003c/span\u003e",
+         "files": {
+            "source_file": {
+               "file": "scan_health/report/report_to_json.go",
+               "upload_file": "scan_health/report/report_to_json.go",
+               "line": 26,
+               "function_name": "renderToJson",
+               "qualified_function_name": "github.com.veracode.scan_health.v2.report.Report.renderToJson",
+               "function_prototype": "void renderToJson(string)",
+               "scope": "^::github.com::veracode::scan_health::v2::report::Report"
+            }
+         },
+         "flaw_match": {
+            "procedure_hash": "4052060009",
+            "prototype_hash": "3763714738",
+            "flaw_hash": "3813028584",
+            "flaw_hash_count": 1,
+            "flaw_hash_ordinal": 1,
+            "cause_hash": "1814119108",
+            "cause_hash_count": 1,
+            "cause_hash_ordinal": 1,
+            "cause_hash2": "1522093433",
+            "cause_hash2_ordinal": "4"
+         },
+         "stack_dumps": {
+            "stack_dump": [
+               {
+                  "Frame": [
+                     {
+                        "FrameId": "0",
+                        "FunctionName": "renderToJson",
+                        "SourceFile": "scan_health/report/report_to_json.go",
+                        "SourceLine": "25",
+                        "SourceFileId": "101",
+                        "StatementText": {},
+                        "QualifiedFunctionName": "github.com.veracode.scan_health.v2.report.Report.renderToJson",
+                        "FunctionPrototype": "void renderToJson(string)"
+                     },
+                     {
+                        "FrameId": "1",
+                        "FunctionName": "renderToJson",
+                        "SourceFile": "scan_health/report/report_to_json.go",
+                        "SourceLine": "17",
+                        "SourceFileId": "101",
+                        "StatementText": {},
+                        "VarNames": "/**X-VC defscope id=\"361033\" */string cleanPath/**X-VC /defscope */",
+                        "QualifiedFunctionName": "github.com.veracode.scan_health.v2.report.Report.renderToJson",
+                        "FunctionPrototype": "void renderToJson(string)"
+                     },
+                     {
+                        "FrameId": "2",
+                        "FunctionName": "renderToJson",
+                        "SourceFile": "scan_health/report/report_to_json.go",
+                        "SourceLine": "10",
+                        "SourceFileId": "101",
+                        "StatementText": {},
+                        "VarNames": "/**X-VC defscope id=\"289316\" */string filePath/**X-VC /defscope */",
+                        "QualifiedFunctionName": "github.com.veracode.scan_health.v2.report.Report.renderToJson",
+                        "FunctionPrototype": "void renderToJson(string)"
+                     },
+                     {
+                        "FrameId": "3",
+                        "FunctionName": "Render",
+                        "SourceFile": "scan_health/report/report.go",
+                        "SourceLine": "152",
+                        "SourceFileId": "97",
+                        "StatementText": {},
+                        "QualifiedFunctionName": "github.com.veracode.scan_health.v2.report.Report.Render",
+                        "FunctionPrototype": "void Render(string, string)"
+                     }
+                  ]
+               }
+            ]
+         }
+      }
+   ],
+   "selected_modules": []
 }
