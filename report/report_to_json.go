@@ -3,9 +3,10 @@ package report
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/veracode/scan_health/v2/utils"
 	"os"
 	"path/filepath"
+
+	"github.com/veracode/scan_health/v2/utils"
 )
 
 func (r *Report) renderToJson(filePath string) {
