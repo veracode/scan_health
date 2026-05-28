@@ -85,7 +85,7 @@ func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
 	}
 
 	if resp.StatusCode == 401 {
-		if strings.HasSuffix(parsedUrl.Path, "getmaintenancescheduleinfo.do") {
+		if strings.HasSuffix(parsedUrl.Path, "getapplist.do") {
 			utils.ErrorAndExit(fmt.Sprintf("There was a problem with your credentials. %s Please check your credentials are valid for this Veracode region. For help contact your Veracode administrator.", profileFlagHint), nil)
 		} else {
 			utils.ErrorAndExit(fmt.Sprintf("You are not authorized to perform this action. %s Please check you have the \"Results API\" user role set. For help contact your Veracode administrator and refer to https://docs.veracode.com/r/c_API_roles_details", profileFlagHint), nil)
@@ -97,7 +97,7 @@ func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
 	}
 
 	if resp.StatusCode != http.StatusOK {
-		utils.ErrorAndExit(fmt.Sprintf("API responded with status of %s", resp.Status), nil)
+		utils.ErrorAndExit(fmt.Sprintf("API endpoint %s responded with status %s", apiUrl, resp.Status), nil)
 	}
 
 	// Cache if enabled and unless there is some indicator of an error
@@ -109,5 +109,5 @@ func (api API) makeApiRequest(apiUrl, httpMethod string) []byte {
 }
 
 func (api API) AssertCredentialsWork() {
-	api.makeApiRequest("/api/3.0/getmaintenancescheduleinfo.do", http.MethodGet)
+	api.makeApiRequest("/api/5.0/getapplist.do", http.MethodGet)
 }
