@@ -2,12 +2,13 @@ package data
 
 import (
 	"fmt"
-	"github.com/veracode/scan_health/v2/utils"
 	"io"
 	"net/http"
 	"net/url"
 	"strings"
 	"time"
+
+	"github.com/veracode/scan_health/v2/utils"
 
 	"github.com/antfie/veracode-go-hmac-authentication/hmac"
 )

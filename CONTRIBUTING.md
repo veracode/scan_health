@@ -6,22 +6,23 @@ Below, you will find a list of ways you can contribute and how we handle those c
 
 ## Table of Contents
 
-- [Contributing to Scan Health](#contributing-to-scan_health)
-    - [Table of Contents](#table-of-contents)
-    - [Code of Conduct](#code-of-conduct)
-    - [Questions](#questions)
-    - [Contributions](#contributions)
-        - [Reporting Bugs](#reporting-bugs)
-            - [Before Submitting a Bug Report](#before-submitting-a-bug-report)
-            - [How Do I Submit a Good Bug Report?](#how-do-i-submit-a-good-bug-report)
-        - [Suggesting Enhancements](#suggesting-enhancements)
-            - [Before Submitting an Enhancement](#before-submitting-an-enhancement)
-            - [How Do I Submit a Good Enhancement Suggestion?](#how-do-i-submit-a-good-enhancement-suggestion)
-        - [Your First Code Contribution](#your-first-code-contribution)
-        - [Improving The Documentation](#improving-the-documentation)
-    - [Styleguides](#styleguides)
-        - [Commit Messages](#commit-messages)
-    - [Attribution](#attribution)
+- [Contributing to Scan Health](#contributing-to-scan-health)
+  - [Table of Contents](#table-of-contents)
+  - [Code of Conduct](#code-of-conduct)
+  - [Questions](#questions)
+  - [Contributions](#contributions)
+    - [Reporting Bugs](#reporting-bugs)
+      - [Before Submitting a Bug Report](#before-submitting-a-bug-report)
+      - [How Do I Submit a Good Bug Report?](#how-do-i-submit-a-good-bug-report)
+    - [Suggesting Enhancements](#suggesting-enhancements)
+      - [Before Submitting an Enhancement](#before-submitting-an-enhancement)
+      - [How Do I Submit a Good Enhancement Suggestion?](#how-do-i-submit-a-good-enhancement-suggestion)
+    - [Your First Code Contribution](#your-first-code-contribution)
+    - [Veracode scan](#veracode-scan)
+    - [Improving The Documentation](#improving-the-documentation)
+  - [Styleguides](#styleguides)
+    - [Commit Messages](#commit-messages)
+  - [Attribution](#attribution)
 
 ## Code of Conduct
 
@@ -128,6 +129,14 @@ Once you've got an idea for your first code contribution, you will need to submi
 We will review your code changes as soon as possible, and provide feedback if some changes are required.
 
 To reduce review time, please include **detailed** change notes and explain any decisions you've made ahead of time, make sure you check the styleguide below and format your code to it.
+
+### Veracode scan
+
+Given that this relates to Veracode, performing a veracode scan and providing the results helps you make sure that no flaws are being introduced. Scan early, and scan often!
+
+`veracode package -s .`
+
+`veracode static scan -v .\veracode-auto-pack-scan_health-go.zip --baseline-file sast_baseline.json`
 
 ### Improving The Documentation
 

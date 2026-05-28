@@ -295,7 +295,7 @@ You may want to use the `-cache=true` flag to speed up development by caching AP
 
 ### Compiling
 
-Runningt he build script will also run the tests:
+Running the build script will also run the tests:
 
 ```sh
 ./scripts/build.sh
@@ -304,6 +304,17 @@ Runningt he build script will also run the tests:
 ## Bug Reports 🐞
 
 If you find a bug, please file an Issue right here in GitHub, and I will try to resolve it in a timely manner.
+
+## Veracode Findings
+
+### Veracode scan results
+
+To generate, see [CONTRIBUTING.md](./CONTRIBUTING.md)
+The baseline flaw file is in [sast_baseline.json](./sast_baseline.json)
+
+| Flaw Hash | Description | Filename | Mitigation |
+| --------- | ----------- | -------- | ---------- |
+| 3813028584 | CWE 73 - External Control of File Name or Path | scan_health/report/report_to_json.go:26 | This is dictated by the user and does not inherently change privileges of the running process. Validation is performed to ensure the output file has the json extension to avoid overwriting arbitrary non-json files, and that the parent to the output file exists.
 
 ## API Calls
 
