@@ -6,7 +6,7 @@
          "templated": false
       },
       "self": {
-         "href": "/scans/b97e7343-4620-459a-8b36-40d40e9101a2/findings",
+         "href": "/scans/e7cd900e-c49d-40e9-ad66-d4388572822d/findings",
          "name": "",
          "templated": false
       },
@@ -41,7 +41,7 @@
          "templated": false
       }
    },
-   "scan_id": "b97e7343-4620-459a-8b36-40d40e9101a2",
+   "scan_id": "e7cd900e-c49d-40e9-ad66-d4388572822d",
    "scan_status": "SUCCESS",
    "message": "Scan successful. Results size: 3726 bytes",
    "modules": [
@@ -64,7 +64,7 @@
             "source_file": {
                "file": "scan_health/report/report_to_json.go",
                "upload_file": "scan_health/report/report_to_json.go",
-               "line": 26,
+               "line": 27,
                "function_name": "renderToJson",
                "qualified_function_name": "github.com.veracode.scan_health.v2.report.Report.renderToJson",
                "function_prototype": "void renderToJson(string)",
@@ -91,7 +91,7 @@
                         "FrameId": "0",
                         "FunctionName": "renderToJson",
                         "SourceFile": "scan_health/report/report_to_json.go",
-                        "SourceLine": "25",
+                        "SourceLine": "26",
                         "SourceFileId": "101",
                         "StatementText": {},
                         "QualifiedFunctionName": "github.com.veracode.scan_health.v2.report.Report.renderToJson",
@@ -101,7 +101,7 @@
                         "FrameId": "1",
                         "FunctionName": "renderToJson",
                         "SourceFile": "scan_health/report/report_to_json.go",
-                        "SourceLine": "17",
+                        "SourceLine": "18",
                         "SourceFileId": "101",
                         "StatementText": {},
                         "VarNames": "/**X-VC defscope id=\"361033\" */string cleanPath/**X-VC /defscope */",
@@ -112,7 +112,7 @@
                         "FrameId": "2",
                         "FunctionName": "renderToJson",
                         "SourceFile": "scan_health/report/report_to_json.go",
-                        "SourceLine": "10",
+                        "SourceLine": "11",
                         "SourceFileId": "101",
                         "StatementText": {},
                         "VarNames": "/**X-VC defscope id=\"289316\" */string filePath/**X-VC /defscope */",
