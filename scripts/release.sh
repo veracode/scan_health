@@ -23,14 +23,15 @@ echo -e "${CYAN}Releasing v${VERSION}...${NC}"
 echo
 ./scripts/build.sh
 
+# Disabled updates of antfie Docker container, should publish to `veracode` account.
+# https://github.com/veracode/scan_health/issues/22
+#echo -e "\n${CYAN}Creating Docker image v${VERSION}...${NC}"
+#docker pull alpine
+#docker build -t antfie/scan_health . --no-cache
 
-echo -e "\n${CYAN}Creating Docker image v${VERSION}...${NC}"
-docker pull alpine
-docker build -t antfie/scan_health . --no-cache
 
-
-echo -e "\n${CYAN}Publishing Docker image v${VERSION}...${NC}"
-docker push antfie/scan_health
+#echo -e "\n${CYAN}Publishing Docker image v${VERSION}...${NC}"
+#docker push antfie/scan_health
 
 
 echo

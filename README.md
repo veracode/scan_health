@@ -3,8 +3,6 @@
 [![Go Report Card](https://goreportcard.com/badge/github.com/veracode/scan_health/v2)](https://goreportcard.com/report/github.com/github.com/veracode/scan_health/v2)
 ![GitHub Release](https://img.shields.io/github/v/release/veracode/scan_health)
 ![GitHub Downloads (all assets, all releases)](https://img.shields.io/github/downloads/veracode/scan_health/total)
-![Docker Image Size](https://img.shields.io/docker/image-size/antfie/scan_health/latest)
-![Docker Pulls](https://img.shields.io/docker/pulls/antfie/scan_health)
 
 # Veracode Scan Health Tool 🏥
 
@@ -47,14 +45,6 @@ brew install scan_health
 
 From the [Releases](https://github.com/veracode/scan_health/releases) page you can download the latest version of this standalone executable for Windows, Linux and macOS. Note that at this time we are unable to code-sign these binaries.
 
-### Using Docker 🐳
-
-You can also use the [Docker image](https://hub.docker.com/r/antfie/scan_health):
-
-```bash
-docker pull antfie/scan_health
-```
-
 ### Compile Manually
 
 You will need the latest version of [Go](https://go.dev/dl/) and then run the following commands to get the code and compile it:
@@ -79,14 +69,6 @@ Alternatively you can use
 environment
 variables (`VERACODE_API_KEY_ID` and `VERACODE_API_KEY_SECRET`) or the CLI flags (`-vid` and `-vkey`) to authenticate
 with the Veracode APIs.
-
-### Using Docker 🐳
-
-If you are using Docker you can mount the API credentials file in the container like this:
-
-```bash
-docker run -t -v "$HOME/.veracode:/app/.veracode" antfie/scan_health -action health -sast https://analysiscenter.veracode.com/auth/index.jsp#...
-```
 
 ## Using the Tool
 
