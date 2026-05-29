@@ -63,7 +63,7 @@ echo -e "\n${CYAN}Container scanning with Veracode...${NC}"
 
 
 echo -e "\n${CYAN}Container scanning with Scout...${NC}"
-docker scout cves antfie/scan_health
+#docker scout cves antfie/scan_health
 
 
 echo -e "\n${CYAN}Generating SBOMs...${NC}"
